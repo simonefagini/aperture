@@ -1,11 +1,10 @@
-import { parse, board } from "./board.js?v=24";
+import { parse, board } from "./board.js?v=25";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [
   { name: "London System", page: "london.html", file: "data/london.txt", flipped: false },
-  { name: "Test Opening", page: "test.html", file: "data/test.txt", flipped: false },
 ];
-const PLACEHOLDERS = 4;
+const PLACEHOLDERS = 5;
 const MAX_PLIES = 16;   // the preview follows the first line for up to 8 moves each
 const EMPTY = { fen: "8/8/8/8/8/8/8/8 w - - 0 1" };
 
