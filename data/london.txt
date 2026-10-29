@@ -11,7 +11,6 @@ d4 d5 Bf4 Nf6 e3 e6 c3
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 exd4
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 exd4
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6
