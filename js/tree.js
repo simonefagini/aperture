@@ -1,6 +1,7 @@
 import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
 
-const LIGHT = "#f0d9b5", DARK = "#b58863";
+// printed-diagram look: paper squares, dark squares hatched with ink (same in light and dark mode)
+const PAPER = "#f0eadc", INK = "#1a1a1a";
 const NS = "http://www.w3.org/2000/svg";
 
 // ---- parse: lines of SAN into a merged tree --------------------------------
@@ -32,9 +33,13 @@ function el(name, attrs, parent) {
 
 function board(fen, flipped) {
   const svg = el("svg", { viewBox: "0 0 8 8", class: "board" });
+  const hatch = el("pattern", { id: "hatch", width: 0.11, height: 0.11, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, el("defs", {}, svg));
+  el("line", { x1: 0, y1: 0, x2: 0, y2: 0.11, stroke: INK, "stroke-width": 0.022 }, hatch);
+  el("rect", { width: 8, height: 8, fill: PAPER }, svg);
   for (let r = 0; r < 8; r++)
     for (let f = 0; f < 8; f++)
-      el("rect", { x: f, y: r, width: 1, height: 1, fill: (r + f) % 2 ? DARK : LIGHT }, svg);
+      if ((r + f) % 2) el("rect", { x: f, y: r, width: 1, height: 1, fill: "url(#hatch)" }, svg);
+  el("rect", { x: 0.02, y: 0.02, width: 7.96, height: 7.96, fill: "none", stroke: INK, "stroke-width": 0.04 }, svg);
   fen.split(" ")[0].split("/").forEach((row, r) => {
     let f = 0;
     for (const ch of row) {
