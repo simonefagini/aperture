@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=19";
+import { parse, board } from "./board.js?v=20";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -55,7 +55,7 @@ function enableKeys() {
     const row = next.filter(p => Math.abs(p.top - rowTop) < 1);     // the nearest row, and in it the branch you are on
     row.sort((a, b) => Math.abs(a.mid - ps[cur].mid) - Math.abs(b.mid - ps[cur].mid));
     e.preventDefault();
-    scrollTo({ top: row[0].top - anchor, behavior: "smooth" });
+    scrollTo({ top: row[0].top - anchor, behavior: "instant" });   // a hard jump, no animation
   });
 }
 
