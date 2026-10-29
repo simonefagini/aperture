@@ -18,17 +18,33 @@
 
 * { box-sizing: border-box; }
 body {
-  text-align: center;
   font-family: Onest, system-ui, sans-serif; font-weight: 450;
-  margin: 1rem; background: var(--body-bg); color: var(--text-color);
+  margin: 0; background: var(--body-bg); color: var(--text-color);
   transition: background-color .5s ease, color .5s ease;
 }
 a { color: var(--text-color); text-decoration-color: var(--highlight-color); }
 a:hover { color: var(--hover-color); }
-nav a { margin-right: 1rem; }
-small { color: var(--muted); }
-.san { font: 600 22px Onest, system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
-.comment { font: italic 19px "EB Garamond", Georgia, serif; text-anchor: middle; fill: var(--muted); }
+
+/* back arrow: same box as the eclipse toggle, mirrored on the left */
+#back {
+  position: absolute; top: 1rem; left: 1rem; height: 2.5rem;
+  display: flex; align-items: center; gap: .5rem;
+  color: var(--toggle-color); text-decoration: none;
+  transition: color .3s ease;
+}
+#back:hover { color: var(--hover-color); }
+#back svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+main { max-width: 40rem; margin: 0 auto; padding: 4.5rem 1rem 3rem; text-align: center; }
+h1 { margin: 0 0 1.5rem; font-weight: 600; }
+
+/* boards scale with the viewport */
+figure { margin: 0; }
+figcaption { margin-top: .4rem; font-weight: 600; }
+.board { display: block; width: 100%; height: auto; }
+#start { width: min(100%, 26rem); margin: 0 auto 1.25rem; }
+#replies { display: flex; justify-content: center; gap: .75rem; }
+#replies figure { width: min(46%, 13rem); }
 
 #theme-toggle {
   position: absolute; top: 1rem; right: 1rem;
