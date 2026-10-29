@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=28";
+import { parse, board } from "./board.js?v=29";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {

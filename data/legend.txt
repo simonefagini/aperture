@@ -47,7 +47,7 @@ LEGEND: how to write a line in london.txt
        d4 d5 Bf4 Nf6
 
    The ~ line has full moves from the start, like any line. Its comment stands to
-   the left of its own board on wide screens (under it on narrower ones), left-aligned, and its first line (the name) is part of it, and its marks show on hover. Several ~ lines in a row
+   the left of its own board on wide screens (under it, left-aligned, on narrower ones), right-aligned against the board, and its first line (the name) is part of it, and its marks show on hover. Several ~ lines in a row
    stack as several side boards. The arrow keys skip them.
    On a narrow screen the side boards move under the board.
 
