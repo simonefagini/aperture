@@ -2,7 +2,7 @@
 # A line's parent is the longest shorter line it starts with. For a branch, repeat
 # the same moves and play something else. Optional {comment} after the last move.
 # the board shown on the home page
-@preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6
+@preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 O-O Bd3 {[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5]}
 
 d4
 d4 d5

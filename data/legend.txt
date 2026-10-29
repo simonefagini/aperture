@@ -45,10 +45,10 @@ LEGEND: how to write a line in london.txt
 5. HOME PAGE PREVIEW
    The board on the home page is set by one extra line in the opening's file:
 
-       @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6
+       @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 O-O Bd3 {[%cal Rd3h7,Gf3e5]}
 
-   It takes the same moves as a normal line, but it does not make a board on
-   the opening's own page. Without it the home page follows the first line of
+   It takes the same moves and marks as a normal line, but it does not make a
+   board on the opening's own page. The marks show while hovering the card. Without it the home page follows the first line of
    each position (up to 8 moves).
 
 6. EXAMPLES

@@ -43,9 +43,9 @@ export function parse(text) {
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length) return;
-    if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows: [], rings: [] }; return; }
-    const key = moves.join(" ");
     const { text, arrows, rings } = marksIn(comment, i + 1);
+    if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
+    const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
       if (text) same.comment = text;
