@@ -41,6 +41,9 @@ h1 { margin: 0 0 1.5rem; font-weight: 600; }
 /* every board has the same size (--b); a board's replies sit in a row below it */
 figure { position: relative; margin: 0; width: var(--b); }
 figcaption { margin-top: .4rem; font-weight: 600; }
+/* second layer: shown while hovering a board */
+.layer { opacity: 0; transition: opacity .2s ease; pointer-events: none; }
+figure:hover .layer { opacity: 1; }
 .board { display: block; width: 100%; height: auto; }
 .coord { font: 450 .36px Onest, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
 
