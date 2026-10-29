@@ -40,7 +40,7 @@ h1 { margin: 0 0 3rem; font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 600; 
 
 /* every board has the same size (--b); a board's replies sit in a row below it */
 figure { position: relative; margin: 0; width: var(--b); }
-figcaption { margin-top: .4rem; font-weight: 600; }
+figcaption { margin-top: 0; font-weight: 600; }
 /* second layer: shown while hovering a board */
 .layer { opacity: 0; transition: opacity .2s ease; pointer-events: none; }
 figure:hover .layer { opacity: 1; }
@@ -50,7 +50,7 @@ figure:hover .layer { opacity: 1; }
 #tree { display: flex; overflow-x: auto; }
 #tree > .kids { margin: 0 auto; }   /* centered, and scrollable when wider than the screen */
 .kids { display: flex; align-items: flex-start; gap: 1rem; }
-.block { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.block { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; }
 
 /* comments: beside the board when there is room, else under it */
 .note { margin: .4rem 0 0; font: italic 1.15rem "EB Garamond", Georgia, serif; color: var(--muted); }
