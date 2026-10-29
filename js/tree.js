@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=20";
+import { parse, board } from "./board.js?v=21";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -37,25 +37,53 @@ function row(nodes, flipped) {
   return div;
 }
 
-// ArrowDown / ArrowUp: scroll so the next / previous board lands exactly where the current one sits
+// Keys on the opening page. The current board is the one at the first board's place on screen.
+//   Down / Up: jump to its first reply / its parent, landing exactly where the current board sits
+//   Right / Left: switch to the next / previous branch (same parent); Down then follows that branch
 function enableKeys() {
   const figs = [...document.querySelectorAll("#tree figure")];
   if (!figs.length) return;
-  const pos = f => { const r = f.getBoundingClientRect(); return { top: r.top + scrollY, mid: r.left + r.width / 2 + scrollX }; };
-  const anchor = pos(figs[0]).top;                    // where the first board sits when the page is at the top
+  const treeEl = document.getElementById("tree");
+  const top = f => f.getBoundingClientRect().top + scrollY;
+  const anchor = top(figs[0]);              // where the first board sits when the page is at the top
+  const choice = new Map();                 // board block -> the reply you were last on
+  let sel = null;
+
+  const blockOf = f => f.closest(".block");
+  const figOf = b => b.querySelector(":scope > figure");
+  const repliesOf = b => [...b.querySelectorAll(":scope > .kids > .block")];
+
+  function current() {
+    const line = scrollY + anchor, dist = f => Math.abs(top(f) - line);
+    const best = Math.min(...figs.map(dist));
+    if (sel && dist(sel) <= best + 1) return sel;               // still where we left it
+    const x = f => { const r = f.getBoundingClientRect(); return Math.abs(r.left + r.width / 2 - innerWidth / 2); };
+    return sel = figs.filter(f => dist(f) <= best + 1).sort((a, b) => x(a) - x(b))[0];   // e.g. after scrolling by hand
+  }
+
+  function go(target) {
+    sel = target;
+    scrollTo({ top: top(target) - anchor, behavior: "instant" });   // a hard jump
+    const r = target.getBoundingClientRect(), t = treeEl.getBoundingClientRect();
+    treeEl.scrollLeft += r.left + r.width / 2 - (t.left + t.width / 2);   // centre the branch when the tree is wider than the screen
+  }
+
   addEventListener("keydown", e => {
-    if ((e.key !== "ArrowDown" && e.key !== "ArrowUp") || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    const ps = figs.map(pos), line = scrollY + anchor;
-    let cur = 0;                                      // the current board is the one closest to that line
-    ps.forEach((p, i) => { if (Math.abs(p.top - line) < Math.abs(ps[cur].top - line)) cur = i; });
-    const dir = e.key === "ArrowDown" ? 1 : -1;
-    const next = ps.filter(p => dir * (p.top - ps[cur].top) > 1);   // boards further down (or up)
-    if (!next.length) return;                         // none left: let the browser scroll as usual
-    const rowTop = dir > 0 ? Math.min(...next.map(p => p.top)) : Math.max(...next.map(p => p.top));
-    const row = next.filter(p => Math.abs(p.top - rowTop) < 1);     // the nearest row, and in it the branch you are on
-    row.sort((a, b) => Math.abs(a.mid - ps[cur].mid) - Math.abs(b.mid - ps[cur].mid));
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const b = blockOf(current()), parent = b.parentElement.closest(".block");
+    let target = null;
+    if (e.key === "ArrowDown") {
+      const replies = repliesOf(b);
+      if (replies.length) { const next = choice.get(b) ?? replies[0]; choice.set(b, next); target = figOf(next); }
+    } else if (e.key === "ArrowUp") {
+      if (parent) target = figOf(parent);
+    } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      const sibs = [...b.parentElement.children], next = sibs[sibs.indexOf(b) + (e.key === "ArrowRight" ? 1 : -1)];
+      if (next) { target = figOf(next); if (parent) choice.set(parent, next); }
+    }
+    if (!target) return;                    // nothing there: normal browser behaviour
     e.preventDefault();
-    scrollTo({ top: row[0].top - anchor, behavior: "instant" });   // a hard jump, no animation
+    go(target);
   });
 }
 
