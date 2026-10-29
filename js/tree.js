@@ -2,7 +2,8 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
 
 // printed-diagram look: paper squares, dark squares hatched with ink (same in light and dark mode)
 const PAPER = "#f0eadc", INK = "#1a1a1a";
-const ACCENT = "#b04a4a";   // arrows and highlights (the "bad" red from biblioteca)
+// last-move highlight, as in most engines: lighter green for the square it left, darker for where it landed
+const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.6 }, TO_GREEN = { fill: "#6fa83a", "fill-opacity": 0.7 };
 const NS = "http://www.w3.org/2000/svg";
 
 // ---- parse: every line is one board; its parent is the nearest listed shorter line ----
@@ -51,28 +52,13 @@ function center(sq, flipped) {
   return flipped ? [7 - f + 0.5, 7 - r + 0.5] : [f + 0.5, r + 0.5];
 }
 
-// hover layer, part 1 (under the pieces): tint the squares the last move went from and to
+// hover layer (under the pieces): tint the squares the last move went from and to
 function tints(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
-  for (const sq of [node.from, node.to]) {
+  for (const [sq, green] of [[node.from, FROM_GREEN], [node.to, TO_GREEN]]) {
     const [x, y] = center(sq, flipped);
-    el("rect", { x: x - 0.5, y: y - 0.5, width: 1, height: 1, fill: ACCENT, "fill-opacity": 0.35 }, g);
+    el("rect", { x: x - 0.5, y: y - 0.5, width: 1, height: 1, ...green }, g);
   }
-}
-
-// hover layer, part 2 (over the pieces): an arrow for the last move, with a paper halo to read on the hatching
-function arrow(parent, node, flipped) {
-  const g = el("g", { class: "layer" }, parent);
-  const [x0, y0] = center(node.from, flipped), [x1, y1] = center(node.to, flipped);
-  const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L;
-  const tx = x1 - ux * 0.08, ty = y1 - uy * 0.08;            // tip
-  const bx = tx - ux * 0.42, by = ty - uy * 0.42;            // base of the head
-  const head = `${tx},${ty} ${bx - uy * 0.24},${by + ux * 0.24} ${bx + uy * 0.24},${by - ux * 0.24}`;
-  const shaft = { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx, y2: by, "stroke-linecap": "round" };
-  el("line", { ...shaft, stroke: PAPER, "stroke-width": 0.24 }, g);
-  el("polygon", { points: head, fill: PAPER, stroke: PAPER, "stroke-width": 0.1, "stroke-linejoin": "round" }, g);
-  el("line", { ...shaft, stroke: ACCENT, "stroke-width": 0.14 }, g);
-  el("polygon", { points: head, fill: ACCENT }, g);
 }
 
 function board(node, flipped) {
@@ -102,7 +88,6 @@ function board(node, flipped) {
       f++;
     }
   });
-  arrow(svg, node, flipped);
   return svg;
 }
 
