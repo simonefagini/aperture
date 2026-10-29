@@ -6,8 +6,6 @@
   --hover-color: #000000;
   --muted: #7d7566;
   --toggle-color: #b3a98f;
-  --board-paper: #f0eadc;
-  --board-ink: #1a1a1a;
 }
 :root[data-theme="dark"] {
   --text-color: #c8c8c8;
@@ -16,8 +14,6 @@
   --hover-color: #ffffff;
   --muted: #808080;
   --toggle-color: #c8c8c8;
-  --board-paper: #282828;   /* the board is inverted in dark mode */
-  --board-ink: #c8c8c8;
 }
 
 * { box-sizing: border-box; }
@@ -46,11 +42,6 @@ h1 { margin: 0 0 1.5rem; font-weight: 600; }
 figure { margin: 0; width: var(--b); }
 figcaption { margin-top: .4rem; font-weight: 600; }
 .board { display: block; width: 100%; height: auto; }
-.paper { fill: var(--board-paper); }
-.ink-line { stroke: var(--board-ink); stroke-width: 0.04; }
-.frame { fill: none; stroke: var(--board-ink); stroke-width: 0.04; }
-.set-dark, :root[data-theme="dark"] .set-light { display: none; }
-:root[data-theme="dark"] .set-dark { display: inline; }
 .coord { font: 450 .36px Onest, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
 #start { width: var(--b); margin: 0 auto 1.25rem; }
 

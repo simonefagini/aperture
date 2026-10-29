@@ -6,7 +6,6 @@ Licensed under CC BY-SA 3.0, GFDL, or GPL (your choice, per Wikimedia).
 Files were taken from the Lichess copy of the set
 (https://github.com/lichess-org/lila/tree/master/public/piece/cburnett),
 which distributes them under GPLv2+. Check the upstream pages before publishing.
-`pieces/dark/` holds colour-inverted copies of the same SVGs for dark mode (modified, same license).
 If you modify the SVGs, share the changes under the same license.
 
 ## Code
