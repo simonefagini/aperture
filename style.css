@@ -82,3 +82,10 @@ figure:hover .layer { opacity: 1; }
 #theme-toggle:hover::before { background-color: var(--hover-color); }
 #tree { overflow-x: auto; }
 #tree svg { display: block; margin: 0 auto; max-width: none; }
+
+/* home page: a centered grid of opening previews, like superfluo.cc */
+#grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 2.5rem 2rem; max-width: 56rem; margin: 0 auto; }
+.card { display: block; color: inherit; text-decoration: none; }
+#grid figure { width: 100%; }
+.card:hover figcaption { color: var(--hover-color); }
+.card.empty { opacity: .4; pointer-events: none; }
