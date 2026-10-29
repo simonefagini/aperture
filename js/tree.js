@@ -4,21 +4,34 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
 const PAPER = "#f0eadc", INK = "#1a1a1a";
 const NS = "http://www.w3.org/2000/svg";
 
-// ---- parse: lines of SAN into a merged tree --------------------------------
+// ---- parse: every line is one board; its parent is the nearest listed shorter line ----
 function parse(text) {
-  const root = { san: "", fen: new Chess().fen(), comment: "", children: [] };
-  for (const raw of text.split("\n")) {
+  const root = { moves: [], fen: new Chess().fen(), comment: "", children: [] };
+  const byKey = new Map([["", root]]);
+  const nodes = [];
+  text.split("\n").forEach((raw, i) => {
     const line = raw.trim();
-    if (!line || line.startsWith("#")) continue;
+    if (!line || line.startsWith("#")) return;
     const game = new Chess();
-    let node = root;
-    for (const [, comment, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
-      if (comment !== undefined) { if (node !== root && !node.comment) node.comment = comment; continue; }
-      const san = game.move(move).san;       // throws on an illegal move
-      let child = node.children.find(c => c.san === san);
-      if (!child) { child = { san, fen: game.fen(), comment: "", children: [] }; node.children.push(child); }
-      node = child;
+    const moves = [];
+    let comment = "";
+    for (const [, c, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
+      if (c !== undefined) { comment = c; continue; }   // a {comment} belongs to the move before it
+      try { moves.push(game.move(move).san); }
+      catch (e) { throw new Error(`line ${i + 1}: "${move}" is not a legal move here`); }
+      comment = "";                                       // only a comment after the last move counts
     }
+    if (!moves.length) return;
+    const key = moves.join(" ");
+    if (byKey.has(key)) { if (comment) byKey.get(key).comment = comment; return; }   // repeated line
+    const node = { moves, fen: game.fen(), comment, children: [] };
+    byKey.set(key, node);
+    nodes.push(node);
+  });
+  for (const node of nodes) {   // parent = longest listed prefix (else the start position)
+    let n = node.moves.length - 1;
+    while (n > 0 && !byKey.has(node.moves.slice(0, n).join(" "))) n--;
+    byKey.get(node.moves.slice(0, n).join(" ")).children.push(node);
   }
   return root;
 }
@@ -59,50 +72,47 @@ function board(fen, flipped) {
   return svg;
 }
 
-// last move with its number, e.g. "2.d4" or "1...d5"
-function label(ply, san) {
-  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${san}`;
+// last move with its number, e.g. "2.Bf4" or "1...d5"
+function label(moves) {
+  const ply = moves.length;
+  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}`;
 }
 
-function figure(node, caption, flipped) {
+// a block is a board with its replies in a row below it; side says where its comment goes
+function block(node, side, flipped) {
+  const div = document.createElement("div");
+  div.className = "block";
   const fig = document.createElement("figure");
   fig.appendChild(board(node.fen, flipped));
-  if (caption) {
-    const cap = document.createElement("figcaption");
-    cap.textContent = caption;
-    fig.appendChild(cap);
+  const cap = document.createElement("figcaption");
+  cap.textContent = label(node.moves);
+  fig.appendChild(cap);
+  if (node.comment) {
+    const note = document.createElement("p");
+    note.className = `note ${side}`;
+    note.textContent = node.comment;
+    fig.appendChild(note);
   }
-  return fig;
+  div.appendChild(fig);
+  if (node.children.length) div.appendChild(row(node.children, flipped));
+  return div;
 }
 
-function note(text, side) {
-  const p = document.createElement("p");
-  p.className = `note ${side}`;
-  p.textContent = text;
-  return p;
+function row(nodes, flipped) {
+  const div = document.createElement("div");
+  div.className = "kids";
+  nodes.forEach((n, i) => {
+    const several = nodes.length > 1;   // first of several: comment on the left, last: on the right
+    const side = !several ? "right" : i === 0 ? "left" : i === nodes.length - 1 ? "right" : "below";
+    div.appendChild(block(n, side, flipped));
+  });
+  return div;
 }
 
 async function main() {
   const { file, orientation } = document.body.dataset;
-  const flipped = orientation === "black";
   const root = parse(await (await fetch(file)).text());
-
-  // the replies: follow the single-move chain from the start until the first branching
-  let node = root, moves = [];
-  while (node.children.length === 1) { node = node.children[0]; moves.push(node.san); }
-
-  // the top board is the position where the lines split, e.g. after 1.d4
-  document.getElementById("start").appendChild(figure(node, "", flipped));
-
-  // two replies, with room for a comment to the left of the first and to the right of the second
-  const [a, b] = node.children;
-  const ply = moves.length + 1;
-  const replies = document.getElementById("replies");
-  replies.append(
-    note(a?.comment ?? "", "left"),
-    ...(a ? [figure(a, label(ply, a.san), flipped)] : []),
-    ...(b ? [figure(b, label(ply, b.san), flipped)] : []),
-    note(b?.comment ?? "", "right"));
+  document.getElementById("tree").appendChild(row(root.children, orientation === "black"));
 }
 
-main().catch(e => { document.getElementById("start").textContent = "Error: " + e.message; });
+main().catch(e => { document.getElementById("tree").textContent = "Error: " + e.message; });

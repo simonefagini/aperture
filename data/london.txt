@@ -1,4 +1,10 @@
-# London System (White). One line per row, SAN moves. Optional {comment} after a move.
-d4 d5 Bf4 Nf6 e3 c5
-d4 d5 Bf4 c5 e3 Nc6
-d4 Nf6 Bf4 g6 Nc3
+# London System (White). Every line is one board: all the moves from the start, SAN.
+# A line's parent is the longest shorter line it starts with. For a branch, repeat
+# the same moves and play something else. Optional {comment} after the last move.
+d4
+d4 d5
+d4 d5 Bf4
+d4 d5 Bf4 Nf6
+d4 d5 Bf4 Nf6 e3
+d4 d5 Bf4 Nf6 e3 e6
+d4 d5 Bf4 Nf6 e3 e6 c3
