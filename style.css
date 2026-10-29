@@ -1,5 +1,27 @@
-body { font-family: system-ui, sans-serif; margin: 1rem; color: #222; }
+/* palette from biblioteca: beige in light mode, grey in dark; follows the system setting */
+:root {
+  color-scheme: light dark;
+  --text-color: #1a1a1a;
+  --body-bg: #f0eadc;
+  --highlight-color: #c9bfa6;
+  --hover-color: #000000;
+  --muted: #7d7566;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #c8c8c8;
+    --body-bg: #282828;
+    --highlight-color: #808080;
+    --hover-color: #ffffff;
+    --muted: #808080;
+  }
+}
+
+body { font-family: system-ui, sans-serif; margin: 1rem; background: var(--body-bg); color: var(--text-color); }
+a { color: var(--text-color); text-decoration-color: var(--highlight-color); }
+a:hover { color: var(--hover-color); }
 nav a { margin-right: 1rem; }
-.link { fill: none; stroke: #999; stroke-width: 2; }
-.san { font: 600 15px system-ui, sans-serif; text-anchor: middle; fill: #222; }
-.comment { font: 12px system-ui, sans-serif; text-anchor: middle; fill: #666; }
+small { color: var(--muted); }
+.link { fill: none; stroke: var(--highlight-color); stroke-width: 2; }
+.san { font: 600 15px system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
+.comment { font: 12px system-ui, sans-serif; text-anchor: middle; fill: var(--muted); }
