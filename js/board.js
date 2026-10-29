@@ -88,18 +88,16 @@ function tints(parent, node, flipped) {
   }
 }
 
-// an arrow from one square to another, with a paper halo so it reads on the hatching
+// an arrow from one square to another: thin shaft, long pointed head, slightly transparent
 function arrow(parent, color, from, to, flipped) {
   const [x0, y0] = center(from, flipped), [x1, y1] = center(to, flipped);
   const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L;
-  const tx = x1 - ux * 0.08, ty = y1 - uy * 0.08;            // tip
-  const bx = tx - ux * 0.42, by = ty - uy * 0.42;            // base of the head
-  const head = `${tx},${ty} ${bx - uy * 0.24},${by + ux * 0.24} ${bx + uy * 0.24},${by - ux * 0.24}`;
-  const shaft = { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx, y2: by, "stroke-linecap": "round" };
-  el("line", { ...shaft, stroke: PAPER, "stroke-width": 0.24 }, parent);
-  el("polygon", { points: head, fill: PAPER, stroke: PAPER, "stroke-width": 0.1, "stroke-linejoin": "round" }, parent);
-  el("line", { ...shaft, stroke: color, "stroke-width": 0.14 }, parent);
-  el("polygon", { points: head, fill: color }, parent);
+  const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
+  const bx = tx - ux * 0.55, by = ty - uy * 0.55;            // base of the head
+  const head = `${tx},${ty} ${bx - uy * 0.17},${by + ux * 0.17} ${bx + uy * 0.17},${by - ux * 0.17}`;
+  const g = el("g", { opacity: 0.75 }, parent);              // one opacity for the whole arrow, so shaft and head do not double up
+  el("line", { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx, y2: by, stroke: color, "stroke-width": 0.09, "stroke-linecap": "round" }, g);
+  el("polygon", { points: head, fill: color }, g);
 }
 
 // hover layer (over the pieces): the marks written in the comment
