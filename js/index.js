@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=18";
+import { parse, board } from "./board.js?v=19";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [

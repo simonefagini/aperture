@@ -47,7 +47,7 @@ figure:hover .layer { opacity: 1; }
 .board { display: block; width: 100%; height: auto; }
 .coord { font: 450 .36px Onest, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
 
-#tree { display: flex; overflow-x: auto; }
+#tree { display: flex; overflow-x: auto; padding-bottom: max(0px, calc(100vh - 34rem)); }   /* room so the last board can scroll up to the first one's place */
 #tree > .kids { margin: 0 auto; }   /* centered, and scrollable when wider than the screen */
 .kids { display: flex; align-items: flex-start; gap: 1rem; }
 .block { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; }
