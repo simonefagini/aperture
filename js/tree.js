@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=22";
+import { parse, board } from "./board.js?v=23";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -18,6 +18,12 @@ function block(node, side, flipped) {
   const cap = document.createElement("figcaption");
   cap.textContent = label(node.moves);
   fig.appendChild(cap);
+  if (node.name) {                           // the variation's name: the first line of the comment
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = node.name;
+    fig.appendChild(name);
+  }
   if (node.comment) {
     const note = document.createElement("p");
     note.className = `note ${side}`;

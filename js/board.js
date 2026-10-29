@@ -8,10 +8,12 @@ const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.6 }, TO_GREEN = { fill: 
 const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
 const NS = "http://www.w3.org/2000/svg";
 
-// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is the text to show
+// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text: the first line is the
+// variation's name, the other lines are the note
+
 function marksIn(comment, lineNo) {
   const arrows = [], rings = [];
-  const text = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
+  const lines = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
       const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8]$/ : /^[GRYB][a-h][1-8]$/;
       if (!ok.test(item)) throw new Error(`line ${lineNo}: "${item}" is not a valid ${kind} mark`);
@@ -19,13 +21,27 @@ function marksIn(comment, lineNo) {
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
     }
     return "";
-  }).replace(/\s+/g, " ").trim();
-  return { text, arrows, rings };
+  }).split("\n").map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+  return { name: lines[0] ?? "", note: lines.slice(1).join("\n"), arrows, rings };
+}
+
+// the file as logical lines [first line number, text]: a { comment } may run over several lines,
+// and "#" lines are never joined to the next one
+function logicalLines(text) {
+  const out = [];
+  let buf = null, start = 0;
+  logicalLines(text).forEach(([lineNo, raw]) => {
+    if (buf === null && raw.trim().startsWith("#")) { out.push([i + 1, raw]); return; }
+    if (buf === null) { buf = raw; start = i + 1; } else buf += "\n" + raw;
+    if ((buf.match(/\{/g) || []).length <= (buf.match(/\}/g) || []).length) { out.push([start, buf]); buf = null; }
+  });
+  if (buf !== null) throw new Error(`line ${start}: a { comment is never closed`);
+  return out;
 }
 
 // ---- parse: every line is one board; its parent is the nearest listed shorter line ----
 export function parse(text) {
-  const root = { moves: [], fen: new Chess().fen(), comment: "", arrows: [], rings: [], children: [] };
+  const root = { moves: [], fen: new Chess().fen(), name: "", comment: "", arrows: [], rings: [], children: [] };
   const byKey = new Map([["", root]]);
   const nodes = [];
   text.split("\n").forEach((raw, i) => {
@@ -39,20 +55,21 @@ export function parse(text) {
     for (const [, c, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
       if (c !== undefined) { comment = c; continue; }   // a {comment} belongs to the move before it
       try { last = game.move(move); moves.push(last.san); }
-      catch (e) { throw new Error(`line ${i + 1}: "${move}" is not a legal move here`); }
+      catch (e) { throw new Error(`line ${lineNo}: "${move}" is not a legal move here`); }
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length) return;
-    const { text, arrows, rings } = marksIn(comment, i + 1);
+    const { name, note, arrows, rings } = marksIn(comment, lineNo);
     if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
     const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
-      if (text) same.comment = text;
+      if (name) same.name = name;
+      if (note) same.comment = note;
       same.arrows.push(...arrows); same.rings.push(...rings);
       return;
     }
-    const node = { moves, fen: game.fen(), from: last.from, to: last.to, comment: text, arrows, rings, children: [] };
+    const node = { moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings, children: [] };
     byKey.set(key, node);
     nodes.push(node);
   });
