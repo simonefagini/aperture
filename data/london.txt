@@ -4,18 +4,31 @@
 # the board shown on the home page
 @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 O-O Bd3 {[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5]}
 
-d4
-d4 d5
-d4 d5 Bf4
+d4 {Fake name 1
+Fake comment 1. A short line to see how it sits.}
+d4 d5 {Fake name 2
+Fake comment 2. A short line to see how it sits.}
+d4 d5 Bf4 {Fake name 3
+Fake comment 3. A short line to see how it sits.}
 ~ d4 d5 Nf3 {Traditional line
 Bf4 is the accelerated version, today considered the standard.}
-d4 d5 Bf4 Nf6
-d4 d5 Bf4 Nf6 e3
-d4 d5 Bf4 Nf6 e3 e6
-d4 d5 Bf4 Nf6 e3 e6 c3
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 exd4
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6
+d4 d5 Bf4 Nf6 {Fake name 4
+Fake comment 4. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 {Fake name 5
+Fake comment 5. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 {Fake name 6
+Fake comment 6. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 {Fake name 7
+Fake comment 7. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 {Fake name 8
+Fake comment 8. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 {Fake name 9
+Fake comment 9. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 exd4 {Fake name 10
+Fake comment 10. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 {Fake name 11
+Fake comment 11. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 {Fake name 12
+Fake comment 12. A short line to see how it sits.}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6 {Fake name 13
+Fake comment 13. A short line to see how it sits.}
