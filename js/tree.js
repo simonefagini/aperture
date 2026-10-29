@@ -32,14 +32,20 @@ function el(name, attrs, parent) {
 }
 
 function board(fen, flipped) {
-  const svg = el("svg", { viewBox: "0 0 8 8", class: "board" });
+  const svg = el("svg", { viewBox: "-0.55 0 9.1 8.6", class: "board" });   // extra room for the coordinates
   const hatch = el("pattern", { id: "hatch", width: 0.11, height: 0.11, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, el("defs", {}, svg));
-  el("line", { x1: 0, y1: 0, x2: 0, y2: 0.11, stroke: INK, "stroke-width": 0.022 }, hatch);
+  el("line", { x1: 0, y1: 0, x2: 0, y2: 0.11, stroke: INK, "stroke-width": 0.04 }, hatch);
   el("rect", { width: 8, height: 8, fill: PAPER }, svg);
   for (let r = 0; r < 8; r++)
     for (let f = 0; f < 8; f++)
       if ((r + f) % 2) el("rect", { x: f, y: r, width: 1, height: 1, fill: "url(#hatch)" }, svg);
   el("rect", { x: 0.02, y: 0.02, width: 7.96, height: 7.96, fill: "none", stroke: INK, "stroke-width": 0.04 }, svg);
+  // coordinates outside the frame: files below, ranks on the left (reversed when flipped)
+  for (let i = 0; i < 8; i++) {
+    const file = "abcdefgh"[flipped ? 7 - i : i], rank = flipped ? i + 1 : 8 - i;
+    el("text", { class: "coord", x: i + 0.5, y: 8.4 }, svg).textContent = file;
+    el("text", { class: "coord", x: -0.28, y: i + 0.62 }, svg).textContent = rank;
+  }
   fen.split(" ")[0].split("/").forEach((row, r) => {
     let f = 0;
     for (const ch of row) {
