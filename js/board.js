@@ -40,12 +40,15 @@ function logicalLines(text) {
 
 // ---- parse: every line is one board; its parent is the nearest listed shorter line ----
 export function parse(text) {
-  const root = { moves: [], fen: new Chess().fen(), name: "", comment: "", arrows: [], rings: [], children: [] };
+  const root = { moves: [], fen: new Chess().fen(), name: "", comment: "", arrows: [], rings: [], asides: [], children: [] };
   const byKey = new Map([["", root]]);
   const nodes = [];
+  let lastNode = null;   // the board a "~" line hangs on: the last ordinary line
   logicalLines(text).forEach(([lineNo, raw]) => {
     let line = raw.trim();
     if (!line || line.startsWith("#")) return;
+    const isAside = line.startsWith("~");            // "~ <moves>": an alternative line shown beside the board above
+    if (isAside) line = line.slice(1).trim();
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
     if (isPreview) line = line.slice("@preview".length).trim();
     const game = new Chess();
@@ -60,17 +63,24 @@ export function parse(text) {
     if (!moves.length) return;
     const { name, note, arrows, rings } = marksIn(comment, lineNo);
     if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
+    if (isAside) {
+      if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
+      lastNode.asides.push({ moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings });
+      return;
+    }
     const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
       if (name) same.name = name;
       if (note) same.comment = note;
       same.arrows.push(...arrows); same.rings.push(...rings);
+      lastNode = same;
       return;
     }
-    const node = { moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings, children: [] };
+    const node = { moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings, asides: [], children: [] };
     byKey.set(key, node);
     nodes.push(node);
+    lastNode = node;
   });
   for (const node of nodes) {   // parent = longest listed prefix (else the start position)
     let n = node.moves.length - 1;

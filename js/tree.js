@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=25";
+import { parse, board } from "./board.js?v=26";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -6,10 +6,8 @@ function label(moves) {
   return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}`;
 }
 
-// a block is a board with its replies in a row below it; side says where its comment goes
-function block(node, side, flipped) {
-  const div = document.createElement("div");
-  div.className = "block";
+// a figure: a board with its move caption and, when it has one, the variation's name
+function makeFigure(node, flipped) {
   const fig = document.createElement("figure");
   fig.appendChild(board(node, flipped));
   fig.addEventListener("click", e => {      // cmd/ctrl-click: open this position on the chess.com analysis board
@@ -24,13 +22,38 @@ function block(node, side, flipped) {
     name.textContent = node.name;
     fig.appendChild(name);
   }
-  if (node.comment) {
-    const note = document.createElement("p");
-    note.className = `note ${side}`;
-    note.textContent = node.comment;
-    fig.appendChild(note);
+  return fig;
+}
+
+function note(text, side) {
+  const p = document.createElement("p");
+  p.className = `note ${side}`;
+  p.textContent = text;
+  return p;
+}
+
+// a block is a board with its replies in a row below it; side says where its comment goes.
+// Alternative lines ("~") sit in a column of smaller boards to the left of the board.
+function block(node, side, flipped) {
+  const div = document.createElement("div");
+  div.className = "block";
+  const main = document.createElement("div");
+  main.className = "main";
+  const fig = makeFigure(node, flipped);
+  if (node.comment) fig.appendChild(note(node.comment, side));
+  main.appendChild(fig);
+  if (node.asides.length) {
+    const col = document.createElement("div");
+    col.className = "asides";
+    for (const a of node.asides) {
+      const f = makeFigure(a, flipped);
+      f.classList.add("aside");
+      if (a.comment) f.appendChild(note(a.comment, "below"));   // under its own board
+      col.appendChild(f);
+    }
+    main.appendChild(col);
   }
-  div.appendChild(fig);
+  div.appendChild(main);
   if (node.children.length) div.appendChild(row(node.children, flipped));
   return div;
 }
@@ -50,7 +73,7 @@ function row(nodes, flipped) {
 // order of the tree (a board, then its first branch all the way down, then the next branch, ...).
 // The board you move to lands exactly where the current one sits: the first board's place on screen.
 function enableKeys() {
-  const figs = [...document.querySelectorAll("#tree figure")];   // document order is that tree order
+  const figs = [...document.querySelectorAll("#tree figure:not(.aside)")];   // document order is that tree order
   if (!figs.length) return;
   const treeEl = document.getElementById("tree");
   const top = f => f.getBoundingClientRect().top + scrollY;

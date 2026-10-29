@@ -53,6 +53,16 @@ figure:hover .layer { opacity: 1; }
 .kids { display: flex; align-items: flex-start; gap: 1rem; }
 .block { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; }
 
+.main { position: relative; width: var(--b); }
+
+/* alternative lines: smaller boards, left of the board (under it on narrow screens) */
+.asides { display: flex; flex-direction: column; gap: 1.5rem; width: calc(var(--b) * .7); margin: 1.25rem auto 0; }
+.aside { width: 100%; }
+.aside .note { position: static; width: auto; margin: .3rem 0 0; font-size: 1rem; text-align: center; }
+@media (min-width: 52rem) {
+  .asides { position: absolute; top: 0; right: calc(100% + 1rem); margin: 0; }
+}
+
 /* comments: beside the board when there is room, else under it */
 .note { white-space: pre-line; margin: .4rem 0 0; font: italic 1.15rem "EB Garamond", Georgia, serif; color: var(--muted); }
 @media (min-width: 52rem) {

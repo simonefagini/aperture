@@ -37,6 +37,20 @@ LEGEND: how to write a line in london.txt
    Boards at the left end of a row show it on the left, at the right end on the
    right, and on a narrow screen under the board.
 
+3b. ALTERNATIVE LINES (a board on the side, not a branch)
+   A line starting with ~ is drawn as a smaller board to the LEFT of the board on
+   the line right above it. It does not start a branch and has no replies:
+
+       d4 d5 Bf4
+       ~ d4 d5 Nf3 {Traditional line
+       Bf4 is the accelerated version, today considered the standard.}
+       d4 d5 Bf4 Nf6
+
+   The ~ line has full moves from the start, like any line. Its name and note go
+   under its own board, and its marks show on hover. Several ~ lines in a row
+   stack as several side boards. The arrow keys skip them.
+   On a narrow screen the side boards move under the board.
+
 4. MARKS (Lichess style), shown only while hovering
    Put them inside the same {comment}. The text around them is still shown; the
    codes themselves are not.
