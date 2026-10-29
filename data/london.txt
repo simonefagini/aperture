@@ -1,6 +1,9 @@
 # London System (White). Every line is one board: all the moves from the start, SAN.
 # A line's parent is the longest shorter line it starts with. For a branch, repeat
 # the same moves and play something else. Optional {comment} after the last move.
+# the board shown on the home page
+@preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6
+
 d4
 d4 d5
 d4 d5 Bf4

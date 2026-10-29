@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=15";
+import { parse, board } from "./board.js?v=16";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [
@@ -8,9 +8,11 @@ const PLACEHOLDERS = 5;
 const MAX_PLIES = 16;   // the preview follows the first line for up to 8 moves each
 const EMPTY = { fen: "8/8/8/8/8/8/8/8 w - - 0 1" };
 
-// the board to show: follow the first reply of each position, as far as the data goes (max 8 moves)
+// the board to show: the "@preview" line of the data file, else the first reply of each position (max 8 moves)
 async function preview(file) {
-  let node = parse(await (await fetch(file)).text());
+  const root = parse(await (await fetch(file)).text());
+  if (root.preview) return root.preview;
+  let node = root;
   while (node.children.length && node.moves.length < MAX_PLIES) node = node.children[0];
   return node;
 }

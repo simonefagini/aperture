@@ -29,8 +29,10 @@ export function parse(text) {
   const byKey = new Map([["", root]]);
   const nodes = [];
   text.split("\n").forEach((raw, i) => {
-    const line = raw.trim();
+    let line = raw.trim();
     if (!line || line.startsWith("#")) return;
+    const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
+    if (isPreview) line = line.slice("@preview".length).trim();
     const game = new Chess();
     const moves = [];
     let comment = "", last;
@@ -41,6 +43,7 @@ export function parse(text) {
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length) return;
+    if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows: [], rings: [] }; return; }
     const key = moves.join(" ");
     const { text, arrows, rings } = marksIn(comment, i + 1);
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one

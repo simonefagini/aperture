@@ -42,13 +42,22 @@ LEGEND: how to write a line in london.txt
    Habit I suggest:  R = a threat against me,  G = what I defend / my plan,
                      Y = a square to watch,    B = free to use.
 
-5. EXAMPLES
+5. HOME PAGE PREVIEW
+   The board on the home page is set by one extra line in the opening's file:
+
+       @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6
+
+   It takes the same moves as a normal line, but it does not make a board on
+   the opening's own page. Without it the home page follows the first line of
+   each position (up to 8 moves).
+
+6. EXAMPLES
 
    d4 d5 Bf4 Nf6 e3
    d4 d5 Bf4 Nf6 e3 {the bishop eyes b8 [%cal Gf4b8] [%csl Rb8]}
    d4 d5 Bf4 c5 {[%cal Rc5d4] hits d4: answer with e3 or c3}
 
-6. THINGS TO REMEMBER
+7. THINGS TO REMEMBER
    - Lines starting with # are ignored. Blank lines too.
    - Moves must be legal in the position. If not, the page shows
      "line N: ... is not a legal move here".
