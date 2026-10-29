@@ -18,6 +18,7 @@
 
 * { box-sizing: border-box; }
 body {
+  text-align: center;
   font-family: Onest, system-ui, sans-serif; font-weight: 450;
   margin: 1rem; background: var(--body-bg); color: var(--text-color);
   transition: background-color .5s ease, color .5s ease;
@@ -26,9 +27,8 @@ a { color: var(--text-color); text-decoration-color: var(--highlight-color); }
 a:hover { color: var(--hover-color); }
 nav a { margin-right: 1rem; }
 small { color: var(--muted); }
-.link { fill: none; stroke: var(--highlight-color); stroke-width: 2; }
-.san { font: 600 15px Onest, system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
-.comment { font: italic 14px "EB Garamond", Georgia, serif; text-anchor: middle; fill: var(--muted); }
+.san { font: 600 22px Onest, system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
+.comment { font: italic 19px "EB Garamond", Georgia, serif; text-anchor: middle; fill: var(--muted); }
 
 #theme-toggle {
   position: absolute; top: 1rem; right: 1rem;
@@ -50,3 +50,5 @@ small { color: var(--muted); }
 }
 :root[data-theme="dark"] #theme-toggle::before { --p: 0; }
 #theme-toggle:hover::before { background-color: var(--hover-color); }
+#tree { overflow-x: auto; }
+#tree svg { display: block; margin: 0 auto; max-width: none; }
