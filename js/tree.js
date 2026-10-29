@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=26";
+import { parse, board } from "./board.js?v=27";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -7,7 +7,7 @@ function label(moves) {
 }
 
 // a figure: a board with its move caption and, when it has one, the variation's name
-function makeFigure(node, flipped) {
+function makeFigure(node, flipped, withName = true) {
   const fig = document.createElement("figure");
   fig.appendChild(board(node, flipped));
   fig.addEventListener("click", e => {      // cmd/ctrl-click: open this position on the chess.com analysis board
@@ -16,7 +16,7 @@ function makeFigure(node, flipped) {
   const cap = document.createElement("figcaption");
   cap.textContent = label(node.moves);
   fig.appendChild(cap);
-  if (node.name) {                           // the variation's name: the first line of the comment
+  if (withName && node.name) {               // the variation's name: the first line of the comment
     const name = document.createElement("div");
     name.className = "name";
     name.textContent = node.name;
@@ -46,9 +46,10 @@ function block(node, side, flipped) {
     const col = document.createElement("div");
     col.className = "asides";
     for (const a of node.asides) {
-      const f = makeFigure(a, flipped);
+      const f = makeFigure(a, flipped, false);   // its name is the first line of its comment instead
       f.classList.add("aside");
-      if (a.comment) f.appendChild(note(a.comment, "below"));   // under its own board
+      const text = [a.name, a.comment].filter(Boolean).join("\n");
+      if (text) f.appendChild(note(text, "below"));              // under its own board
       col.appendChild(f);
     }
     main.appendChild(col);
