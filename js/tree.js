@@ -5,17 +5,17 @@ const NS = "http://www.w3.org/2000/svg";
 
 // ---- parse: lines of SAN into a merged tree --------------------------------
 function parse(text) {
-  const root = { san: "", fen: new Chess().fen(), children: [] };
+  const root = { san: "", fen: new Chess().fen(), comment: "", children: [] };
   for (const raw of text.split("\n")) {
     const line = raw.trim();
     if (!line || line.startsWith("#")) continue;
     const game = new Chess();
     let node = root;
     for (const [, comment, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
-      if (comment !== undefined) continue;   // comments are not shown yet
+      if (comment !== undefined) { if (node !== root && !node.comment) node.comment = comment; continue; }
       const san = game.move(move).san;       // throws on an illegal move
       let child = node.children.find(c => c.san === san);
-      if (!child) { child = { san, fen: game.fen(), children: [] }; node.children.push(child); }
+      if (!child) { child = { san, fen: game.fen(), comment: "", children: [] }; node.children.push(child); }
       node = child;
     }
   }
@@ -48,18 +48,27 @@ function board(fen, flipped) {
   return svg;
 }
 
-// "1.d4 d5" style label for a path of SAN moves
-function label(moves) {
-  return moves.map((m, i) => (i % 2 ? "" : `${i / 2 + 1}.`) + m).join(" ");
+// last move with its number, e.g. "2.d4" or "1...d5"
+function label(ply, san) {
+  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${san}`;
 }
 
-function figure(node, moves, flipped) {
+function figure(node, caption, flipped) {
   const fig = document.createElement("figure");
   fig.appendChild(board(node.fen, flipped));
-  const cap = document.createElement("figcaption");
-  cap.textContent = label(moves);
-  if (moves.length) fig.appendChild(cap);
+  if (caption) {
+    const cap = document.createElement("figcaption");
+    cap.textContent = caption;
+    fig.appendChild(cap);
+  }
   return fig;
+}
+
+function note(text, side) {
+  const p = document.createElement("p");
+  p.className = `note ${side}`;
+  p.textContent = text;
+  return p;
 }
 
 async function main() {
@@ -71,11 +80,18 @@ async function main() {
   let node = root, moves = [];
   while (node.children.length === 1) { node = node.children[0]; moves.push(node.san); }
 
-  const start = document.getElementById("start");
-  start.appendChild(figure(root, [], flipped));
+  // the top board is the position where the lines split, e.g. after 1.d4
+  document.getElementById("start").appendChild(figure(node, "", flipped));
+
+  // two replies, with room for a comment to the left of the first and to the right of the second
+  const [a, b] = node.children;
+  const ply = moves.length + 1;
   const replies = document.getElementById("replies");
-  for (const child of node.children.slice(0, 2))
-    replies.appendChild(figure(child, [...moves, child.san], flipped));
+  replies.append(
+    note(a?.comment ?? "", "left"),
+    ...(a ? [figure(a, label(ply, a.san), flipped)] : []),
+    ...(b ? [figure(b, label(ply, b.san), flipped)] : []),
+    note(b?.comment ?? "", "right"));
 }
 
 main().catch(e => { document.getElementById("start").textContent = "Error: " + e.message; });

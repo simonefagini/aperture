@@ -35,16 +35,25 @@ a:hover { color: var(--hover-color); }
 #back:hover { color: var(--hover-color); }
 #back svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-main { max-width: 40rem; margin: 0 auto; padding: 4.5rem 1rem 3rem; text-align: center; }
+main { --b: min(20.8rem, calc((100vw - 2.75rem) / 2)); padding: 4.5rem 1rem 3rem; text-align: center; }
 h1 { margin: 0 0 1.5rem; font-weight: 600; }
 
-/* boards scale with the viewport */
-figure { margin: 0; }
+/* every board has the same size (--b) and scales with the viewport */
+figure { margin: 0; width: var(--b); }
 figcaption { margin-top: .4rem; font-weight: 600; }
 .board { display: block; width: 100%; height: auto; }
-#start { width: min(100%, 26rem); margin: 0 auto 1.25rem; }
-#replies { display: flex; justify-content: center; gap: .75rem; }
-#replies figure { width: min(46%, 13rem); }
+#start { width: var(--b); margin: 0 auto 1.25rem; }
+
+/* comment | board | board | comment */
+#replies { display: grid; grid-template-columns: 1fr auto auto 1fr; gap: .75rem; align-items: start; }
+.note { margin: 0; font: italic 1.15rem "EB Garamond", Georgia, serif; color: var(--muted); }
+.note.left { text-align: right; }
+.note.right { text-align: left; }
+@media (max-width: 52rem) {   /* too narrow for side comments: put them under the boards */
+  #replies { grid-template-columns: auto auto; justify-content: center; }
+  .note.left { grid-row: 2; grid-column: 1; text-align: center; }
+  .note.right { grid-row: 2; grid-column: 2; text-align: center; }
+}
 
 #theme-toggle {
   position: absolute; top: 1rem; right: 1rem;
