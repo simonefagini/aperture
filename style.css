@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; margin: 1rem; color: #222; }
+nav a { margin-right: 1rem; }
+.link { fill: none; stroke: #999; stroke-width: 2; }
+.san { font: 600 15px system-ui, sans-serif; text-anchor: middle; fill: #222; }
+.comment { font: 12px system-ui, sans-serif; text-anchor: middle; fill: #666; }
