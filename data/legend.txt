@@ -45,7 +45,7 @@ LEGEND: how to write a line in london.txt
 5. EXAMPLES
 
    d4 d5 Bf4 Nf6 e3
-   d4 d5 Bf4 Nf6 e3 {the bishop is out before e3 [%cal Gf4b8,Yb8b8] [%csl Rb8]}
+   d4 d5 Bf4 Nf6 e3 {the bishop eyes b8 [%cal Gf4b8] [%csl Rb8]}
    d4 d5 Bf4 c5 {[%cal Rc5d4] hits d4: answer with e3 or c3}
 
 6. THINGS TO REMEMBER
