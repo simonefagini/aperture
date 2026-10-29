@@ -10,7 +10,6 @@ const NS = "http://www.w3.org/2000/svg";
 
 // pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text: the first line is the
 // variation's name, the other lines are the note
-
 function marksIn(comment, lineNo) {
   const arrows = [], rings = [];
   const lines = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
@@ -30,7 +29,7 @@ function marksIn(comment, lineNo) {
 function logicalLines(text) {
   const out = [];
   let buf = null, start = 0;
-  logicalLines(text).forEach(([lineNo, raw]) => {
+  text.split("\n").forEach((raw, i) => {
     if (buf === null && raw.trim().startsWith("#")) { out.push([i + 1, raw]); return; }
     if (buf === null) { buf = raw; start = i + 1; } else buf += "\n" + raw;
     if ((buf.match(/\{/g) || []).length <= (buf.match(/\}/g) || []).length) { out.push([start, buf]); buf = null; }
@@ -44,7 +43,7 @@ export function parse(text) {
   const root = { moves: [], fen: new Chess().fen(), name: "", comment: "", arrows: [], rings: [], children: [] };
   const byKey = new Map([["", root]]);
   const nodes = [];
-  text.split("\n").forEach((raw, i) => {
+  logicalLines(text).forEach(([lineNo, raw]) => {
     let line = raw.trim();
     if (!line || line.startsWith("#")) return;
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
