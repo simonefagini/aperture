@@ -1,27 +1,52 @@
-/* palette from biblioteca: beige in light mode, grey in dark; follows the system setting */
+/* palette from biblioteca: beige in light mode, grey in dark; js/theme.js sets data-theme */
 :root {
-  color-scheme: light dark;
   --text-color: #1a1a1a;
   --body-bg: #f0eadc;
   --highlight-color: #c9bfa6;
   --hover-color: #000000;
   --muted: #7d7566;
+  --toggle-color: #b3a98f;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #c8c8c8;
-    --body-bg: #282828;
-    --highlight-color: #808080;
-    --hover-color: #ffffff;
-    --muted: #808080;
-  }
+:root[data-theme="dark"] {
+  --text-color: #c8c8c8;
+  --body-bg: #282828;
+  --highlight-color: #808080;
+  --hover-color: #ffffff;
+  --muted: #808080;
+  --toggle-color: #c8c8c8;
 }
 
-body { font-family: system-ui, sans-serif; margin: 1rem; background: var(--body-bg); color: var(--text-color); }
+* { box-sizing: border-box; }
+body {
+  font-family: Onest, system-ui, sans-serif; font-weight: 450;
+  margin: 1rem; background: var(--body-bg); color: var(--text-color);
+  transition: background-color .5s ease, color .5s ease;
+}
 a { color: var(--text-color); text-decoration-color: var(--highlight-color); }
 a:hover { color: var(--hover-color); }
 nav a { margin-right: 1rem; }
 small { color: var(--muted); }
 .link { fill: none; stroke: var(--highlight-color); stroke-width: 2; }
-.san { font: 600 15px system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
-.comment { font: 12px system-ui, sans-serif; text-anchor: middle; fill: var(--muted); }
+.san { font: 600 15px Onest, system-ui, sans-serif; text-anchor: middle; fill: var(--text-color); }
+.comment { font: italic 14px "EB Garamond", Georgia, serif; text-anchor: middle; fill: var(--muted); }
+
+#theme-toggle {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 2.5rem; height: 2.5rem; padding: 0; border: 0; background: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+/* an eclipse: a cut-out disc slides across the circle, leaving a crescent (--p: 1 light, 0 dark) */
+@property --p { syntax: '<number>'; inherits: false; initial-value: 1; }
+#theme-toggle::before {
+  content: '';
+  --cut-x: calc(0.38rem + var(--p) * 0.72rem);
+  --cut-y: calc(-0.2rem - var(--p) * 0.38rem);
+  width: 1.1rem; height: 1.1rem; border-radius: 50%;
+  background: var(--toggle-color);
+  -webkit-mask: radial-gradient(circle at calc(50% + var(--cut-x)) calc(50% + var(--cut-y)), transparent calc(0.55rem - 0.5px), #000 0.55rem);
+  mask: radial-gradient(circle at calc(50% + var(--cut-x)) calc(50% + var(--cut-y)), transparent calc(0.55rem - 0.5px), #000 0.55rem);
+  transition: --p .8s ease-in-out, background-color .3s ease;
+}
+:root[data-theme="dark"] #theme-toggle::before { --p: 0; }
+#theme-toggle:hover::before { background-color: var(--hover-color); }
