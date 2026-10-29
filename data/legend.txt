@@ -57,7 +57,14 @@ LEGEND: how to write a line in london.txt
    d4 d5 Bf4 Nf6 e3 {the bishop eyes b8 [%cal Gf4b8] [%csl Rb8]}
    d4 d5 Bf4 c5 {[%cal Rc5d4] hits d4: answer with e3 or c3}
 
-7. THINGS TO REMEMBER
+7. ON THE PAGE
+   - Down or Right arrow: next board. Up or Left arrow: previous board. The order
+     is the tree's: a board, its first branch all the way down, then the next one.
+   - Cmd-click (Ctrl-click on Windows/Linux) on a board: opens that position on
+     the chess.com analysis board in a new tab.
+   - Hover a board: the last move turns green, plus any marks you wrote.
+
+8. THINGS TO REMEMBER
    - Lines starting with # are ignored. Blank lines too.
    - Moves must be legal in the position. If not, the page shows
      "line N: ... is not a legal move here".
