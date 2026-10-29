@@ -1,0 +1,57 @@
+LEGEND: how to write a line in london.txt
+==========================================
+
+1. A LINE IS A BOARD
+   Write all the moves from the start, in SAN, separated by spaces:
+
+       d4 d5 Bf4 Nf6
+
+   That draws the board after 2...Nf6. Its parent is the longest shorter line it
+   starts with ("d4 d5 Bf4"). The last move is highlighted in green when you
+   hover over the board, and you never have to write it down.
+
+2. BRANCHES
+   Repeat the same moves and play something else:
+
+       d4 d5 Bf4 Nf6
+       d4 d5 Bf4 c5
+
+   Two boards side by side, both under "d4 d5 Bf4".
+
+3. COMMENTS
+   Put text in {curly braces} AFTER THE LAST MOVE of the line:
+
+       d4 d5 Bf4 Nf6 {the main line}
+
+   A comment anywhere else in the line is ignored.
+   Boards at the left end of a row show it on the left, at the right end on the
+   right, and on a narrow screen under the board.
+
+4. MARKS (Lichess style), shown only while hovering
+   Put them inside the same {comment}. The text around them is still shown; the
+   codes themselves are not.
+
+   ARROWS   [%cal Ge2e4,Rb1c3]        one arrow per item: colour + from + to
+   CIRCLES  [%csl Gd4,Rf5]            one circle per item: colour + square
+
+   Colours:  G green   R red   Y yellow   B blue
+   Squares:  file a-h + rank 1-8, lowercase, e.g. e4
+   Items are separated by commas (spaces work too).
+   An arrow from a square to the same square is drawn as a circle.
+
+   Habit I suggest:  R = a threat against me,  G = what I defend / my plan,
+                     Y = a square to watch,    B = free to use.
+
+5. EXAMPLES
+
+   d4 d5 Bf4 Nf6 e3
+   d4 d5 Bf4 Nf6 e3 {the bishop is out before e3 [%cal Gf4b8,Yb8b8] [%csl Rb8]}
+   d4 d5 Bf4 c5 {[%cal Rc5d4] hits d4: answer with e3 or c3}
+
+6. THINGS TO REMEMBER
+   - Lines starting with # are ignored. Blank lines too.
+   - Moves must be legal in the position. If not, the page shows
+     "line N: ... is not a legal move here".
+   - A wrong mark shows "line N: ... is not a valid cal mark" (or csl).
+   - Use x for captures (cxd4), O-O for castling, = for promotion (e8=Q).
+   - Upper case for pieces (Bf4, Nf6), lower case for pawns (d4).
