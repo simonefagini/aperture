@@ -51,12 +51,12 @@ export function parse(text) {
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
     if (isPreview) line = line.slice("@preview".length).trim();
     let game = new Chess(), fromFen = false;
-    if (line.startsWith("@fen")) {                  // "~ @fen <FEN> [moves] {comment}": any position, as a side board
+    if (line.startsWith("@fen")) {                  // "~ @fen <pieces> [moves] {comment}": any position, as a side board
       if (!isAside) throw new Error(`line ${lineNo}: "@fen" only works on a "~" line (a side board)`);
-      const fen = line.slice(4).trim().split(/\s+/).slice(0, 6).join(" ");
-      try { game = new Chess(fen); }
-      catch (e) { throw new Error(`line ${lineNo}: "${fen}" is not a valid FEN`); }
-      line = line.slice(4).trim().split(/\s+/).slice(6).join(" ");
+      const [placement = "", ...rest] = line.slice(4).trim().split(/\s+/);   // only the piece placement; the rest is assumed
+      try { game = new Chess(`${placement} w - - 0 1`); }
+      catch (e) { throw new Error(`line ${lineNo}: "${placement}" is not a valid FEN piece placement`); }
+      line = rest.join(" ");
       fromFen = true;
     }
     const moves = [];
