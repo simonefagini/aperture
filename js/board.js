@@ -8,8 +8,7 @@ const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.6 }, TO_GREEN = { fill: 
 const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
 const NS = "http://www.w3.org/2000/svg";
 
-// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text: the first line is the
-// variation's name, the other lines are the note
+// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, line by line
 function marksIn(comment, lineNo) {
   const arrows = [], rings = [];
   const lines = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
@@ -21,7 +20,7 @@ function marksIn(comment, lineNo) {
     }
     return "";
   }).split("\n").map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
-  return { name: lines[0] ?? "", note: lines.slice(1).join("\n"), arrows, rings };
+  return { note: lines.join("\n"), arrows, rings };
 }
 
 // the file as logical lines [first line number, text]: a { comment } may run over several lines,
@@ -40,7 +39,7 @@ function logicalLines(text) {
 
 // ---- parse: every line is one board; its parent is the nearest listed shorter line ----
 export function parse(text) {
-  const root = { moves: [], fen: new Chess().fen(), name: "", comment: "", arrows: [], rings: [], asides: [], children: [] };
+  const root = { moves: [], fen: new Chess().fen(), comment: "", arrows: [], rings: [], asides: [], children: [] };
   const byKey = new Map([["", root]]);
   const nodes = [];
   let lastNode = null;   // the board a "~" line hangs on: the last ordinary line
@@ -61,23 +60,22 @@ export function parse(text) {
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length) return;
-    const { name, note, arrows, rings } = marksIn(comment, lineNo);
+    const { note, arrows, rings } = marksIn(comment, lineNo);
     if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, fen: game.fen(), from: last.from, to: last.to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
-      if (name) same.name = name;
       if (note) same.comment = note;
       same.arrows.push(...arrows); same.rings.push(...rings);
       lastNode = same;
       return;
     }
-    const node = { moves, fen: game.fen(), from: last.from, to: last.to, name, comment: note, arrows, rings, asides: [], children: [] };
+    const node = { moves, fen: game.fen(), from: last.from, to: last.to, comment: note, arrows, rings, asides: [], children: [] };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;

@@ -41,7 +41,6 @@ h1 { margin: 0 0 3rem; font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 600; 
 /* every board has the same size (--b); a board's replies sit in a row below it */
 figure { position: relative; margin: 0; width: var(--b); }
 figcaption { margin-top: 0; font-weight: 600; }
-.name { margin-top: .15rem; font-size: .95rem; }
 /* second layer: shown while hovering a board */
 .layer { opacity: 0; transition: opacity .2s ease; pointer-events: none; }
 figure:hover .layer { opacity: 1; }
@@ -58,20 +57,23 @@ figure:hover .layer { opacity: 1; }
 /* alternative lines: smaller boards, left of the board (under it on narrow screens) */
 .asides { display: flex; flex-direction: column; gap: 1.5rem; width: calc(var(--b) * .6); margin: 1.25rem auto 0; }
 .aside { width: 100%; }
-.aside .note { position: static; width: auto; margin: .3rem 0 0; font-size: 1rem; text-align: left; }
+.aside .note { position: static; width: auto; margin: .3rem 0 0; font-size: 1rem; text-align: justify; text-align-last: left; }
 @media (min-width: 70rem) {   /* wide enough: the comment stands to the left of its side board */
-  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 10rem; margin: 0; text-align: right; }
+  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 10rem; margin: 0; text-align: justify; text-align-last: right; }
 }
 @media (min-width: 52rem) {
   .asides { position: absolute; top: 0; right: calc(100% + 2rem); margin: 0; }
 }
 
 /* comments: beside the board when there is room, else under it */
-.note { white-space: pre-line; margin: .4rem 0 0; font: italic 1.15rem "EB Garamond", Georgia, serif; color: var(--muted); }
+/* try another font: change --note-font (loaded: EB Garamond, Lora, Crimson Pro, Newsreader, Cormorant Garamond, Source Serif 4) */
+:root { --note-font: "EB Garamond"; }
+.note { white-space: pre-line; margin: .4rem 0 0; font: italic 1.15rem var(--note-font), Georgia, serif; color: var(--muted);
+  text-align: justify; text-align-last: left; hyphens: auto; }
 @media (min-width: 52rem) {
   .note.left, .note.right { position: absolute; top: 0; width: 11rem; margin: 0; }
-  .note.left { right: calc(100% + 1rem); text-align: right; }
-  .note.right { left: calc(100% + 1rem); text-align: left; }
+  .note.left { right: calc(100% + 1rem); text-align: justify; text-align-last: right; }
+  .note.right { left: calc(100% + 1rem); text-align: justify; text-align-last: left; }
 }
 
 #theme-toggle {
