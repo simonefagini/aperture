@@ -65,7 +65,7 @@ figure:hover .layer { opacity: 1; }
   .aside .note { margin: .3rem 0 0; font-size: .95rem; }
 }
 @media (min-width: 70rem) {   /* wide enough: the comment stands to the left of its side board */
-  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 10rem; margin: 0; }
+  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 15rem; margin: 0; }
 }
 
 /* comments: beside the board when there is room, else under it */
