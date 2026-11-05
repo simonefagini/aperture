@@ -1,8 +1,9 @@
-import { parse, board } from "./board.js?v=29";
+import { parse, board } from "./board.js?v=30";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
   const ply = moves.length;
+  if (!ply) return "";   // a position given as a FEN has no last move
   return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}`;
 }
 

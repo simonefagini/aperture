@@ -50,7 +50,15 @@ export function parse(text) {
     if (isAside) line = line.slice(1).trim();
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
     if (isPreview) line = line.slice("@preview".length).trim();
-    const game = new Chess();
+    let game = new Chess(), fromFen = false;
+    if (line.startsWith("@fen")) {                  // "~ @fen <FEN> [moves] {comment}": any position, as a side board
+      if (!isAside) throw new Error(`line ${lineNo}: "@fen" only works on a "~" line (a side board)`);
+      const fen = line.slice(4).trim().split(/\s+/).slice(0, 6).join(" ");
+      try { game = new Chess(fen); }
+      catch (e) { throw new Error(`line ${lineNo}: "${fen}" is not a valid FEN`); }
+      line = line.slice(4).trim().split(/\s+/).slice(6).join(" ");
+      fromFen = true;
+    }
     const moves = [];
     let comment = "", last;
     for (const [, c, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
@@ -59,12 +67,12 @@ export function parse(text) {
       catch (e) { throw new Error(`line ${lineNo}: "${move}" is not a legal move here`); }
       comment = "";                                       // only a comment after the last move counts
     }
-    if (!moves.length) return;
+    if (!moves.length && !fromFen) return;
     const { note, arrows, rings } = marksIn(comment, lineNo);
     if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, fen: game.fen(), from: last.from, to: last.to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, fen: game.fen(), from: last?.from, to: last?.to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
