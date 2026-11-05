@@ -48,7 +48,7 @@ LEGEND: how to write a line in london.txt
    The ~ line has full moves from the start, like any line. Its comment stands to
    the left of its own board on wide screens (under it on narrower ones), and its marks show on hover. Several ~ lines in a row
    stack as several side boards. The arrow keys skip them.
-   On a narrow screen the side boards move under the board.
+   On a phone they stay on the left too, just smaller (pinch to zoom).
 
 4. MARKS (Lichess style), shown only while hovering
    Put them inside the same {comment}. The text around them is still shown; the
