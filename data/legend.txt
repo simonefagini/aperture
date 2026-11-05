@@ -31,6 +31,8 @@ LEGEND: how to write a line in london.txt
        d4 d5 Bf4 {The bishop comes out before e3.
        Keep c3 for later.}
 
+   Inside a comment: **bold**, *italic* and <br> (a forced line break) work.
+
    Marks ([%cal ...], [%csl ...]) can go on
    any line and are not shown as text.
    Boards at the left end of a row show it on the left, at the right end on the

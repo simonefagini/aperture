@@ -23,7 +23,16 @@ function makeFigure(node, flipped) {
 function note(text, side) {
   const p = document.createElement("p");
   p.className = `note ${side}`;
-  p.textContent = text;
+  // tiny markdown, built with DOM nodes (never innerHTML): **bold**, *italic*, <br>
+  const add = (parent, str) => {
+    for (const [, br, bold, ital, plain] of str.matchAll(/(<br\s*\/?>)|\*\*(.+?)\*\*|\*(.+?)\*|([^*<]+|[*<])/gi)) {
+      if (br) parent.appendChild(document.createElement("br"));
+      else if (bold !== undefined) add(parent.appendChild(document.createElement("strong")), bold);
+      else if (ital !== undefined) add(parent.appendChild(document.createElement("em")), ital);
+      else parent.appendChild(document.createTextNode(plain));
+    }
+  };
+  add(p, text);
   return p;
 }
 
