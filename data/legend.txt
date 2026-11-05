@@ -45,6 +45,13 @@ LEGEND: how to write a line in london.txt
        Bf4 is the accelerated version, today considered the standard.}
        d4 d5 Bf4 Nf6
 
+   A ~ line can also start from any position, written as a FEN:
+
+       ~ @fen rnbqkbnr/pppppppp/8/8/3P1B2/2P1P3/PP3PPP/RN1QKBNR w KQkq - 0 1 {What if...}
+
+   (all 6 FEN fields, then optional moves played from there, then the comment).
+   With no moves there is no last-move highlight and no caption.
+
    The ~ line has full moves from the start, like any line. Its comment stands to
    the left of its own board on wide screens (under it on narrower ones), and its marks show on hover. Several ~ lines in a row
    stack as several side boards. The arrow keys skip them.
