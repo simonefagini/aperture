@@ -54,7 +54,7 @@ export function parse(text) {
     if (line.startsWith("@fen")) {                  // "~ @fen <pieces> [moves] {comment}": any position, as a side board
       if (!isAside) throw new Error(`line ${lineNo}: "@fen" only works on a "~" line (a side board)`);
       const [placement = "", ...rest] = line.slice(4).trim().split(/\s+/);   // only the piece placement; the rest is assumed
-      try { game = new Chess(`${placement} w - - 0 1`); }
+      try { game = new Chess(`${placement} w - - 0 1`, { skipValidation: true }); }   // no kings needed
       catch (e) { throw new Error(`line ${lineNo}: "${placement}" is not a valid FEN piece placement`); }
       line = rest.join(" ");
       fromFen = true;
