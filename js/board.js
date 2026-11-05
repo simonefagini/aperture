@@ -8,10 +8,10 @@ const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.6 }, TO_GREEN = { fill: 
 const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
 const NS = "http://www.w3.org/2000/svg";
 
-// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, line by line
+// pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, all on one flow (line breaks are just spaces), line by line
 function marksIn(comment, lineNo) {
   const arrows = [], rings = [];
-  const lines = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
+  const text = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
       const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8]$/ : /^[GRYB][a-h][1-8]$/;
       if (!ok.test(item)) throw new Error(`line ${lineNo}: "${item}" is not a valid ${kind} mark`);
@@ -19,8 +19,8 @@ function marksIn(comment, lineNo) {
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
     }
     return "";
-  }).split("\n").map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
-  return { note: lines.join("\n"), arrows, rings };
+  }).replace(/\s+/g, " ").trim();
+  return { note: text, arrows, rings };
 }
 
 // the file as logical lines [first line number, text]: a { comment } may run over several lines,
