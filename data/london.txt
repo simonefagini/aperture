@@ -5,6 +5,7 @@
 @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 O-O Bd3 {[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5]}
 
 d4
+~ @fen 8/8/8/8/3P1B2/2P1P3/PP3PPP/8 {The London is a system: White builds the same c3–d4–e3 triangle against almost any defense, getting the bishop to f4 before e3 locks it in.}
 d4 d5
 d4 d5 Bf4
 ~ d4 d5 Nf3 {Traditional line
