@@ -4,7 +4,7 @@
 # the board shown on the home page
 @preview d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 O-O Bd3 {[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5]}
 
-d4 {Fake name 1
+d4 {-
 Fake comment 1. A short line to see how it sits.}
 d4 d5 {Fake name 2
 Fake comment 2. A short line to see how it sits.}
