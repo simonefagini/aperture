@@ -69,9 +69,7 @@ figure:hover .layer { opacity: 1; }
 }
 
 /* comments: beside the board when there is room, else under it */
-/* try another font: change --note-font (loaded: Onest, Inter, Source Sans 3, IBM Plex Sans) */
-:root { --note-font: Onest; }
-.note { margin: .4rem 0 0; font: 400 .95rem/1.4 var(--note-font), system-ui, sans-serif; color: var(--muted);
+.note { margin: .4rem 0 0; font: 400 .95rem/1.4 Onest, system-ui, sans-serif; color: var(--muted);
   text-align: justify; hyphens: auto; }
 @media (min-width: 52rem) {
   .note.left, .note.right { position: absolute; top: 0; width: 11rem; margin: 0; }
