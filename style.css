@@ -57,9 +57,9 @@ figure:hover .layer { opacity: 1; }
 /* alternative lines: smaller boards, left of the board (under it on narrow screens) */
 .asides { display: flex; flex-direction: column; gap: 1.5rem; width: calc(var(--b) * .6); margin: 1.25rem auto 0; }
 .aside { width: 100%; }
-.aside .note { position: static; width: auto; margin: .3rem 0 0; font-size: 1rem; text-align: justify; text-align-last: left; }
+.aside .note { position: static; width: auto; margin: .3rem 0 0; font-size: 1rem; text-align: left; }
 @media (min-width: 70rem) {   /* wide enough: the comment stands to the left of its side board */
-  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 10rem; margin: 0; text-align: justify; text-align-last: right; }
+  .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 10rem; margin: 0; text-align: left; }
 }
 @media (min-width: 52rem) {
   .asides { position: absolute; top: 0; right: calc(100% + 2rem); margin: 0; }
@@ -69,11 +69,11 @@ figure:hover .layer { opacity: 1; }
 /* try another font: change --note-font (loaded: EB Garamond, Lora, Crimson Pro, Newsreader, Cormorant Garamond, Source Serif 4) */
 :root { --note-font: "EB Garamond"; }
 .note { white-space: pre-line; margin: .4rem 0 0; font: italic 1.15rem var(--note-font), Georgia, serif; color: var(--muted);
-  text-align: justify; text-align-last: left; hyphens: auto; }
+  text-align: left; }
 @media (min-width: 52rem) {
   .note.left, .note.right { position: absolute; top: 0; width: 11rem; margin: 0; }
-  .note.left { right: calc(100% + 1rem); text-align: justify; text-align-last: right; }
-  .note.right { left: calc(100% + 1rem); text-align: justify; text-align-last: left; }
+  .note.left { right: calc(100% + 1rem); text-align: left; }
+  .note.right { left: calc(100% + 1rem); text-align: left; }
 }
 
 #theme-toggle {
