@@ -1,4 +1,4 @@
-LEGEND: how to write a line in london.txt
+LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
 ==========================================
 
 1. A LINE IS A BOARD
