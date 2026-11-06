@@ -144,6 +144,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 #home svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
 
 /* annotations toggle: half grey, half green; dim while off, full while on */
-#marks-toggle { opacity: .45; }
-#marks-toggle[aria-pressed="true"] { opacity: 1; }
+#stepper #marks-toggle { opacity: .45; }
+#stepper #marks-toggle:hover { opacity: 1; }
+#stepper #marks-toggle[aria-pressed="true"] { opacity: 1; }
 #marks-toggle .green { fill: #6fa83a; }
