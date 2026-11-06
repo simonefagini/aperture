@@ -72,6 +72,7 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    [%sqr Sb1,Eb2] highlights a start (S) and an end (E) square like a last move,
    handy for a ~ @fen board that has no move of its own.
    [%sqr Rg8] marks a square red, for a check.
+   A checkmate (# in the SAN) marks the mated king's square red by itself.
    Boards at the left end of a row show it on the left, at the right end on the
    right, and on a narrow screen under the board.
 

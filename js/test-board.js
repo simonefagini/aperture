@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=54";
+import { parse, board } from "./board.js?v=55";
 
 // a board that follows what you type: SAN, move numbers, ! ? $7, and the { [%cal ...] [%csl ...] [%sqr ...] } marks
 const stage = document.getElementById("stage"), input = document.getElementById("san"), msg = document.getElementById("msg");

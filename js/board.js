@@ -16,6 +16,14 @@ const BADGES = { "!": { fill: "#1ba39c", text: "!" }, "!!": { fill: "#1ba39c", t
 const CHECK_RED = { fill: "#d03a3a", "fill-opacity": 0.55 };
 const NS = "http://www.w3.org/2000/svg";
 
+// the square of the king whose turn it is (after a checkmate: the mated king)
+function kingSquare(game) {
+  const rows = game.board(), turn = game.turn();
+  for (let r = 0; r < 8; r++)
+    for (let f = 0; f < 8; f++)
+      if (rows[r][f]?.type === "k" && rows[r][f].color === turn) return "abcdefgh"[f] + (8 - r);
+}
+
 // a knight's move: one square along one axis, two along the other
 function isKnightMove(a, b) {
   const df = Math.abs("abcdefgh".indexOf(a[0]) - "abcdefgh".indexOf(b[0])), dr = Math.abs(a[1] - b[1]);
@@ -115,6 +123,7 @@ export function parse(text) {
     if (!moves.length && !fromFen) return;
     const { note, arrows, rings, sqr } = marksIn(comment, lineNo);
     const from = sqr.from ?? last?.from, to = sqr.to ?? last?.to;
+    if (last?.san.endsWith("#")) sqr.checks.push(kingSquare(game));   // checkmate: the mated king gets a red square
     if (isPreview) { root.preview = { moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
