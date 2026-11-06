@@ -50,7 +50,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 .board { display: block; width: 100%; height: auto; }
 .coord { font: 450 .36px Onest, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
 
-#tree { display: flex; overflow-x: auto; padding-bottom: max(0px, calc(100vh - 34rem)); }   /* room so the last board can scroll up to the first one's place */
+#tree { container-type: inline-size; display: flex; overflow-x: auto; padding-bottom: max(0px, calc(100vh - 34rem)); }   /* room so the last board can scroll up to the first one's place */
 #tree > .kids { margin: 0 auto; }   /* centered, and scrollable when wider than the screen */
 .kids { display: flex; align-items: flex-start; gap: 1rem; }
 .block { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; }
@@ -74,6 +74,12 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 /* comments: beside the board when there is room, else under it */
 .note { margin: .4rem 0 0; font: 400 .95rem/1.4 Onest, system-ui, sans-serif; color: var(--muted);
   text-align: left; }
+@media (max-width: 51.99rem) {   /* phones: a comment to the right of its board, small; the left-hand ones stay under the board */
+  #stepper { right: .25rem; bottom: .25rem; background: color-mix(in srgb, var(--body-bg) 88%, transparent); border-radius: .5rem; }   /* a quiet backing, so the comments under it stay readable */
+  #stepper button { width: 2.2rem; height: 2.2rem; }
+  body[data-file] main { padding-inline: .5rem; }   /* the tree gets the whole width, so the comments fit */
+  .note.right { position: absolute; top: 0; left: calc(100% + .5rem); width: calc((100cqw - var(--b)) / 2 - .5rem); margin: 0; font-size: .58rem; line-height: 1.35; }
+}
 @media (min-width: 52rem) {
   .note.left, .note.right { position: absolute; top: 0; width: min(16rem, calc((100vw - var(--b)) / 2 - 2rem)); margin: 0; }
   .note.left { right: calc(100% + 1rem); }
