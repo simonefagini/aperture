@@ -9,7 +9,7 @@ d4
 
 d4 d5
 d4 d5 Bf4 {**Bf4 before e3.**<br>Often called the *Accelerated London*; the main London move order since the 2010s.}
-~ d4 d5 Nf3 {Nf3 keeps the dark-squared bishop uncommitted, so White can
+~ d4 d5 Nf3 {**Nf3** keeps the dark-squared bishop uncommitted, so White can
 still choose c4, e3, Bg5 or Bf4 depending on Black's setup.
 It was the original setup of the London System, named after London 1922.}
 d4 d5 Bf4 Nf6 
