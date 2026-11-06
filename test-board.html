@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>test board</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
+  <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+  <script src="js/theme.js?v=37"></script>
+  <link rel="stylesheet" href="style.css?v=61">
+</head>
+<body class="marks">
+  <button id="theme-toggle" type="button" aria-label="switch to dark mode"></button>
+  <main class="tester">
+    <div id="stage"></div>
+    <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
+           placeholder="1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf3e5L][%csl Yc3][%sqr Re8]}">
+    <p id="msg"></p>
+    <button id="flip" type="button">flip</button>
+  </main>
+  <script type="module" src="js/test-board.js?v=1"></script>
+</body>
+</html>

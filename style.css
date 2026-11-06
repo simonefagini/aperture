@@ -169,3 +169,12 @@ body.study .coord { display: none; }
 .error pre { margin: 0; padding: .9rem 1rem; background: rgba(127, 127, 127, .12); border-radius: .4rem; font: 450 .85rem/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; overflow-x: auto; color: var(--text-color); }
 .error .gutter { color: var(--muted); user-select: none; }
 .error mark { background: rgba(208, 58, 58, .35); color: inherit; border-radius: .2rem; padding: 0 .1rem; }
+
+/* test-board.html: a board in the middle, and a line to type below it */
+.tester { --b: min(28rem, calc(100vw - 3rem)); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; padding-top: 4rem; }
+.tester figure { width: var(--b); }
+.tester #san { width: min(40rem, 100%); box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
+.tester #san:focus { border-color: var(--muted); }
+.tester #msg { min-height: 1.4em; margin: 0; max-width: 40rem; color: #d03a3a; font-size: .9rem; }
+.tester #flip { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; }
+.tester #flip:hover { color: var(--hover-color); }

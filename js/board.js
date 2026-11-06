@@ -190,12 +190,11 @@ function arrow(parent, color, from, to, flipped, elbow) {
     corner = (elbow === "L") === longX ? [x1, y0] : [x0, y1];
   }
   const [cx, cy] = corner ?? [x0, y0];
-  const L1 = Math.hypot(cx - x0, cy - y0) || 1, u1x = (cx - x0) / L1, u1y = (cy - y0) / L1;   // first leg direction
   const L2 = Math.hypot(x1 - cx, y1 - cy), ux = (x1 - cx) / L2, uy = (y1 - cy) / L2;          // direction of the head
   const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
   const bx = tx - ux * 0.45, by = ty - uy * 0.45;            // base of the head
   const head = `${tx},${ty} ${bx - uy * 0.31},${by + ux * 0.31} ${bx + uy * 0.31},${by - ux * 0.31}`;
-  const sx = corner ? x0 + u1x * 0.1 : x0 + ux * 0.1, sy = corner ? y0 + u1y * 0.1 : y0 + uy * 0.1;   // start, just off the centre
+  const sx = x0, sy = y0;   // the arrow starts exactly at the centre of its square
   const end = `${bx + ux * 0.05},${by + uy * 0.05}`;
   const path = corner ? `M${sx},${sy} L${cx},${cy} L${end}` : `M${sx},${sy} L${end}`;   // an L has a sharp corner
   const g = el("g", { opacity: 0.72 }, parent);             // one opacity for the whole arrow, so shaft and head do not double up
@@ -222,7 +221,7 @@ function marks(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
-    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.102, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
+    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.092, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
   if (badge) drawBadge(g, BADGES[node.glyph], node.to, flipped);
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);

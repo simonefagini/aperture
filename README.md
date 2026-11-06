@@ -9,3 +9,4 @@ Static site that shows opening lines as a tree of boards. Display only.
 - Black's view: `data-orientation="black"` on `<body>` in the page.
 - Sublime Text highlighting for the data files: copy everything in `sublime/` into Packages/User, then pick "Aperture" from the syntax menu at the bottom right. In a comment, `cal`, `csl` or `sqr` + Tab inserts a mark template (`[%cal Gg1f3]`).
 - A mistake in a data file (illegal move, wrong move number, bad mark) shows on the page, with the line and the culprit marked.
+- `test-board.html` (not linked anywhere): a board that follows the line you type, to try SAN, glyphs, arrows and circles.
