@@ -1,15 +1,15 @@
 # London System: 2...c5, the Steinitz countergambit. Every line is one board: all the moves from the start, SAN.
 # Reference: https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...d5/2._Bf4/2...c5
 # See data/legend.txt for the syntax. The lines are left to study.
-@preview d4 d5 Bf4 c5 {[%cal Rc5d4]}
+@preview 1. d4 d5 2. Bf4 c5 {[%cal Rc5d4]}
 
-d4
-d4 d5
-d4 d5 Bf4
-d4 d5 Bf4 c5 {[%cal Rc5d4]}
-d4 d5 Bf4 c5 Nc3 
-~ d4 d5 Bf4 c5 e3 cxd4 exd4 {After **e3** and the exchange on **d4**, White leaves the typical London structure.<br>It's a *reversed Carlsbad*, the same pawn structure as the **Exchange Caro-Kann**, with the bishop already on f4.}
-d4 d5 Bf4 c5 Nc3 cxd4
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 {[%cal Rd4d5, Rc3d5L]}
+1. d4
+1. d4 d5
+1. d4 d5 2. Bf4
+1. d4 d5 2. Bf4 c5 {[%cal Rc5d4]}
+1. d4 d5 2. Bf4 c5 3. Nc3 
+~ 1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 {After **e3** and the exchange on **d4**, White leaves the typical London structure.<br>It's a *reversed Carlsbad*, the same pawn structure as the **Exchange Caro-Kann**, with the bishop already on f4.}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 {[%cal Rd4d5, Rc3d5L]}
 
 @empty
