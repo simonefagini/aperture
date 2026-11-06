@@ -35,8 +35,12 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    [a link](https://example.com) work. A link to another page of this site
    can be relative: [Jobava](jobava.html).
 
-   "@empty" after a line adds a faded, empty board below it, to suggest that the
-   line goes on (only when no reply to that line is listed):
+   "@empty" adds a faded, empty board below a line, to suggest that the line goes
+   on (only when no reply to that line is listed). Write it on its own line, under
+   the line it belongs to, or at the end of that line:
+
+       d4 d5 Bf4 Nf6 e3
+       @empty
 
        d4 d5 Bf4 Nf6 e3 @empty
 

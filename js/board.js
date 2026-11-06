@@ -48,6 +48,11 @@ export function parse(text) {
   logicalLines(text).forEach(([lineNo, raw]) => {
     let line = raw.trim();
     if (!line || line.startsWith("#")) return;
+    if (line === "@empty") {                         // "@empty" on its own line: an empty board after the line above it
+      if (!lastNode) throw new Error(`line ${lineNo}: "@empty" needs a line above it`);
+      lastNode.more = true;
+      return;
+    }
     const isAside = line.startsWith("~");            // "~ <moves>": an alternative line shown beside the board above
     if (isAside) line = line.slice(1).trim();
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
