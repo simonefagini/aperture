@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=51";
+import { parse, board } from "./board.js?v=52";
 
 // the variations of each opening: a name, the moves that define it (shown as SAN and as the little board),
 // and the page with its tree. A "{[%cal ...]}" after the moves adds marks to the board.

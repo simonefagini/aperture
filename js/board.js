@@ -211,7 +211,7 @@ function drawBadge(parent, b, sq, flipped) {
     el("path", { d: `M${cx - 0.09},${cy} H${cx + 0.09} M${cx + 0.01},${cy - 0.08} L${cx + 0.09},${cy} L${cx + 0.01},${cy + 0.08}`, fill: "none", stroke: "#fff", "stroke-width": 0.045, "stroke-linecap": "round", "stroke-linejoin": "round" }, parent);
     return;
   }
-  const t = el("text", { x: cx, y: cy + (b.text.length > 1 ? 0.085 : 0.1), "text-anchor": "middle", "font-size": b.text.length > 1 ? 0.27 : 0.34, "font-weight": 700, fill: "#fff", "font-family": "Onest, system-ui, sans-serif" }, parent);
+  const t = el("text", { x: cx, y: cy + 0.095, "text-anchor": "middle", "font-size": 0.28, "font-weight": 700, fill: "#fff", "font-family": "Onest, system-ui, sans-serif" }, parent);
   t.textContent = b.text;
 }
 
