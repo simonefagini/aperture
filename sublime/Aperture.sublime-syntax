@@ -1,0 +1,76 @@
+%YAML 1.2
+---
+# Syntax highlighting for aperture data files (data/*/*.txt) in Sublime Text.
+# Install: copy this file into Sublime's Packages/User folder (Preferences > Browse Packages...),
+# then pick "Aperture" from the syntax menu at the bottom right of the window.
+# It only colours the notation with regular expressions; it does not check that moves are legal.
+name: Aperture
+file_extensions: [aperture]
+scope: text.aperture
+
+contexts:
+  main:
+    # "# ..." a note to yourself, not shown on the site
+    - match: '^\s*#.*$'
+      scope: comment.line.number-sign.aperture
+    # "~ ..." a side board
+    - match: '^\s*(~)'
+      captures:
+        1: keyword.operator.side-board.aperture
+    # "@fen <pieces>"
+    - match: '(@fen)\s+([prnbqkPRNBQK1-8/]+)'
+      captures:
+        1: keyword.control.aperture
+        2: string.unquoted.fen.aperture
+    - match: '@(?:preview|empty)\b'
+      scope: keyword.control.aperture
+    # { a comment, that can run over several lines }
+    - match: '\{'
+      scope: punctuation.definition.comment.begin.aperture
+      push: comment
+    # moves: castling, then the rest of SAN
+    - match: '(?<![\w%])(?:O-O-O|O-O)[+#]?(?![\w-])'
+      scope: variable.function.move.castle.aperture
+    - match: '(?<![\w%])(?:[KQRBN][a-h]?[1-8]?x?[a-h][1-8]|[a-h]x[a-h][1-8]|[a-h][1-8])(?:=[QRBN])?[+#]?(?![\w])'
+      scope: variable.function.move.aperture
+    # move numbers, if you write them: 1. or 1...
+    - match: '\b\d+\.(?:\.\.)?'
+      scope: constant.numeric.move-number.aperture
+
+  comment:
+    - meta_scope: comment.block.aperture
+    - match: '\}'
+      scope: punctuation.definition.comment.end.aperture
+      pop: true
+    # [%cal ...] arrows, [%csl ...] circles, [%sqr ...] last-move squares
+    - match: '\[%(?:cal|csl|sqr)\b'
+      scope: keyword.other.mark.aperture
+      push: mark
+    # [text](url)
+    - match: '(\[)([^\]%][^\]]*)(\])(\()([^)\s]+)(\))'
+      captures:
+        2: markup.underline.link.text.aperture
+        5: markup.underline.link.aperture
+    - match: '\*\*[^*]+\*\*'
+      scope: markup.bold.aperture
+    - match: '\*[^*]+\*'
+      scope: markup.italic.aperture
+    - match: '<br\s*/?>'
+      scope: constant.character.escape.aperture
+
+  mark:
+    - meta_scope: meta.mark.aperture
+    - match: '\]'
+      pop: true
+    # G/R/Y/B (the colour), then the square(s), then L or l for a bent knight arrow
+    - match: '\b([GRYB])([a-h][1-8])(?:([a-h][1-8])([Ll])?)?\b'
+      captures:
+        1: constant.language.colour.aperture
+        2: constant.numeric.square.aperture
+        3: constant.numeric.square.aperture
+        4: keyword.operator.elbow.aperture
+    # S (start) / E (end) of a last move
+    - match: '\b([SE])([a-h][1-8])\b'
+      captures:
+        1: constant.language.colour.aperture
+        2: constant.numeric.square.aperture
