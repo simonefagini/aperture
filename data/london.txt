@@ -15,7 +15,7 @@ d4 d5 Bf4 Nf6 e3
 d4 d5 Bf4 Nf6 e3 e6
 d4 d5 Bf4 Nf6 e3 e6 c3
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 {With the bishop gone from c1, the **b2 pawn** is undefended: Black's typical idea after **…c5** is **…Qb6**. **Nd2** becomes especially important to allow **Rb1** and defend b2.[%cal Rd8b6,Ga1b1][%csl Rb2]}
-~ @fen r3kb1r/pp2pppp/1qn2n2/3p1b2/2pP1B2/2P1PN2/PPQ2PPP/RN2KB1R {In some cases, where the pawn is still on **e7**, **Qxf5** loses to **…Qxb2**, and **…Qxa1** follows. <br> White must keep b2 defended, usually with the **passive Qc1**. [%csl Ye7][%cal Gc2c1, Rb6b2]}
+~ @fen r3kb1r/pp2pppp/1qn2n2/3p1b2/2pP1B2/2P1PN2/PPQ2PPP/RN2KB1R {In some cases, where the pawn is still on **e7**, **Qxf5** loses to **…Qxb2**, and **…Qxa1** follows. <br> White must keep b2 defended, usually with the **passive Qc1**. [%csl Ye7][%cal Gc2c1, Rb6b2][%sqr Sc8,Ef5]}
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 cxd4 exd4
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6
