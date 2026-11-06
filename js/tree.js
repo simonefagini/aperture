@@ -124,17 +124,33 @@ function enableKeys() {
     go(target);
   });
 
-  // two subtle buttons, bottom right: the same as the arrow keys (for touch screens, and a hint that the keys work)
+  // subtle buttons, bottom right: the arrow keys (for touch screens, and a hint that the keys work),
+  // and above them a jump to the other end of the sequence
   const nav = document.createElement("div");
   nav.id = "stepper";
-  for (const [step, label, d] of [[-1, "previous board", "M6 15l6-6 6 6"], [1, "next board", "M6 9l6 6 6-6"]]) {
+  const button = (label, inner, onclick) => {
     const b = document.createElement("button");
     b.type = "button";
     b.setAttribute("aria-label", label);
-    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
-    b.addEventListener("click", () => move(step));
+    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${inner}</svg>`;
+    b.addEventListener("click", onclick);
     nav.appendChild(b);
+    return b;
+  };
+  const TO_START = `<path d="M6 5h12M6 16l6-6 6 6"/>`, TO_END = `<path d="M6 19h12M6 8l6 6 6-6"/>`;
+  let toEnd = true;
+  const jump = button("go to the end", TO_END, () => { go(toEnd ? figs[figs.length - 1] : figs[0]); refresh(); });
+  button("previous board", `<path d="M6 15l6-6 6 6"/>`, () => { move(-1); refresh(); });
+  button("next board", `<path d="M6 9l6 6 6-6"/>`, () => { move(1); refresh(); });
+  function refresh() {   // in the first half of the sequence the jump goes to the end, in the second half back to the start
+    toEnd = figs.indexOf(current()) < figs.length / 2;
+    jump.setAttribute("aria-label", toEnd ? "go to the end" : "go to the start");
+    jump.firstChild.innerHTML = toEnd ? TO_END : TO_START;
   }
+  let pending = false;
+  addEventListener("scroll", () => { if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; refresh(); }); } }, { passive: true });
+  addEventListener("keydown", () => requestAnimationFrame(refresh));
+  refresh();
   document.body.appendChild(nav);
 }
 
