@@ -6,6 +6,7 @@ const PAPER = "#f0eadc", INK = "#1a1a1a";
 const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.4 }, TO_GREEN = { fill: "#6fa83a", "fill-opacity": 0.45 };
 // Lichess-style marks: G/R/Y/B in [%cal ...] (arrows) and [%csl ...] (circles)
 const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
+const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 const NS = "http://www.w3.org/2000/svg";
 
 // pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, all on one flow (line breaks are just spaces), line by line
@@ -61,9 +62,10 @@ export function parse(text) {
       fromFen = true;
     }
     const moves = [];
-    let comment = "", last;
+    let comment = "", last, more = false;
     for (const [, c, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
       if (c !== undefined) { comment = c; continue; }   // a {comment} belongs to the move before it
+      if (move === "@empty") { more = true; continue; } // "@empty" after a line: an empty board after it, to suggest the line goes on
       try { last = game.move(move); moves.push(last.san); }
       catch (e) { throw new Error(`line ${lineNo}: "${move}" is not a legal move here`); }
       comment = "";                                       // only a comment after the last move counts
@@ -84,10 +86,11 @@ export function parse(text) {
       if (sqr.from) same.from = sqr.from;
       if (sqr.to) same.to = sqr.to;
       same.arrows.push(...arrows); same.rings.push(...rings);
+      if (more) same.more = true;
       lastNode = same;
       return;
     }
-    const node = { moves, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [] };
+    const node = { moves, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
@@ -97,6 +100,8 @@ export function parse(text) {
     while (n > 0 && !byKey.has(node.moves.slice(0, n).join(" "))) n--;
     byKey.get(node.moves.slice(0, n).join(" ")).children.push(node);
   }
+  for (const node of nodes)   // "@empty": a faded, empty board after a line that has no replies of its own
+    if (node.more && !node.children.length) node.children.push({ moves: [], fen: EMPTY_FEN, empty: true, comment: "", arrows: [], rings: [], asides: [], children: [] });
   return root;
 }
 

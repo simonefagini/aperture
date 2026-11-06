@@ -157,3 +157,8 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 /* study mode: only the main line of boards, no comments, no side boards, no annotations */
 body.study .note, body.study .asides { display: none; }
 body.study .layer, body.study figure:hover .layer { opacity: 0; }
+
+/* the "@empty" board at the end of a line: faded, like the placeholders on the home page */
+figure.empty { opacity: .4; pointer-events: none; }
+/* study mode: no coordinates either */
+body.study .coord { display: none; }

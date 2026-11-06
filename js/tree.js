@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=39";
+import { parse, board } from "./board.js?v=40";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -10,6 +10,7 @@ function label(moves) {
 // a figure: a board with its move caption
 function makeFigure(node, flipped) {
   const fig = document.createElement("figure");
+  if (node.empty) fig.className = "empty";   // the "@empty" board: faded, nothing to click
   fig.appendChild(board(node, flipped));
   fig.addEventListener("click", e => {      // cmd/ctrl-click: open this position on the chess.com analysis board
     if (e.metaKey || e.ctrlKey) window.open(`https://www.chess.com/analysis?fen=${encodeURI(node.fen)}&flip=${flipped}`, "_blank", "noopener");
@@ -86,7 +87,7 @@ function row(nodes, flipped) {
 // order of the tree (a board, then its first branch all the way down, then the next branch, ...).
 // The board you move to lands exactly where the current one sits: the first board's place on screen.
 function enableKeys() {
-  const figs = [...document.querySelectorAll("#tree figure:not(.aside)")];   // document order is that tree order
+  const figs = [...document.querySelectorAll("#tree figure:not(.aside):not(.empty)")];   // document order is that tree order
   if (!figs.length) return;
   const treeEl = document.getElementById("tree");
   const top = f => f.getBoundingClientRect().top + scrollY;

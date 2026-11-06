@@ -35,6 +35,11 @@ LEGEND: how to write a line in london.txt
    [a link](https://example.com) work. A link to another page of this site
    can be relative: [Jobava](jobava.html).
 
+   "@empty" after a line adds a faded, empty board below it, to suggest that the
+   line goes on (only when no reply to that line is listed):
+
+       d4 d5 Bf4 Nf6 e3 @empty
+
    Marks ([%cal ...], [%csl ...]) can go on
    any line and are not shown as text.
    [%sqr Sb1,Eb2] highlights a start (S) and an end (E) square like a last move,
