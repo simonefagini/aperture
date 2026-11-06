@@ -5,7 +5,7 @@ const PAPER = "#f0eadc", INK = "#1a1a1a";
 // last-move highlight, as in most engines: lighter green for the square it left, darker for where it landed
 const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.4 }, TO_GREEN = { fill: "#6fa83a", "fill-opacity": 0.45 };
 // Lichess-style marks: G/R/Y/B in [%cal ...] (arrows) and [%csl ...] (circles)
-const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
+const MARK_COLORS = { G: "#15781b", R: "#d03a3a", Y: "#e68f00", B: "#1d56c0" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 const NS = "http://www.w3.org/2000/svg";
 
@@ -156,12 +156,14 @@ function arrow(parent, color, from, to, flipped, elbow) {
   const L1 = Math.hypot(cx - x0, cy - y0) || 1, u1x = (cx - x0) / L1, u1y = (cy - y0) / L1;   // first leg direction
   const L2 = Math.hypot(x1 - cx, y1 - cy), ux = (x1 - cx) / L2, uy = (y1 - cy) / L2;          // direction of the head
   const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
-  const bx = tx - ux * 0.4, by = ty - uy * 0.4;              // base of the head
-  const head = `${tx},${ty} ${bx - uy * 0.25},${by + ux * 0.25} ${bx + uy * 0.25},${by - ux * 0.25}`;
+  const bx = tx - ux * 0.45, by = ty - uy * 0.45;            // base of the head
+  const head = `${tx},${ty} ${bx - uy * 0.31},${by + ux * 0.31} ${bx + uy * 0.31},${by - ux * 0.31}`;
   const sx = corner ? x0 + u1x * 0.2 : x0 + ux * 0.2, sy = corner ? y0 + u1y * 0.2 : y0 + uy * 0.2;   // start, just off the centre
-  const path = corner ? `M${sx},${sy} L${cx},${cy} L${bx + ux * 0.05},${by + uy * 0.05}` : `M${sx},${sy} L${bx + ux * 0.05},${by + uy * 0.05}`;
-  const g = el("g", { opacity: 0.6 }, parent);              // one opacity for the whole arrow, so shaft and head do not double up
-  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.16, "stroke-linecap": "butt", "stroke-linejoin": "round" }, g);
+  const end = `${bx + ux * 0.05},${by + uy * 0.05}`;
+  const r = 0.32;   // an L bends in a curve, no sharp corner
+  const path = corner ? `M${sx},${sy} L${cx - u1x * r},${cy - u1y * r} Q${cx},${cy} ${cx + ux * r},${cy + uy * r} L${end}` : `M${sx},${sy} L${end}`;
+  const g = el("g", { opacity: 0.72 }, parent);             // one opacity for the whole arrow, so shaft and head do not double up
+  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.22, "stroke-linecap": "butt", "stroke-linejoin": "round" }, g);
   el("polygon", { points: head, fill: color }, g);
 }
 
@@ -171,7 +173,7 @@ function marks(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
-    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.12, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
+    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.14, opacity: 0.72 }, g);   // same colour and transparency as the arrows, no outline
   }
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);
 }
