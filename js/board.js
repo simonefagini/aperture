@@ -9,7 +9,7 @@ const MARK_COLORS = { G: "#15781b", R: "#d03a3a", Y: "#e68f00", B: "#1d56c0" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 // an error that knows the offending token (and which occurrence of it), so the page can point at it
 const fail = (message, token, occurrence = 0) => Object.assign(new Error(message), { token, occurrence });
-const ARROW_START = 0.15;   // how far from the centre of its square an arrow starts (0 = the centre, 0.5 = the edge)
+const ARROW_START = 0.35;   // how far from the centre of its square an arrow starts (0 = the centre, 0.5 = the edge); the tip is on the centre of the target
 const GLYPHS = ["!", "?", "!!", "??", "!?", "?!", "$7"];   // as in PGN: good, mistake, brilliant, blunder, interesting, dubious, and $7 = forced move (NAG 7)
 // badges on the board, in the top right corner of the square the move went to (Lichess / chess.com style)
 const BADGES = { "!": { fill: "#2f9e44", text: "!" }, "!!": { fill: "#1ba39c", text: "!!" }, "?": { fill: "#e08a1e", text: "?" }, "??": { fill: "#c93a3a", text: "??" }, "$7": { fill: "#8b8b8b", arrow: true } };
@@ -192,11 +192,11 @@ function arrow(parent, color, from, to, flipped, elbow) {
   }
   const [cx, cy] = corner ?? [x0, y0];
   const L2 = Math.hypot(x1 - cx, y1 - cy), ux = (x1 - cx) / L2, uy = (y1 - cy) / L2;          // direction of the head
-  const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
+  const tx = x1, ty = y1;                                    // tip: exactly on the centre of the target square
   const bx = tx - ux * 0.45, by = ty - uy * 0.45;            // base of the head
   const head = `${tx},${ty} ${bx - uy * 0.31},${by + ux * 0.31} ${bx + uy * 0.31},${by - ux * 0.31}`;
   const [fx, fy] = corner ?? [x1, y1], L1 = Math.hypot(fx - x0, fy - y0), sx = x0 + (fx - x0) / L1 * ARROW_START, sy = y0 + (fy - y0) / L1 * ARROW_START;   // the start, ARROW_START from the centre of its square
-  const end = `${bx + ux * 0.05},${by + uy * 0.05}`;
+  const end = `${bx + ux * 0.05},${by + uy * 0.05}`;   // the shaft ends just inside the head
   const path = corner ? `M${sx},${sy} L${cx},${cy} L${end}` : `M${sx},${sy} L${end}`;   // an L has a sharp corner
   const g = el("g", { opacity: 0.72 }, parent);             // one opacity for the whole arrow, so shaft and head do not double up
   el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.22, "stroke-linecap": "butt", "stroke-linejoin": "miter" }, g);
