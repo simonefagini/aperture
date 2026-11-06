@@ -160,10 +160,9 @@ function arrow(parent, color, from, to, flipped, elbow) {
   const head = `${tx},${ty} ${bx - uy * 0.31},${by + ux * 0.31} ${bx + uy * 0.31},${by - ux * 0.31}`;
   const sx = corner ? x0 + u1x * 0.2 : x0 + ux * 0.2, sy = corner ? y0 + u1y * 0.2 : y0 + uy * 0.2;   // start, just off the centre
   const end = `${bx + ux * 0.05},${by + uy * 0.05}`;
-  const r = 0.32;   // an L bends in a curve, no sharp corner
-  const path = corner ? `M${sx},${sy} L${cx - u1x * r},${cy - u1y * r} Q${cx},${cy} ${cx + ux * r},${cy + uy * r} L${end}` : `M${sx},${sy} L${end}`;
+  const path = corner ? `M${sx},${sy} L${cx},${cy} L${end}` : `M${sx},${sy} L${end}`;   // an L has a sharp corner
   const g = el("g", { opacity: 0.72 }, parent);             // one opacity for the whole arrow, so shaft and head do not double up
-  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.22, "stroke-linecap": "butt", "stroke-linejoin": "round" }, g);
+  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.22, "stroke-linecap": "butt", "stroke-linejoin": "miter" }, g);
   el("polygon", { points: head, fill: color }, g);
 }
 
@@ -173,7 +172,7 @@ function marks(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
-    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.14, opacity: 0.72 }, g);   // same colour and transparency as the arrows, no outline
+    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.12, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);
 }
