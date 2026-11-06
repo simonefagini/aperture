@@ -138,22 +138,6 @@ function enableKeys() {
     nav.appendChild(b);
     return b;
   };
-  // focus: every board is masked except the one that sits in position as the arrows are pressed
-  const focus = button("focus on one board", `<path d="M5 9V5h4M15 5h4v4M19 15v4h-4M9 19H5v-4"/><rect x="10" y="10" width="4" height="4" fill="currentColor" stroke="none"/>`, () => setFocus(!document.body.classList.contains("focus")));
-  focus.id = "focus-toggle";
-  function setFocus(on) {
-    document.body.classList.toggle("focus", on);
-    focus.setAttribute("aria-pressed", on);
-    focus.setAttribute("aria-label", on ? "show all boards" : "focus on one board");
-    try { localStorage.setItem("aperture-focus", on ? "1" : "0"); } catch (e) {}
-  }
-  function markCurrent() {   // .current: the board in position, and the side boards of its own block
-    const cur = current();
-    document.querySelectorAll("#tree figure.current").forEach(f => f.classList.remove("current"));
-    cur.classList.add("current");
-    cur.closest(".main")?.querySelectorAll(".asides figure").forEach(f => f.classList.add("current"));
-  }
-
   // a green circle: the annotations, comments and side boards are shown. Click for study mode (grey circle): only the
   // main line of boards, to analyse the positions yourself
   const study = button("study mode", `<circle cx="12" cy="12" r="8"/>`, () => setStudy(!document.body.classList.contains("study")));
@@ -174,9 +158,7 @@ function enableKeys() {
   const jump = button("go to the end", TO_END, () => { go(toEnd ? figs[figs.length - 1] : figs[0]); refresh(); });
   button("previous board", `<path d="M6 15l6-6 6 6"/>`, () => { move(-1); refresh(); });
   button("next board", `<path d="M6 9l6 6 6-6"/>`, () => { move(1); refresh(); });
-  function refresh() {
-    markCurrent();
-    // in the first half of the sequence the jump goes to the end, in the second half back to the start
+  function refresh() {   // in the first half of the sequence the jump goes to the end, in the second half back to the start
     toEnd = figs.indexOf(current()) < figs.length / 2;
     jump.setAttribute("aria-label", toEnd ? "go to the end" : "go to the start");
     jump.firstChild.innerHTML = toEnd ? TO_END : TO_START;
@@ -184,11 +166,7 @@ function enableKeys() {
   let pending = false;
   addEventListener("scroll", () => { if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; refresh(); }); } }, { passive: true });
   addEventListener("keydown", () => requestAnimationFrame(refresh));
-  let focused = false;
-  try { focused = localStorage.getItem("aperture-focus") === "1"; } catch (e) {}
-  setFocus(focused);
   refresh();
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("ready")));   // fade only after the first paint
   document.body.appendChild(nav);
 }
 
