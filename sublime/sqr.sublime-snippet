@@ -1,6 +1,0 @@
-<snippet>
-  <content><![CDATA[[%sqr S${1:b1},E${2:b2}]]]></content>
-  <tabTrigger>sqr</tabTrigger>
-  <scope>text.aperture</scope>
-  <description>Last-move squares: S = start, E = end</description>
-</snippet>

@@ -1,6 +1,0 @@
-<snippet>
-  <content><![CDATA[[%cal ${1:Gg1f3}]]]></content>
-  <tabTrigger>cal</tabTrigger>
-  <scope>text.aperture</scope>
-  <description>Arrows: colour G/R/Y/B, from, to; add L or l for a bent knight arrow (Gg1f3L)</description>
-</snippet>
