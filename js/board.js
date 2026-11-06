@@ -114,7 +114,7 @@ function center(sq, flipped) {
   return flipped ? [7 - f + 0.5, 7 - r + 0.5] : [f + 0.5, r + 0.5];
 }
 
-// hover layer: tint the squares the last move went from and to
+// hover layer (under the pieces): tint the squares the last move went from and to
 function tints(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const [sq, green] of [[node.from, FROM_GREEN], [node.to, TO_GREEN]]) {
@@ -163,6 +163,7 @@ export function board(node, flipped) {
     el("text", { class: "coord", x: i + 0.5, y: 8.4 }, svg).textContent = file;
     el("text", { class: "coord", x: -0.28, y: i + 0.62 }, svg).textContent = rank;
   }
+  tints(svg, node, flipped);   // the last-move squares sit under the pieces
   fen.split(" ")[0].split("/").forEach((row, r) => {
     let f = 0;
     for (const ch of row) {
@@ -173,7 +174,6 @@ export function board(node, flipped) {
       f++;
     }
   });
-  tints(svg, node, flipped);   // hover layers sit on top of the pieces
-  marks(svg, node, flipped);
+  marks(svg, node, flipped);   // arrows and circles sit on top of the pieces
   return svg;
 }
