@@ -137,6 +137,18 @@ function enableKeys() {
     nav.appendChild(b);
     return b;
   };
+  // a circle, half grey and half green: show the annotations (last move, arrows, circles) all the time, not only on hover
+  const marksBtn = button("show the annotations", `<path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/><path d="M12 4a8 8 0 0 1 0 16z" class="green" stroke="none"/><circle cx="12" cy="12" r="8"/>`, () => setMarks(!document.body.classList.contains("marks")));
+  marksBtn.id = "marks-toggle";
+  function setMarks(on) {
+    document.body.classList.toggle("marks", on);
+    marksBtn.setAttribute("aria-pressed", on);
+    try { localStorage.setItem("aperture-marks", on ? "1" : "0"); } catch (e) {}
+  }
+  let saved = false;
+  try { saved = localStorage.getItem("aperture-marks") === "1"; } catch (e) {}
+  setMarks(saved);
+
   const TO_START = `<path d="M6 5h12M6 16l6-6 6 6"/>`, TO_END = `<path d="M6 19h12M6 8l6 6 6-6"/>`;
   let toEnd = true;
   const jump = button("go to the end", TO_END, () => { go(toEnd ? figs[figs.length - 1] : figs[0]); refresh(); });
