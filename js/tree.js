@@ -137,17 +137,20 @@ function enableKeys() {
     nav.appendChild(b);
     return b;
   };
-  // a circle, half grey and half green: show the annotations (last move, arrows, circles) all the time, not only on hover
-  const marksBtn = button("show the annotations", `<path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"/><path d="M12 4a8 8 0 0 1 0 16z" class="green" stroke="none"/><circle cx="12" cy="12" r="8"/>`, () => setMarks(!document.body.classList.contains("marks")));
-  marksBtn.id = "marks-toggle";
-  function setMarks(on) {
-    document.body.classList.toggle("marks", on);
-    marksBtn.setAttribute("aria-pressed", on);
-    try { localStorage.setItem("aperture-marks", on ? "1" : "0"); } catch (e) {}
+  // a green circle: the annotations, comments and side boards are shown. Click for study mode (grey circle): only the
+  // main line of boards, to analyse the positions yourself
+  const study = button("study mode", `<circle cx="12" cy="12" r="8"/>`, () => setStudy(!document.body.classList.contains("study")));
+  study.id = "study-toggle";
+  function setStudy(on) {
+    document.body.classList.toggle("study", on);
+    document.body.classList.toggle("marks", !on);   // marks: the hover layers always on
+    study.setAttribute("aria-pressed", on);
+    study.setAttribute("aria-label", on ? "leave study mode" : "study mode");
+    try { localStorage.setItem("aperture-study", on ? "1" : "0"); } catch (e) {}
   }
   let saved = false;
-  try { saved = localStorage.getItem("aperture-marks") === "1"; } catch (e) {}
-  setMarks(saved);
+  try { saved = localStorage.getItem("aperture-study") === "1"; } catch (e) {}
+  setStudy(saved);
 
   const TO_START = `<path d="M6 5h12M6 16l6-6 6 6"/>`, TO_END = `<path d="M6 19h12M6 8l6 6 6-6"/>`;
   let toEnd = true;
