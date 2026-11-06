@@ -46,6 +46,8 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
 
    Marks ([%cal ...], [%csl ...]) can go on
    any line and are not shown as text.
+   A knight arrow can be bent in an L: add L (the long leg first) or l (the short
+   leg first) after the squares, e.g. [%cal Gg1f3L,Gb1c3l]. Only for knight moves.
    [%sqr Sb1,Eb2] highlights a start (S) and an end (E) square like a last move,
    handy for a ~ @fen board that has no move of its own.
    Boards at the left end of a row show it on the left, at the right end on the

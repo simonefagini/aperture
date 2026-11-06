@@ -9,13 +9,21 @@ const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 const NS = "http://www.w3.org/2000/svg";
 
+// a knight's move: one square along one axis, two along the other
+function isKnightMove(a, b) {
+  const df = Math.abs("abcdefgh".indexOf(a[0]) - "abcdefgh".indexOf(b[0])), dr = Math.abs(a[1] - b[1]);
+  return df * dr === 2;
+}
+
 // pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, all on one flow (line breaks are just spaces), line by line
 function marksIn(comment, lineNo) {
   const arrows = [], rings = [], sqr = {};
   const text = comment.replace(/\[%(cal|csl|sqr)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
-      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8]$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SE][a-h][1-8]$/;
+      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8][Ll]?$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SE][a-h][1-8]$/;
       if (!ok.test(item)) throw new Error(`line ${lineNo}: "${item}" is not a valid ${kind} mark`);
+      if (kind === "cal" && item.length === 6 && !isKnightMove(item.slice(1, 3), item.slice(3, 5)))
+        throw new Error(`line ${lineNo}: "${item}": an L-shaped arrow (L or l at the end) only works for a knight move`);
       if (kind === "sqr") sqr[item[0] === "S" ? "from" : "to"] = item.slice(1);   // [%sqr Sb1,Eb2]: the last-move squares, start and end
       else if (kind === "cal" && item.slice(1, 3) !== item.slice(3, 5)) arrows.push(item);
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
@@ -134,15 +142,26 @@ function tints(parent, node, flipped) {
   }
 }
 
-// an arrow from one square to another: Lichess-like: thick shaft, short head, transparent
-function arrow(parent, color, from, to, flipped) {
+// an arrow from one square to another: Lichess-like: thick shaft, short head, transparent.
+// elbow "L": a knight's arrow bent in an L, the long leg first; "l": the short leg first
+function arrow(parent, color, from, to, flipped, elbow) {
   const [x0, y0] = center(from, flipped), [x1, y1] = center(to, flipped);
-  const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L;
+  // the corner of the L (none for a straight arrow)
+  let corner = null;
+  if (elbow) {
+    const longX = Math.abs(x1 - x0) > Math.abs(y1 - y0);   // the long leg runs along x
+    corner = (elbow === "L") === longX ? [x1, y0] : [x0, y1];
+  }
+  const [cx, cy] = corner ?? [x0, y0];
+  const L1 = Math.hypot(cx - x0, cy - y0) || 1, u1x = (cx - x0) / L1, u1y = (cy - y0) / L1;   // first leg direction
+  const L2 = Math.hypot(x1 - cx, y1 - cy), ux = (x1 - cx) / L2, uy = (y1 - cy) / L2;          // direction of the head
   const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
   const bx = tx - ux * 0.4, by = ty - uy * 0.4;              // base of the head
   const head = `${tx},${ty} ${bx - uy * 0.25},${by + ux * 0.25} ${bx + uy * 0.25},${by - ux * 0.25}`;
+  const sx = corner ? x0 + u1x * 0.2 : x0 + ux * 0.2, sy = corner ? y0 + u1y * 0.2 : y0 + uy * 0.2;   // start, just off the centre
+  const path = corner ? `M${sx},${sy} L${cx},${cy} L${bx + ux * 0.05},${by + uy * 0.05}` : `M${sx},${sy} L${bx + ux * 0.05},${by + uy * 0.05}`;
   const g = el("g", { opacity: 0.6 }, parent);              // one opacity for the whole arrow, so shaft and head do not double up
-  el("line", { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx + ux * 0.05, y2: by + uy * 0.05, stroke: color, "stroke-width": 0.16, "stroke-linecap": "butt" }, g);
+  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 0.16, "stroke-linecap": "butt", "stroke-linejoin": "round" }, g);
   el("polygon", { points: head, fill: color }, g);
 }
 
@@ -154,7 +173,7 @@ function marks(parent, node, flipped) {
     const [x, y] = center(item.slice(1), flipped);
     el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.12, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
-  for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped);
+  for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);
 }
 
 export function board(node, flipped) {
