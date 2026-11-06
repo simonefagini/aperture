@@ -10,6 +10,15 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    starts with ("d4 d5 Bf4"). The last move is highlighted in green when you
    hover over the board, and you never have to write it down.
 
+   Move numbers are optional, and checked. "3." is for White, "3..." for Black, with
+   or without a space before the move:
+
+       1. d4 d5 2. Bf4 Nf6        1.d4 d5 2.Bf4 Nf6
+
+   A wrong number is an error (expected "2." before Bf4), shown on the page with
+   the line and the culprit marked. After a ~ @fen position the numbers are
+   not checked, as the game does not start from move 1.
+
 2. BRANCHES
    Repeat the same moves and play something else:
 

@@ -7,6 +7,8 @@ const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.4 }, TO_GREEN = { fill: 
 // Lichess-style marks: G/R/Y/B in [%cal ...] (arrows) and [%csl ...] (circles)
 const MARK_COLORS = { G: "#15781b", R: "#d03a3a", Y: "#e68f00", B: "#1d56c0" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
+// an error that knows the offending token (and which occurrence of it), so the page can point at it
+const fail = (message, token, occurrence = 0) => Object.assign(new Error(message), { token, occurrence });
 const NS = "http://www.w3.org/2000/svg";
 
 // a knight's move: one square along one axis, two along the other
@@ -21,9 +23,9 @@ function marksIn(comment, lineNo) {
   const text = comment.replace(/\[%(cal|csl|sqr)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
       const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8][Ll]?$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SE][a-h][1-8]$/;
-      if (!ok.test(item)) throw new Error(`line ${lineNo}: "${item}" is not a valid ${kind} mark`);
+      if (!ok.test(item)) throw fail(`line ${lineNo}: "${item}" is not a valid ${kind} mark`, item);
       if (kind === "cal" && item.length === 6 && !isKnightMove(item.slice(1, 3), item.slice(3, 5)))
-        throw new Error(`line ${lineNo}: "${item}": an L-shaped arrow (L or l at the end) only works for a knight move`);
+        throw fail(`line ${lineNo}: "${item}": an L-shaped arrow (L or l at the end) only works for a knight move`, item);
       if (kind === "sqr") sqr[item[0] === "S" ? "from" : "to"] = item.slice(1);   // [%sqr Sb1,Eb2]: the last-move squares, start and end
       else if (kind === "cal" && item.slice(1, 3) !== item.slice(3, 5)) arrows.push(item);
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
@@ -53,7 +55,7 @@ export function parse(text) {
   const byKey = new Map([["", root]]);
   const nodes = [];
   let lastNode = null;   // the board a "~" line hangs on: the last ordinary line
-  logicalLines(text).forEach(([lineNo, raw]) => {
+  const handle = ([lineNo, raw]) => {
     let line = raw.trim();
     if (!line || line.startsWith("#")) return;
     if (line === "@empty") {                         // "@empty" on its own line: an empty board after the line above it
@@ -70,17 +72,34 @@ export function parse(text) {
       if (!isAside) throw new Error(`line ${lineNo}: "@fen" only works on a "~" line (a side board)`);
       const [placement = "", ...rest] = line.slice(4).trim().split(/\s+/);   // only the piece placement; the rest is assumed
       try { game = new Chess(`${placement} w - - 0 1`, { skipValidation: true }); }   // no kings needed
-      catch (e) { throw new Error(`line ${lineNo}: "${placement}" is not a valid FEN piece placement`); }
+      catch (e) { throw fail(`line ${lineNo}: "${placement}" is not a valid FEN piece placement`, placement); }
       line = rest.join(" ");
       fromFen = true;
     }
     const moves = [];
-    let comment = "", last, more = false;
-    for (const [, c, move] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
+    let comment = "", last, more = false, pending = null;
+    const seen = {};   // how many times each token has appeared, to point at the right one in an error
+    for (const [, c, tok] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
       if (c !== undefined) { comment = c; continue; }   // a {comment} belongs to the move before it
-      if (move === "@empty") { more = true; continue; } // "@empty" after a line: an empty board after it, to suggest the line goes on
+      if (tok === "@empty") { more = true; continue; } // "@empty" after a line: an empty board after it, to suggest the line goes on
+      seen[tok] = (seen[tok] ?? -1) + 1;
+      let move = tok;
+      const num = /^(\d+)(\.+)(.*)$/.exec(tok);   // an optional move number: "3." "3.e3" "3..." "3...Nf6"
+      if (num) {
+        if (num[2].length !== 1 && num[2].length !== 3) throw fail(`line ${lineNo}: "${tok}" is not a move number (use "3." for White, "3..." for Black)`, tok, seen[tok]);
+        pending = { n: +num[1], dots: num[2].length, tok, occurrence: seen[tok] };
+        move = num[3];
+        if (!move) continue;                            // the number stands alone: it belongs to the next move
+      }
+      if (pending && !fromFen) {                        // numbers are checked against the position (not after an @fen start)
+        const ply = moves.length, white = ply % 2 === 0;
+        const expected = white ? `${ply / 2 + 1}.` : `${(ply + 1) / 2}...`;
+        if (pending.n !== (white ? ply / 2 + 1 : (ply + 1) / 2) || pending.dots !== (white ? 1 : 3))
+          throw fail(`line ${lineNo}: expected "${expected}" before ${move}, found "${pending.tok}"`, pending.tok, pending.occurrence);
+      }
+      pending = null;
       try { last = game.move(move); moves.push(last.san); }
-      catch (e) { throw new Error(`line ${lineNo}: "${move}" is not a legal move here`); }
+      catch (e) { throw fail(`line ${lineNo}: "${move}" is not a legal move here`, tok, seen[tok]); }
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length && !fromFen) return;
@@ -107,6 +126,9 @@ export function parse(text) {
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
+  };
+  logicalLines(text).forEach(entry => {   // an error carries its line, so the page can show it
+    try { handle(entry); } catch (e) { e.lineNo = entry[0]; e.source = entry[1]; throw e; }
   });
   for (const node of nodes) {   // parent = longest listed prefix (else the start position)
     let n = node.moves.length - 1;
@@ -206,4 +228,33 @@ export function board(node, flipped) {
   });
   marks(svg, node, flipped);   // arrows and circles sit on top of the pieces
   return svg;
+}
+
+// show a parse error on the page like a debugger: the message, then the line it is about, the culprit marked
+export function showError(target, e) {
+  target.replaceChildren();
+  const box = document.createElement("div");
+  box.className = "error";
+  const msg = document.createElement("p");
+  msg.className = "msg";
+  msg.textContent = e.message;
+  box.appendChild(msg);
+  if (e.source) {
+    const pre = document.createElement("pre");
+    const gutter = document.createElement("span");
+    gutter.className = "gutter";
+    gutter.textContent = `${e.lineNo} │ `;
+    pre.appendChild(gutter);
+    const src = e.source.trim().slice(0, 400);
+    let at = -1;
+    if (e.token) for (let i = 0, from = 0; i <= (e.occurrence ?? 0); i++) { at = src.indexOf(e.token, from); if (at < 0) break; from = at + e.token.length; }
+    if (at < 0) pre.append(src);
+    else {
+      const mark = document.createElement("mark");
+      mark.textContent = e.token;
+      pre.append(src.slice(0, at), mark, src.slice(at + e.token.length));
+    }
+    box.appendChild(pre);
+  }
+  target.appendChild(box);
 }

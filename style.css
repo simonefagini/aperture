@@ -162,3 +162,10 @@ body.study .layer, body.study figure:hover .layer { opacity: 0; }
 figure.empty { opacity: .4; pointer-events: none; }
 /* study mode: no coordinates either */
 body.study .coord { display: none; }
+
+/* a data file error, shown like a debugger: the message, then the line with the culprit marked */
+.error { max-width: 42rem; margin: 0 auto; text-align: left; }
+.error .msg { margin: 0 0 1rem; color: #d03a3a; font-weight: 600; }
+.error pre { margin: 0; padding: .9rem 1rem; background: rgba(127, 127, 127, .12); border-radius: .4rem; font: 450 .85rem/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap; overflow-x: auto; color: var(--text-color); }
+.error .gutter { color: var(--muted); user-select: none; }
+.error mark { background: rgba(208, 58, 58, .35); color: inherit; border-radius: .2rem; padding: 0 .1rem; }

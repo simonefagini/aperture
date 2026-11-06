@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=44";
+import { parse, board, showError } from "./board.js?v=45";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [
@@ -40,4 +40,4 @@ async function main() {
   }
 }
 
-main().catch(e => { document.getElementById("grid").textContent = "Error: " + e.message; });
+main().catch(e => showError(document.getElementById("grid"), e));

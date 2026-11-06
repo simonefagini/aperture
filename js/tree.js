@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=44";
+import { parse, board, showError } from "./board.js?v=45";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves) {
@@ -177,4 +177,4 @@ async function main() {
   enableKeys();
 }
 
-main().catch(e => { document.getElementById("tree").textContent = "Error: " + e.message; });
+main().catch(e => showError(document.getElementById("tree"), e));
