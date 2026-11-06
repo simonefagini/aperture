@@ -12,7 +12,7 @@ const fail = (message, token, occurrence = 0) => Object.assign(new Error(message
 const ARROW_START = 0.35;   // how far from the centre of its square an arrow starts (0 = the centre, 0.5 = the edge); the tip is on the centre of the target
 const GLYPHS = ["!", "?", "!!", "??", "!?", "?!", "$7"];   // as in PGN: good, mistake, brilliant, blunder, interesting, dubious, and $7 = forced move (NAG 7)
 // badges on the board, in the top right corner of the square the move went to (Lichess / chess.com style)
-const BADGES = { "!": { fill: "#2f9e44", text: "!" }, "!!": { fill: "#1ba39c", text: "!!" }, "?": { fill: "#e08a1e", text: "?" }, "??": { fill: "#c93a3a", text: "??" }, "$7": { fill: "#8b8b8b", arrow: true } };
+const BADGES = { "!": { fill: "#1ba39c", text: "!" }, "!!": { fill: "#1ba39c", text: "!!" }, "?": { fill: "#e08a1e", text: "?" }, "??": { fill: "#c93a3a", text: "??" }, "$7": { fill: "#8b8b8b", arrow: true } };
 const CHECK_RED = { fill: "#d03a3a", "fill-opacity": 0.55 };
 const NS = "http://www.w3.org/2000/svg";
 
