@@ -25,7 +25,7 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
 
        1. d4 d5 2. Bf4! c5?!
 
-   ! and !! also get a round badge on the board, in the corner of the square the move
+   ! !! ? and ?? also get a round badge on the board, in the corner of the square the move
    went to. $7 (the PGN code for a forced move) adds a grey arrow badge, and shows as
    a square in the caption:
 
