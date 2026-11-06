@@ -9,7 +9,10 @@ const MARK_COLORS = { G: "#15781b", R: "#d03a3a", Y: "#e68f00", B: "#1d56c0" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 // an error that knows the offending token (and which occurrence of it), so the page can point at it
 const fail = (message, token, occurrence = 0) => Object.assign(new Error(message), { token, occurrence });
-const GLYPHS = ["!", "?", "!!", "??", "!?", "?!"];   // as in PGN: good, mistake, brilliant, blunder, interesting, dubious
+const GLYPHS = ["!", "?", "!!", "??", "!?", "?!", "$7"];   // as in PGN: good, mistake, brilliant, blunder, interesting, dubious, and $7 = forced move (NAG 7)
+// badges on the board, in the top right corner of the square the move went to (Lichess / chess.com style)
+const BADGES = { "!": { fill: "#2f9e44", text: "!" }, "!!": { fill: "#1ba39c", text: "!!" }, "$7": { fill: "#8b8b8b", arrow: true } };
+const CHECK_RED = { fill: "#d03a3a", "fill-opacity": 0.55 };
 const NS = "http://www.w3.org/2000/svg";
 
 // a knight's move: one square along one axis, two along the other
@@ -20,14 +23,15 @@ function isKnightMove(a, b) {
 
 // pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, all on one flow (line breaks are just spaces), line by line
 function marksIn(comment, lineNo) {
-  const arrows = [], rings = [], sqr = {};
+  const arrows = [], rings = [], sqr = { checks: [] };
   const text = comment.replace(/\[%(cal|csl|sqr)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
-      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8][Ll]?$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SE][a-h][1-8]$/;
+      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8][Ll]?$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SER][a-h][1-8]$/;
       if (!ok.test(item)) throw fail(`line ${lineNo}: "${item}" is not a valid ${kind} mark`, item);
       if (kind === "cal" && item.length === 6 && !isKnightMove(item.slice(1, 3), item.slice(3, 5)))
         throw fail(`line ${lineNo}: "${item}": an L-shaped arrow (L or l at the end) only works for a knight move`, item);
-      if (kind === "sqr") sqr[item[0] === "S" ? "from" : "to"] = item.slice(1);   // [%sqr Sb1,Eb2]: the last-move squares, start and end
+      if (kind === "sqr" && item[0] === "R") sqr.checks.push(item.slice(1));       // [%sqr Rg8]: a red square, for a check
+      else if (kind === "sqr") sqr[item[0] === "S" ? "from" : "to"] = item.slice(1);   // [%sqr Sb1,Eb2]: the last-move squares, start and end
       else if (kind === "cal" && item.slice(1, 3) !== item.slice(3, 5)) arrows.push(item);
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
     }
@@ -99,8 +103,8 @@ export function parse(text) {
           throw fail(`line ${lineNo}: expected "${expected}" before ${move}, found "${pending.tok}"`, pending.tok, pending.occurrence);
       }
       pending = null;
-      const g = /[!?]{1,2}$/.exec(move);                // a move annotation: ! ? !! ?? !? ?!
-      if (g && !GLYPHS.includes(g[0])) throw fail(`line ${lineNo}: "${g[0]}" is not a move annotation (use ! ? !! ?? !? ?!)`, tok, seen[tok]);
+      const g = /(\$\d+|[!?]{1,2})$/.exec(move);           // a move annotation: ! ? !! ?? !? ?! or $7 (forced)
+      if (g && !GLYPHS.includes(g[0])) throw fail(`line ${lineNo}: "${g[0]}" is not a move annotation (use ! ? !! ?? !? ?! or $7)`, tok, seen[tok]);
       glyph = g ? g[0] : "";
       if (g) move = move.slice(0, -g[0].length);
       try { last = game.move(move); moves.push(last.san); }
@@ -110,10 +114,10 @@ export function parse(text) {
     if (!moves.length && !fromFen) return;
     const { note, arrows, rings, sqr } = marksIn(comment, lineNo);
     const from = sqr.from ?? last?.from, to = sqr.to ?? last?.to;
-    if (isPreview) { root.preview = { moves, glyph, fen: game.fen(), from, to, arrows, rings }; return; }
+    if (isPreview) { root.preview = { moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, glyph, fen: game.fen(), from, to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
@@ -121,6 +125,7 @@ export function parse(text) {
       const same = byKey.get(key);
       if (note) same.comment = note;
       if (glyph) same.glyph = glyph;
+      same.checks.push(...sqr.checks);
       if (sqr.from) same.from = sqr.from;
       if (sqr.to) same.to = sqr.to;
       same.arrows.push(...arrows); same.rings.push(...rings);
@@ -128,7 +133,7 @@ export function parse(text) {
       lastNode = same;
       return;
     }
-    const node = { moves, glyph, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
+    const node = { moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
@@ -168,6 +173,10 @@ function tints(parent, node, flipped) {
     const [x, y] = center(sq, flipped);
     el("rect", { x: x - 0.5, y: y - 0.5, width: 1, height: 1, ...green }, g);
   }
+  for (const sq of node.checks ?? []) {   // [%sqr Rg8]: a red square, e.g. the king in check
+    const [x, y] = center(sq, flipped);
+    el("rect", { x: x - 0.5, y: y - 0.5, width: 1, height: 1, ...CHECK_RED }, g);
+  }
 }
 
 // an arrow from one square to another: Lichess-like: thick shaft, short head, transparent.
@@ -194,14 +203,28 @@ function arrow(parent, color, from, to, flipped, elbow) {
   el("polygon", { points: head, fill: color }, g);
 }
 
+// a round badge in the top right corner of a square: "!" "!!", or a grey arrow for a forced move
+function drawBadge(parent, b, sq, flipped) {
+  const [x, y] = center(sq, flipped), cx = x + 0.32, cy = y - 0.32;
+  el("circle", { cx, cy, r: 0.19, fill: b.fill, stroke: "#fff", "stroke-width": 0.03 }, parent);
+  if (b.arrow) {
+    el("path", { d: `M${cx - 0.09},${cy} H${cx + 0.09} M${cx + 0.01},${cy - 0.08} L${cx + 0.09},${cy} L${cx + 0.01},${cy + 0.08}`, fill: "none", stroke: "#fff", "stroke-width": 0.045, "stroke-linecap": "round", "stroke-linejoin": "round" }, parent);
+    return;
+  }
+  const t = el("text", { x: cx, y: cy + (b.text.length > 1 ? 0.085 : 0.1), "text-anchor": "middle", "font-size": b.text.length > 1 ? 0.27 : 0.34, "font-weight": 700, fill: "#fff", "font-family": "Onest, system-ui, sans-serif" }, parent);
+  t.textContent = b.text;
+}
+
 // hover layer (over the pieces): the marks written in the comment
 function marks(parent, node, flipped) {
-  if (!node.arrows?.length && !node.rings?.length) return;
+  const badge = BADGES[node.glyph] && node.to;
+  if (!node.arrows?.length && !node.rings?.length && !badge) return;
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
     el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.102, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
+  if (badge) drawBadge(g, BADGES[node.glyph], node.to, flipped);
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);
 }
 

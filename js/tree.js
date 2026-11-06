@@ -1,10 +1,10 @@
-import { parse, board, showError } from "./board.js?v=46";
+import { parse, board, showError } from "./board.js?v=47";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves, glyph = "") {
   const ply = moves.length;
   if (!ply) return "";   // a position given as a FEN has no last move
-  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}${glyph}`;
+  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}${glyph === "$7" ? "□" : glyph}`;
 }
 
 // a figure: a board with its move caption
