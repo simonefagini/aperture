@@ -23,10 +23,19 @@ function makeFigure(node, flipped) {
 function note(text, side) {
   const p = document.createElement("p");
   p.className = `note ${side}`;
-  // tiny markdown, built with DOM nodes (never innerHTML): **bold**, *italic*, <br>
+  // tiny markdown, built with DOM nodes (never innerHTML): **bold**, *italic*, [text](url), <br>
   const add = (parent, str) => {
-    for (const [, br, bold, ital, plain] of str.matchAll(/(<br\s*\/?>)|\*\*(.+?)\*\*|\*(.+?)\*|([^*<]+|[*<])/gi)) {
+    for (const m of str.matchAll(/(<br\s*\/?>)|\[([^\]]+)\]\(([^)\s]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|([^*<\[]+|[*<\[])/gi)) {
+      const [whole, br, label, url, bold, ital, plain] = m;
       if (br) parent.appendChild(document.createElement("br"));
+      else if (label !== undefined) {
+        const external = /^https?:\/\//i.test(url);
+        if (!external && /^[a-z][a-z0-9+.-]*:/i.test(url)) { parent.appendChild(document.createTextNode(whole)); continue; }   // javascript: and friends stay text
+        const a = parent.appendChild(document.createElement("a"));
+        a.href = url;
+        if (external) { a.target = "_blank"; a.rel = "noopener"; }   // other pages of this site open in the same tab
+        add(a, label);
+      }
       else if (bold !== undefined) add(parent.appendChild(document.createElement("strong")), bold);
       else if (ital !== undefined) add(parent.appendChild(document.createElement("em")), ital);
       else parent.appendChild(document.createTextNode(plain));

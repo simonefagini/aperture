@@ -108,6 +108,10 @@ figure:hover .layer { opacity: 1; }
 .card.empty { opacity: .4; pointer-events: none; }
 
 /* previous / next board buttons: fixed bottom right, very quiet until hovered */
+/* links inside comments */
+.note a { color: inherit; text-decoration: underline; text-underline-offset: .15em; }
+.note a:hover { color: var(--hover-color); }
+
 #stepper { position: fixed; right: .75rem; bottom: .75rem; display: flex; flex-direction: column; z-index: 5; }
 #stepper button {
   width: 2.5rem; height: 2.5rem; padding: 0; border: 0; background: none;
