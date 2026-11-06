@@ -26,6 +26,6 @@ White doesn't want to take on **d6**, allowing Black's queen to develop (**…Qx
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6 Bg3 {White accepts the challenge and plays **Bg3**.}
 d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6 Bg3 O-O
 ~ d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3 Bd6 Bg3 Bxg3 hxg3 {If Black captures on **g3**, White recaptures with **hxg3**, half-opening the h-file for the rook, especially useful if Black castles kingside. [%cal Bh1h6]}
-d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6 Bg3 O-O Bd3 {**Bd3** completes White's standard London setup.[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5][%csl Yc3,Yd4,Ye3]}
+d4 d5 Bf4 Nf6 e3 e6 c3 c5 Nd2 Nc6 Ngf3	Bd6 Bg3 O-O Bd3 {**Bd3** completes White's standard London setup.[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5][%csl Yc3,Yd4,Ye3]} @empty
 
 
