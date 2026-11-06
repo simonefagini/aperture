@@ -8,7 +8,7 @@ d4
 ~ @fen 8/8/8/8/3P1B2/2P1P3/PP3PPP/8 {The London is a system: White builds the same c3–d4–e3 triangle against almost any defense, getting the bishop to f4 before e3 locks it in.}
 
 d4 d5
-d4 d5 Bf4 {**Bf4 before e3.**<br>Often called the *Accelerated London*; after the 2010s, it's the main London move order.}
+d4 d5 Bf4 {**Bf4 before e3.**<br>Often called the *Accelerated London*; the main London move order since the 2010s.}
 ~ d4 d5 Nf3 {Nf3 keeps the dark-squared bishop uncommitted, so White can
 still choose c4, e3, Bg5 or Bf4 depending on Black's setup.
 It was the original setup of the London System, named after London 1922.}
