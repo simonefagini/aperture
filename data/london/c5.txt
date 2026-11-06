@@ -1,40 +1,9 @@
 # London System: 2...c5, the Steinitz countergambit. Every line is one board: all the moves from the start, SAN.
-# Source for the lines: https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...d5/2._Bf4/2...c5
-# See data/legend.txt for the syntax.
+# Reference: https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...d5/2._Bf4/2...c5
+# See data/legend.txt for the syntax. The lines are left to study.
 @preview d4 d5 Bf4 c5 {[%cal Gc5d4]}
 
 d4
 d4 d5
 d4 d5 Bf4
-d4 d5 Bf4 c5 {Black hits d4 at once, before White has played e3: the **Steinitz countergambit**.<br>White can decline it (**e3** is the usual way), accept it, or answer with a counter-gambit.}
-~ d4 d5 Bf4 c5 c3 {Declining with c3 usually transposes into the Accelerated London.}
-~ d4 d5 Bf4 c5 Nf3 {So does Nf3.}
-
-# decline: e3
-d4 d5 Bf4 c5 e3
-d4 d5 Bf4 c5 e3 Nf6 {Transposes to the main line.} @empty
-
-# decline: Nc3
-d4 d5 Bf4 c5 Nc3
-d4 d5 Bf4 c5 Nc3 cxd4
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 Nc6 {A mistake: **Qxd5** wins a pawn.}
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 Nc6 Qxd5
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 Nc6 Qxd5 Qxd5
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 Nc6 Qxd5 Qxd5 Nxd5 {White is clearly better.}
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 e6 {**Bxb8!** wins material.}
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 e6 Bxb8
-d4 d5 Bf4 c5 Nc3 cxd4 Qxd4 e6 Bxb8 Rxb8
-
-# accept: dxc5
-d4 d5 Bf4 c5 dxc5 {Accepting the gambit is dubious (Mason v. Steinitz, 1883).}
-d4 d5 Bf4 c5 dxc5 Nc6
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3 f6
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3 f6 e3
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3 f6 e3 e5
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3 f6 e3 e5 Bg3
-d4 d5 Bf4 c5 dxc5 Nc6 Nf3 f6 e3 e5 Bg3 Bxc5
-
-# countergambit: e4
-d4 d5 Bf4 c5 e4 {The Morris countergambit.}
+d4 d5 Bf4 c5 @empty
