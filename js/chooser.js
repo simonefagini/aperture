@@ -7,6 +7,7 @@ const OPENINGS = {
     flipped: false,
     variations: [
       { name: "Main line (Accelerated London)", moves: "d4 d5 Bf4 {[%cal Gc1f4]}", page: "london-main.html" },
+      { name: "2...c5 (Steinitz Countergambit)", moves: "d4 d5 Bf4 c5 {[%cal Gc5d4]}", page: "london-c5.html" },
     ],
   },
 };
