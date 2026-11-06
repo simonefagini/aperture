@@ -92,8 +92,8 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
-/* an eclipse: a cut-out disc slides across the circle, leaving a crescent (--p: 1 light, 0 dark) */
-@property --p { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* an eclipse: a cut-out disc slides across the circle, leaving a crescent (--p: 0 light, 1 dark): it shows the mode you would switch to */
+@property --p { syntax: '<number>'; inherits: false; initial-value: 0; }
 #theme-toggle::before {
   content: '';
   --cut-x: calc(0.38rem + var(--p) * 0.72rem);
@@ -104,7 +104,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
   mask: radial-gradient(circle at calc(50% + var(--cut-x)) calc(50% + var(--cut-y)), transparent calc(0.55rem - 0.5px), #000 0.55rem);
   transition: --p .8s ease-in-out, background-color .3s ease;
 }
-:root[data-theme="dark"] #theme-toggle::before { --p: 0; }
+:root[data-theme="dark"] #theme-toggle::before { --p: 1; }
 #theme-toggle:hover::before { background-color: var(--hover-color); }
 #tree { overflow-x: auto; }
 #tree svg { display: block; margin: 0 auto; max-width: none; }
