@@ -116,4 +116,4 @@ figure:hover .layer { opacity: 1; }
   transition: opacity .3s ease, color .3s ease; -webkit-tap-highlight-color: transparent;
 }
 #stepper button:hover { opacity: 1; color: var(--hover-color); }
-#stepper svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#stepper svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
