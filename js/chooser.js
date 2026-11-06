@@ -6,7 +6,7 @@ const OPENINGS = {
   london: {
     flipped: false,
     variations: [
-      { name: "Main line", moves: "d4 d5 Bf4 {[%cal Gc1f4]}", page: "london-main.html" },
+      { name: "Main line (Accelerated London)", moves: "d4 d5 Bf4 {[%cal Gc1f4]}", page: "london-main.html" },
     ],
   },
 };
