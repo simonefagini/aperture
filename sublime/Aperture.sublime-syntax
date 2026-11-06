@@ -29,9 +29,9 @@ contexts:
       scope: punctuation.definition.comment.begin.aperture
       push: comment
     # moves: castling, then the rest of SAN
-    - match: '(?<![\w%])(?:O-O-O|O-O)[+#]?(?![\w-])'
+    - match: '(?<![\w%])(?:O-O-O|O-O)[+#]?[!?]{0,2}(?![\w-])'
       scope: variable.function.move.castle.aperture
-    - match: '(?<![\w%])(?:[KQRBN][a-h]?[1-8]?x?[a-h][1-8]|[a-h]x[a-h][1-8]|[a-h][1-8])(?:=[QRBN])?[+#]?(?![\w])'
+    - match: '(?<![\w%])(?:[KQRBN][a-h]?[1-8]?x?[a-h][1-8]|[a-h]x[a-h][1-8]|[a-h][1-8])(?:=[QRBN])?[+#]?[!?]{0,2}(?![\w])'
       scope: variable.function.move.aperture
     # move numbers, if you write them: 1. or 1...
     - match: '\b\d+\.(?:\.\.)?'

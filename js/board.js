@@ -9,6 +9,7 @@ const MARK_COLORS = { G: "#15781b", R: "#d03a3a", Y: "#e68f00", B: "#1d56c0" };
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1";
 // an error that knows the offending token (and which occurrence of it), so the page can point at it
 const fail = (message, token, occurrence = 0) => Object.assign(new Error(message), { token, occurrence });
+const GLYPHS = ["!", "?", "!!", "??", "!?", "?!"];   // as in PGN: good, mistake, brilliant, blunder, interesting, dubious
 const NS = "http://www.w3.org/2000/svg";
 
 // a knight's move: one square along one axis, two along the other
@@ -77,7 +78,7 @@ export function parse(text) {
       fromFen = true;
     }
     const moves = [];
-    let comment = "", last, more = false, pending = null;
+    let comment = "", last, more = false, pending = null, glyph = "";
     const seen = {};   // how many times each token has appeared, to point at the right one in an error
     for (const [, c, tok] of line.matchAll(/\{([^}]*)\}|(\S+)/g)) {
       if (c !== undefined) { comment = c; continue; }   // a {comment} belongs to the move before it
@@ -98,6 +99,10 @@ export function parse(text) {
           throw fail(`line ${lineNo}: expected "${expected}" before ${move}, found "${pending.tok}"`, pending.tok, pending.occurrence);
       }
       pending = null;
+      const g = /[!?]{1,2}$/.exec(move);                // a move annotation: ! ? !! ?? !? ?!
+      if (g && !GLYPHS.includes(g[0])) throw fail(`line ${lineNo}: "${g[0]}" is not a move annotation (use ! ? !! ?? !? ?!)`, tok, seen[tok]);
+      glyph = g ? g[0] : "";
+      if (g) move = move.slice(0, -g[0].length);
       try { last = game.move(move); moves.push(last.san); }
       catch (e) { throw fail(`line ${lineNo}: "${move}" is not a legal move here`, tok, seen[tok]); }
       comment = "";                                       // only a comment after the last move counts
@@ -105,16 +110,17 @@ export function parse(text) {
     if (!moves.length && !fromFen) return;
     const { note, arrows, rings, sqr } = marksIn(comment, lineNo);
     const from = sqr.from ?? last?.from, to = sqr.to ?? last?.to;
-    if (isPreview) { root.preview = { moves, fen: game.fen(), from, to, arrows, rings }; return; }
+    if (isPreview) { root.preview = { moves, glyph, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, fen: game.fen(), from, to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, glyph, fen: game.fen(), from, to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
       if (note) same.comment = note;
+      if (glyph) same.glyph = glyph;
       if (sqr.from) same.from = sqr.from;
       if (sqr.to) same.to = sqr.to;
       same.arrows.push(...arrows); same.rings.push(...rings);
@@ -122,7 +128,7 @@ export function parse(text) {
       lastNode = same;
       return;
     }
-    const node = { moves, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
+    const node = { moves, glyph, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
@@ -180,7 +186,7 @@ function arrow(parent, color, from, to, flipped, elbow) {
   const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
   const bx = tx - ux * 0.45, by = ty - uy * 0.45;            // base of the head
   const head = `${tx},${ty} ${bx - uy * 0.31},${by + ux * 0.31} ${bx + uy * 0.31},${by - ux * 0.31}`;
-  const sx = corner ? x0 + u1x * 0.2 : x0 + ux * 0.2, sy = corner ? y0 + u1y * 0.2 : y0 + uy * 0.2;   // start, just off the centre
+  const sx = corner ? x0 + u1x * 0.1 : x0 + ux * 0.1, sy = corner ? y0 + u1y * 0.1 : y0 + uy * 0.1;   // start, just off the centre
   const end = `${bx + ux * 0.05},${by + uy * 0.05}`;
   const path = corner ? `M${sx},${sy} L${cx},${cy} L${end}` : `M${sx},${sy} L${end}`;   // an L has a sharp corner
   const g = el("g", { opacity: 0.72 }, parent);             // one opacity for the whole arrow, so shaft and head do not double up
@@ -194,7 +200,7 @@ function marks(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
-    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.12, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
+    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.102, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped, item[5]);
 }

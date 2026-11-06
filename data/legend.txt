@@ -19,6 +19,12 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    the line and the culprit marked. After a ~ @fen position the numbers are
    not checked, as the game does not start from move 1.
 
+   Move annotations go right after a move, as in PGN: ! (good) ? (mistake)
+   !! (brilliant) ?? (blunder) !? (interesting) ?! (dubious). The one on the last move
+   of a line shows in the caption of its board:
+
+       1. d4 d5 2. Bf4! c5?!
+
 2. BRANCHES
    Repeat the same moves and play something else:
 

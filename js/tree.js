@@ -1,10 +1,10 @@
-import { parse, board, showError } from "./board.js?v=45";
+import { parse, board, showError } from "./board.js?v=46";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
-function label(moves) {
+function label(moves, glyph = "") {
   const ply = moves.length;
   if (!ply) return "";   // a position given as a FEN has no last move
-  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}`;
+  return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${moves[ply - 1]}${glyph}`;
 }
 
 // a figure: a board with its move caption
@@ -16,7 +16,7 @@ function makeFigure(node, flipped) {
     if (e.metaKey || e.ctrlKey) window.open(`https://www.chess.com/analysis?fen=${encodeURI(node.fen)}&flip=${flipped}`, "_blank", "noopener");
   });
   const cap = document.createElement("figcaption");
-  cap.textContent = label(node.moves);
+  cap.textContent = label(node.moves, node.glyph);
   fig.appendChild(cap);
   return fig;
 }
