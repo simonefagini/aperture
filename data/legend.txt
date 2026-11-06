@@ -35,6 +35,8 @@ LEGEND: how to write a line in london.txt
 
    Marks ([%cal ...], [%csl ...]) can go on
    any line and are not shown as text.
+   [%sqr Sb1,Eb2] highlights a start (S) and an end (E) square like a last move,
+   handy for a ~ @fen board that has no move of its own.
    Boards at the left end of a row show it on the left, at the right end on the
    right, and on a narrow screen under the board.
 

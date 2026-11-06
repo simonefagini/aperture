@@ -3,24 +3,25 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
 // printed-diagram look: paper squares, dark squares hatched with ink (same in light and dark mode)
 const PAPER = "#f0eadc", INK = "#1a1a1a";
 // last-move highlight, as in most engines: lighter green for the square it left, darker for where it landed
-const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.6 }, TO_GREEN = { fill: "#6fa83a", "fill-opacity": 0.7 };
+const FROM_GREEN = { fill: "#b5d86a", "fill-opacity": 0.4 }, TO_GREEN = { fill: "#6fa83a", "fill-opacity": 0.45 };
 // Lichess-style marks: G/R/Y/B in [%cal ...] (arrows) and [%csl ...] (circles)
 const MARK_COLORS = { G: "#15781b", R: "#882020", Y: "#e68f00", B: "#003088" };
 const NS = "http://www.w3.org/2000/svg";
 
 // pull the [%cal ...] / [%csl ...] codes out of a comment; what is left is its text, all on one flow (line breaks are just spaces), line by line
 function marksIn(comment, lineNo) {
-  const arrows = [], rings = [];
-  const text = comment.replace(/\[%(cal|csl)\s+([^\]]*)\]/g, (_, kind, list) => {
+  const arrows = [], rings = [], sqr = {};
+  const text = comment.replace(/\[%(cal|csl|sqr)\s+([^\]]*)\]/g, (_, kind, list) => {
     for (const item of list.split(/[\s,]+/).filter(Boolean)) {
-      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8]$/ : /^[GRYB][a-h][1-8]$/;
+      const ok = kind === "cal" ? /^[GRYB][a-h][1-8][a-h][1-8]$/ : kind === "csl" ? /^[GRYB][a-h][1-8]$/ : /^[SE][a-h][1-8]$/;
       if (!ok.test(item)) throw new Error(`line ${lineNo}: "${item}" is not a valid ${kind} mark`);
-      if (kind === "cal" && item.slice(1, 3) !== item.slice(3, 5)) arrows.push(item);
+      if (kind === "sqr") sqr[item[0] === "S" ? "from" : "to"] = item.slice(1);   // [%sqr Sb1,Eb2]: the last-move squares, start and end
+      else if (kind === "cal" && item.slice(1, 3) !== item.slice(3, 5)) arrows.push(item);
       else rings.push(kind === "cal" ? item.slice(0, 3) : item);   // an arrow from a square to itself is a circle
     }
     return "";
   }).replace(/\s+/g, " ").trim();
-  return { note: text, arrows, rings };
+  return { note: text, arrows, rings, sqr };
 }
 
 // the file as logical lines [first line number, text]: a { comment } may run over several lines,
@@ -68,22 +69,25 @@ export function parse(text) {
       comment = "";                                       // only a comment after the last move counts
     }
     if (!moves.length && !fromFen) return;
-    const { note, arrows, rings } = marksIn(comment, lineNo);
-    if (isPreview) { root.preview = { moves, fen: game.fen(), from: last.from, to: last.to, arrows, rings }; return; }
+    const { note, arrows, rings, sqr } = marksIn(comment, lineNo);
+    const from = sqr.from ?? last?.from, to = sqr.to ?? last?.to;
+    if (isPreview) { root.preview = { moves, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, fen: game.fen(), from: last?.from, to: last?.to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, fen: game.fen(), from, to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
     if (byKey.has(key)) {   // repeated line: keep the first board, take any comment or marks from this one
       const same = byKey.get(key);
       if (note) same.comment = note;
+      if (sqr.from) same.from = sqr.from;
+      if (sqr.to) same.to = sqr.to;
       same.arrows.push(...arrows); same.rings.push(...rings);
       lastNode = same;
       return;
     }
-    const node = { moves, fen: game.fen(), from: last.from, to: last.to, comment: note, arrows, rings, asides: [], children: [] };
+    const node = { moves, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [] };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
@@ -110,25 +114,25 @@ function center(sq, flipped) {
   return flipped ? [7 - f + 0.5, 7 - r + 0.5] : [f + 0.5, r + 0.5];
 }
 
-// hover layer (under the pieces): tint the squares the last move went from and to
+// hover layer: tint the squares the last move went from and to
 function tints(parent, node, flipped) {
-  if (!node.from) return;
   const g = el("g", { class: "layer" }, parent);
   for (const [sq, green] of [[node.from, FROM_GREEN], [node.to, TO_GREEN]]) {
+    if (!sq) continue;
     const [x, y] = center(sq, flipped);
     el("rect", { x: x - 0.5, y: y - 0.5, width: 1, height: 1, ...green }, g);
   }
 }
 
-// an arrow from one square to another: thin shaft, long pointed head, slightly transparent
+// an arrow from one square to another: Lichess-like: thick shaft, short head, transparent
 function arrow(parent, color, from, to, flipped) {
   const [x0, y0] = center(from, flipped), [x1, y1] = center(to, flipped);
   const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L;
   const tx = x1 - ux * 0.05, ty = y1 - uy * 0.05;            // tip
-  const bx = tx - ux * 0.55, by = ty - uy * 0.55;            // base of the head
-  const head = `${tx},${ty} ${bx - uy * 0.17},${by + ux * 0.17} ${bx + uy * 0.17},${by - ux * 0.17}`;
-  const g = el("g", { opacity: 0.75 }, parent);              // one opacity for the whole arrow, so shaft and head do not double up
-  el("line", { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx, y2: by, stroke: color, "stroke-width": 0.09, "stroke-linecap": "round" }, g);
+  const bx = tx - ux * 0.4, by = ty - uy * 0.4;              // base of the head
+  const head = `${tx},${ty} ${bx - uy * 0.25},${by + ux * 0.25} ${bx + uy * 0.25},${by - ux * 0.25}`;
+  const g = el("g", { opacity: 0.6 }, parent);              // one opacity for the whole arrow, so shaft and head do not double up
+  el("line", { x1: x0 + ux * 0.2, y1: y0 + uy * 0.2, x2: bx + ux * 0.05, y2: by + uy * 0.05, stroke: color, "stroke-width": 0.16, "stroke-linecap": "butt" }, g);
   el("polygon", { points: head, fill: color }, g);
 }
 
@@ -138,8 +142,7 @@ function marks(parent, node, flipped) {
   const g = el("g", { class: "layer" }, parent);
   for (const item of node.rings) {
     const [x, y] = center(item.slice(1), flipped);
-    el("circle", { cx: x, cy: y, r: 0.44, fill: "none", stroke: PAPER, "stroke-width": 0.17 }, g);   // halo
-    el("circle", { cx: x, cy: y, r: 0.44, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.09 }, g);
+    el("circle", { cx: x, cy: y, r: 0.42, fill: "none", stroke: MARK_COLORS[item[0]], "stroke-width": 0.12, opacity: 0.6 }, g);   // same colour and transparency as the arrows, no outline
   }
   for (const item of node.arrows) arrow(g, MARK_COLORS[item[0]], item.slice(1, 3), item.slice(3, 5), flipped);
 }
@@ -160,7 +163,6 @@ export function board(node, flipped) {
     el("text", { class: "coord", x: i + 0.5, y: 8.4 }, svg).textContent = file;
     el("text", { class: "coord", x: -0.28, y: i + 0.62 }, svg).textContent = rank;
   }
-  tints(svg, node, flipped);
   fen.split(" ")[0].split("/").forEach((row, r) => {
     let f = 0;
     for (const ch of row) {
@@ -171,6 +173,7 @@ export function board(node, flipped) {
       f++;
     }
   });
+  tints(svg, node, flipped);   // hover layers sit on top of the pieces
   marks(svg, node, flipped);
   return svg;
 }
