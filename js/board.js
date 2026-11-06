@@ -123,11 +123,12 @@ export function parse(text) {
     if (!moves.length && !fromFen) return;
     const { note, arrows, rings, sqr } = marksIn(comment, lineNo);
     const from = sqr.from ?? last?.from, to = sqr.to ?? last?.to;
-    if (last?.san.endsWith("#")) sqr.checks.push(kingSquare(game));   // checkmate: the mated king gets a red square
-    if (isPreview) { root.preview = { moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, arrows, rings }; return; }
+    if (last?.san.endsWith("+")) sqr.checks.push(kingSquare(game));   // check: the king in check gets a red square
+    const mated = last?.san.endsWith("#") ? kingSquare(game) : undefined;   // checkmate: that king is laid upside down
+    if (isPreview) { root.preview = { moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings });
       return;
     }
     const key = moves.join(" ");
@@ -135,6 +136,7 @@ export function parse(text) {
       const same = byKey.get(key);
       if (note) same.comment = note;
       if (glyph) same.glyph = glyph;
+      if (mated) same.mated = mated;
       same.checks.push(...sqr.checks);
       if (sqr.from) same.from = sqr.from;
       if (sqr.to) same.to = sqr.to;
@@ -143,7 +145,7 @@ export function parse(text) {
       lastNode = same;
       return;
     }
-    const node = { moves, glyph, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
+    const node = { moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings, asides: [], children: [], more };
     byKey.set(key, node);
     nodes.push(node);
     lastNode = node;
@@ -260,7 +262,9 @@ export function board(node, flipped) {
       if (/\d/.test(ch)) { f += +ch; continue; }
       const piece = (ch === ch.toUpperCase() ? "w" : "b") + ch.toUpperCase();
       const [x, y] = flipped ? [7 - f, 7 - r] : [f, r];
-      el("image", { href: `pieces/${piece}.svg`, x, y, width: 1, height: 1 }, svg);
+      const sq = "abcdefgh"[f] + (8 - r);
+      const upsideDown = sq === node.mated;   // a mated king lies upside down, as in the old days
+      el("image", { href: `pieces/${piece}.svg`, x, y, width: 1, height: 1, ...(upsideDown ? { class: "mated", transform: `rotate(180 ${x + 0.5} ${y + 0.5})` } : {}) }, svg);
       f++;
     }
   });

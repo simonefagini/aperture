@@ -71,8 +71,9 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    leg first) after the squares, e.g. [%cal Gg1f3L,Gb1c3l]. Only for knight moves.
    [%sqr Sb1,Eb2] highlights a start (S) and an end (E) square like a last move,
    handy for a ~ @fen board that has no move of its own.
-   [%sqr Rg8] marks a square red, for a check.
-   A checkmate (# in the SAN) marks the mated king's square red by itself.
+   [%sqr Rg8] marks any square red.
+   A check (+ in the SAN) marks the square of the king in check red by itself, and a
+   checkmate (#) lays the mated king upside down, as was once done on the board.
    Boards at the left end of a row show it on the left, at the right end on the
    right, and on a narrow screen under the board.
 

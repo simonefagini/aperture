@@ -178,3 +178,6 @@ body.study .coord { display: none; }
 .tester #msg { min-height: 1.4em; margin: 0; max-width: 40rem; color: #d03a3a; font-size: .9rem; }
 .tester #flip { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; }
 .tester #flip:hover { color: var(--hover-color); }
+
+/* study mode shows the mated king upright too */
+body.study .mated { transform: none; }
