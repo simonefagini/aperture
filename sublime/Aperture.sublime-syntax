@@ -43,8 +43,10 @@ contexts:
       scope: punctuation.definition.comment.end.aperture
       pop: true
     # [%cal ...] arrows, [%csl ...] circles, [%sqr ...] last-move squares
-    - match: '\[%(?:cal|csl|sqr)\b'
-      scope: keyword.other.mark.aperture
+    - match: '(\[)(%(?:cal|csl|sqr))\b'
+      captures:
+        1: punctuation.section.mark.begin.aperture
+        2: keyword.other.mark.aperture
       push: mark
     # [text](url)
     - match: '(\[)([^\]%][^\]]*)(\])(\()([^)\s]+)(\))'
@@ -61,6 +63,7 @@ contexts:
   mark:
     - meta_scope: meta.mark.aperture
     - match: '\]'
+      scope: punctuation.section.mark.end.aperture
       pop: true
     # G/R/Y/B (the colour), then the square(s), then L or l for a bent knight arrow
     - match: '\b([GRYB])([a-h][1-8])(?:([a-h][1-8])([Ll])?)?\b'

@@ -1,0 +1,6 @@
+<snippet>
+  <content><![CDATA[[%csl ${1:Ge4}]]]></content>
+  <tabTrigger>csl</tabTrigger>
+  <scope>text.aperture</scope>
+  <description>Circles: colour G/R/Y/B, then the square</description>
+</snippet>
