@@ -38,6 +38,9 @@ a:hover { color: var(--hover-color); }
 main { --b: min(20.8rem, calc((100vw - 3rem) / 2)); padding: 4.5rem 1rem 3rem; text-align: center; }
 h1 { margin: 0 0 3rem; font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 600; line-height: 1.1; }
 
+h1:has(+ .subtitle) { margin-bottom: .5rem; }
+.subtitle { margin: 0 0 3rem; font-size: clamp(1.1rem, 3vw, 1.4rem); color: var(--muted); }
+
 /* every board has the same size (--b); a board's replies sit in a row below it */
 figure { position: relative; margin: 0; width: var(--b); }
 figcaption { margin-top: 0; font-weight: 600; }
