@@ -99,6 +99,13 @@ function enableKeys() {
     treeEl.scrollLeft += r.left + r.width / 2 - (t.left + t.width / 2);   // centre it when the tree is wider than the screen
   }
 
+  function move(step) {
+    const target = figs[figs.indexOf(current()) + step];
+    if (!target) return false;              // first or last board
+    go(target);
+    return true;
+  }
+
   addEventListener("keydown", e => {
     const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
     if (!step || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -107,6 +114,19 @@ function enableKeys() {
     e.preventDefault();
     go(target);
   });
+
+  // two subtle buttons, bottom right: the same as the arrow keys (for touch screens, and a hint that the keys work)
+  const nav = document.createElement("div");
+  nav.id = "stepper";
+  for (const [step, label, d] of [[-1, "previous board", "M6 15l6-6 6 6"], [1, "next board", "M6 9l6 6 6-6"]]) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", label);
+    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+    b.addEventListener("click", () => move(step));
+    nav.appendChild(b);
+  }
+  document.body.appendChild(nav);
 }
 
 async function main() {

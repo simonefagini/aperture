@@ -106,3 +106,14 @@ figure:hover .layer { opacity: 1; }
 #grid figure { width: 100%; }
 .card:hover figcaption { color: var(--hover-color); }
 .card.empty { opacity: .4; pointer-events: none; }
+
+/* previous / next board buttons: fixed bottom right, very quiet until hovered */
+#stepper { position: fixed; right: .75rem; bottom: .75rem; display: flex; gap: .15rem; z-index: 5; }
+#stepper button {
+  width: 2.5rem; height: 2.5rem; padding: 0; border: 0; background: none;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--toggle-color); opacity: .4; cursor: pointer;
+  transition: opacity .3s ease, color .3s ease; -webkit-tap-highlight-color: transparent;
+}
+#stepper button:hover { opacity: 1; color: var(--hover-color); }
+#stepper svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
