@@ -1,9 +1,14 @@
 # London System: 2...c5, the Steinitz countergambit. Every line is one board: all the moves from the start, SAN.
 # Reference: https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...d5/2._Bf4/2...c5
 # See data/legend.txt for the syntax. The lines are left to study.
-@preview d4 d5 Bf4 c5 {[%cal Gc5d4]}
+@preview d4 d5 Bf4 c5 {[%cal Rc5d4]}
 
 d4
 d4 d5
 d4 d5 Bf4
-d4 d5 Bf4 c5 @empty
+d4 d5 Bf4 c5 {[%cal Rc5d4]}
+
+
+
+
+@empty
