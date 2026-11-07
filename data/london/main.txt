@@ -24,10 +24,10 @@
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3	Bd6 {Black's dark-squared bishop challenges White's bishop on **f4**.<br>
 White doesn't want to take on **d6**, allowing Black's queen to develop (**…Qxd6**), nor to be forced to recapture with **exf4**, doubling the f-pawns. [%cal Rd6f4,Yd8d6,Ye3f4][%csl Yc3,Yd4]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3	Bd6 7. Bg3 {White keeps the bishop with **Bg3**.}
-~ @fen r1b2rk1/pp2qppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2Q1RK1 {Note that after **7...O-O 8. Bd3 Qe7** a White King's side castle would be quite good for Black after a bishop exchange in g3, leaving an open h-file and a weaker king. [%cal Rd6g3, Gh2g3, Bh8h1][%sqr Se1 Eg1]}
+~ @fen r1b2rk1/pp2qppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2Q1RK1 {Note that after **7...O-O 8.Bd3 Qe7**, White castling kingside would be less good: after a bishop exchange on **g3** (**…Bxg3 hxg3**), White no longer has a rook to use the half-open h-file. [%cal Rd6g3, Gh2g3][%csl Bh8][%sqr Se1 Eg1]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 O-O
 ~ 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 Bxg3 8. hxg3 {If Black captures on **g3**, White recaptures with **hxg3**, half-opening the h-file for the rook, especially useful if Black castles kingside. [%cal Bh1h6]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 {**Bd3** completes White's standard London setup.[%cal Rd3h7,Rh1h7,Gd1c2,Gf3e5][%csl Yc3,Yd4,Ye3]} @empty
 ~ 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 Re8 9. Ne5 Bxe5 10. dxe5 Nd7 11. f4 {After **8...Re8**, White proceeds with his plan **9.Ne5**, and after **9...Bxe5 10.dxe5 Nd7 11.f4**, White already has a slightly better position. [%csl Gf6,Ye5,Yf4]}
-
+1.d4 
 
