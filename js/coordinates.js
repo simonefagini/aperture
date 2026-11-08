@@ -7,7 +7,12 @@ const stage = document.getElementById("stage"), input = document.getElementById(
 const boxes = [...panel.querySelectorAll("input")];
 let flipped = false, target = null;
 
-const enabled = () => boxes.filter(b => b.checked).map(b => b.value);
+// the ticked files / ranks (none ticked counts as all, so there is always a square to ask)
+const picked = group => {
+  const all = boxes.filter(b => b.dataset.group === group);
+  const on = all.filter(b => b.checked);
+  return (on.length ? on : all).map(b => b.value);
+};
 
 function draw() {
   const fig = document.createElement("figure");
@@ -20,9 +25,11 @@ function draw() {
 
 // a new square on one of the enabled files, never the same twice in a row
 function next() {
-  const files = enabled();
+  const files = picked("files"), ranks = picked("ranks");
+  if (files.length * ranks.length === 1 && files[0] + ranks[0] === target) return;   // only one square to ask
+  const any = list => list[Math.floor(Math.random() * list.length)];
   let sq;
-  do sq = files[Math.floor(Math.random() * files.length)] + (1 + Math.floor(Math.random() * 8));
+  do sq = any(files) + any(ranks);
   while (sq === target);
   target = sq;
   draw();
@@ -40,21 +47,26 @@ function setHidden(on) {
   document.body.classList.toggle("nocoords", on);
   toggle.setAttribute("aria-pressed", on);
   toggle.setAttribute("aria-label", on ? "show the coordinates" : "hide the coordinates");
-  try { localStorage.setItem("aperture-coords-hidden", on ? "1" : "0"); } catch (e) {}
 }
 toggle.addEventListener("click", () => { setHidden(!document.body.classList.contains("nocoords")); input.focus(); });
-try { setHidden(localStorage.getItem("aperture-coords-hidden") === "1"); } catch (e) {}
 
-// the files: remembered, and at least one stays on
+// the files and ranks: remembered; "all" and "none" tick a whole row at once
+const KEY = "aperture-coords-picked";
 try {
-  const saved = JSON.parse(localStorage.getItem("aperture-coords-files"));
-  if (Array.isArray(saved) && saved.some(f => FILES.includes(f))) boxes.forEach(b => { b.checked = saved.includes(b.value); });
+  const saved = JSON.parse(localStorage.getItem(KEY));
+  if (saved) boxes.forEach(b => { if (Array.isArray(saved[b.dataset.group])) b.checked = saved[b.dataset.group].includes(b.value); });
 } catch (e) {}
-panel.addEventListener("change", e => {
-  if (!enabled().length) e.target.checked = true;
-  try { localStorage.setItem("aperture-coords-files", JSON.stringify(enabled())); } catch (err) {}
-  if (!enabled().includes(target[0])) next();
+function changed() {
+  try { localStorage.setItem(KEY, JSON.stringify({ files: boxes.filter(b => b.dataset.group === "files" && b.checked).map(b => b.value), ranks: boxes.filter(b => b.dataset.group === "ranks" && b.checked).map(b => b.value) })); } catch (err) {}
+  if (!picked("files").includes(target[0]) || !picked("ranks").includes(target[1])) next();
   input.focus();
+}
+panel.addEventListener("change", changed);
+panel.addEventListener("click", e => {
+  const set = e.target.dataset?.set;
+  if (!set) return;
+  boxes.filter(b => b.dataset.group === e.target.parentElement.dataset.group).forEach(b => { b.checked = set === "all"; });
+  changed();
 });
 
 input.addEventListener("keydown", e => {
@@ -66,3 +78,6 @@ input.addEventListener("keydown", e => {
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); input.focus(); });
 next();
 input.focus();
+document.addEventListener("keydown", e => {   // typing anywhere starts typing in the input
+  if (e.key.length === 1 && e.key !== " " && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement !== input) input.focus();
+});

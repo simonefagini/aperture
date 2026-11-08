@@ -70,11 +70,12 @@ function setStudy(on) {
   document.body.classList.toggle("study", on);
   studyButton.setAttribute("aria-pressed", on);
   studyButton.setAttribute("aria-label", on ? "leave study mode" : "study mode");
-  try { localStorage.setItem("aperture-study", on ? "1" : "0"); } catch (e) {}
 }
 studyButton.addEventListener("click", () => setStudy(!document.body.classList.contains("study")));
-try { setStudy(localStorage.getItem("aperture-study") === "1"); } catch (e) {}
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); });
 input.value = "1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf4c7]}";
 update();
 input.focus();
+document.addEventListener("keydown", e => {   // typing anywhere starts typing in the input
+  if (e.key.length === 1 && e.key !== " " && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement !== input) input.focus();
+});

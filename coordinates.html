@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
   <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <script src="js/theme.js?v=37"></script>
-  <link rel="stylesheet" href="style.css?v=79">
+  <link rel="stylesheet" href="style.css?v=80">
 </head>
 <body class="marks">
   <nav id="nav">
@@ -35,19 +35,13 @@
       </div>
     </div>
     <div class="lower">
-      <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="type the square, e.g. e4">
+      <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="start typing.." autofocus>
       <div id="files" hidden>
-        <label><input type="checkbox" value="a" checked> a</label>
-        <label><input type="checkbox" value="b" checked> b</label>
-        <label><input type="checkbox" value="c" checked> c</label>
-        <label><input type="checkbox" value="d" checked> d</label>
-        <label><input type="checkbox" value="e" checked> e</label>
-        <label><input type="checkbox" value="f" checked> f</label>
-        <label><input type="checkbox" value="g" checked> g</label>
-        <label><input type="checkbox" value="h" checked> h</label>
+        <div class="row" data-group="files"><span class="what">files</span><label><input type="checkbox" data-group="files" value="a" checked> a</label><label><input type="checkbox" data-group="files" value="b" checked> b</label><label><input type="checkbox" data-group="files" value="c" checked> c</label><label><input type="checkbox" data-group="files" value="d" checked> d</label><label><input type="checkbox" data-group="files" value="e" checked> e</label><label><input type="checkbox" data-group="files" value="f" checked> f</label><label><input type="checkbox" data-group="files" value="g" checked> g</label><label><input type="checkbox" data-group="files" value="h" checked> h</label><button type="button" data-set="all">all</button><button type="button" data-set="none">none</button></div>
+        <div class="row" data-group="ranks"><span class="what">ranks</span><label><input type="checkbox" data-group="ranks" value="1" checked> 1</label><label><input type="checkbox" data-group="ranks" value="2" checked> 2</label><label><input type="checkbox" data-group="ranks" value="3" checked> 3</label><label><input type="checkbox" data-group="ranks" value="4" checked> 4</label><label><input type="checkbox" data-group="ranks" value="5" checked> 5</label><label><input type="checkbox" data-group="ranks" value="6" checked> 6</label><label><input type="checkbox" data-group="ranks" value="7" checked> 7</label><label><input type="checkbox" data-group="ranks" value="8" checked> 8</label><button type="button" data-set="all">all</button><button type="button" data-set="none">none</button></div>
       </div>
     </div>
   </main>
-  <script type="module" src="js/coordinates.js?v=1"></script>
+  <script type="module" src="js/coordinates.js?v=2"></script>
 </body>
 </html>
