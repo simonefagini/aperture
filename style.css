@@ -140,24 +140,16 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 .variation:hover .name { color: var(--hover-color); }
 .variation.empty { opacity: .4; pointer-events: none; }
 
-/* home icon: a little grid next to the eclipse toggle, back to all the openings */
-#home {
-  position: absolute; top: 1rem; right: 3.25rem; width: 2.5rem; height: 2.5rem;
+/* links next to the eclipse toggle, in one row: the coordinates board, the test board, home (back to all the openings) */
+#nav { position: absolute; top: 1rem; right: 3.25rem; display: flex; }
+#nav a {
+  width: 2.5rem; height: 2.5rem; margin-left: -.25rem;
   display: flex; align-items: center; justify-content: center;
   color: var(--toggle-color); transition: color .3s ease;
 }
-#home:hover { color: var(--hover-color); }
-#home svg { width: 1.36rem; height: 1.36rem; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linejoin: round; }
-
-/* test board link: a flask, one step further left (where home would be, on the home page itself) */
-#testlink {
-  position: absolute; top: 1rem; right: 5.5rem; width: 2.5rem; height: 2.5rem;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--toggle-color); transition: color .3s ease;
-}
-body:not(:has(#home)) #testlink { right: 3.25rem; }
-#testlink:hover { color: var(--hover-color); }
-#testlink svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#nav a:hover { color: var(--hover-color); }
+#nav svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#nav #home svg { width: 1.36rem; height: 1.36rem; stroke-width: 1.65; }
 
 /* study mode toggle: a green circle while the annotations are on, grey in study mode */
 #stepper #study-toggle { color: #6fa83a; }
@@ -197,6 +189,17 @@ body.study .coord { display: none; }
 .tester .tools #study-toggle svg { fill: currentColor; stroke: none; }
 .tester .tools #study-toggle[aria-pressed="true"] { color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); }
 .tester .tools svg { margin-top: -.17rem; width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* coordinates.html: the same board, empty; the input is short and centered, the files to practise sit under it */
+.coords .lower { display: flex; justify-content: center; }
+.coords #san { width: min(14rem, 100%); text-align: center; font-size: 1.1rem; }
+.coords #san.wrong { color: #d03a3a; }
+body.nocoords .coord { display: none; }
+.coords #files { position: absolute; top: calc(100% + .75rem); left: 0; right: 0; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; color: var(--muted); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; }
+.coords #files[hidden] { display: none; }
+.coords #files label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.coords #files input { accent-color: #6fa83a; margin: 0; }
+.coords .tools #study-toggle[aria-pressed="true"] { color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); }
 
 /* study mode shows the mated king upright too */
 body.study .mated { transform: none; }
