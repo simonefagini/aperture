@@ -7,7 +7,7 @@ import { board } from "./board.js?v=57";
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1", FILES = "abcdefgh";
 const stage = document.getElementById("stage"), input = document.getElementById("san"), panel = document.getElementById("files");
 const boxes = [...panel.querySelectorAll("input")];
-let flipped = false, target = null, clickMode = false, flash = null, flashTimer = 0;
+let flipped = false, target = null, clickMode = false, flash = null, reveal = false, flashTimer = 0;
 
 // the ticked files / ranks (none ticked counts as all, so there is always a square to ask)
 const picked = group => {
@@ -18,7 +18,7 @@ const picked = group => {
 
 function draw() {
   const fig = document.createElement("figure");
-  const svg = board({ fen: EMPTY_FEN, to: clickMode ? undefined : target, checks: flash ? [flash] : [], arrows: [], rings: [] }, flipped);   // in click mode nothing is lit: the name is the question
+  const svg = board({ fen: EMPTY_FEN, to: !clickMode || reveal ? target : undefined, checks: flash ? [flash] : [], arrows: [], rings: [] }, flipped);   // in click mode nothing is lit until you have answered: the name is the question
   if (clickMode) svg.addEventListener("click", e => clicked(squareAt(svg, e)));
   fig.appendChild(svg);
   const cap = document.createElement("figcaption");
@@ -52,12 +52,12 @@ function squareAt(svg, e) {
 }
 
 function clicked(sq) {
-  if (!sq) return;
-  if (sq === target) { flash = null; next(); return; }
-  flash = sq;   // wrong: that square goes red for a moment
+  if (!sq || reveal) return;   // while the answer is shown, clicks wait
+  reveal = true;               // the right square goes green; a wrong click goes red as well
+  flash = sq === target ? null : sq;
   draw();
   clearTimeout(flashTimer);
-  flashTimer = setTimeout(() => { flash = null; draw(); }, 500);
+  flashTimer = setTimeout(() => { reveal = false; flash = null; next(); }, sq === target ? 350 : 1000);   // then the next name
 }
 
 input.addEventListener("input", () => {
@@ -76,7 +76,8 @@ function setMode(on) {
   input.classList.remove("wrong");
   modeButton.setAttribute("aria-label", on ? "type the names instead" : "click the squares instead");
   try { localStorage.setItem("aperture-coords-mode", on ? "click" : "type"); } catch (e) {}
-  flash = null;
+  flash = null; reveal = false;
+  clearTimeout(flashTimer);
   draw();
   input.focus();
 }
