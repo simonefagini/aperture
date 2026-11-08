@@ -70,16 +70,17 @@ function block(node, side, flipped, branching) {
     main.appendChild(col);
   }
   div.appendChild(main);
-  if (node.children.length) div.appendChild(row(node.children, flipped));
+  if (node.children.length) div.appendChild(row(node.children, flipped, side));
   return div;
 }
 
-function row(nodes, flipped) {
+function row(nodes, flipped, parentSide) {
   const div = document.createElement("div");
   div.className = "kids";
   nodes.forEach((n, i) => {
     const several = nodes.length > 1;   // first of several: comment on the left, last: on the right
-    const side = !several ? "right" : i === 0 ? "left" : i === nodes.length - 1 ? "right" : "below";
+    const side = !several ? (parentSide === "left" ? "left" : "right") :   // a lone reply stays on the side of the branch it is in
+       i === 0 ? "left" : i === nodes.length - 1 ? "right" : "below";
     div.appendChild(block(n, side, flipped, several));
   });
   return div;
