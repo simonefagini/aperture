@@ -64,6 +64,13 @@ input.addEventListener("input", () => {
   const typed = input.value.trim().toLowerCase();
   if (typed === target) { input.value = ""; input.classList.remove("wrong"); next(); return; }
   input.classList.toggle("wrong", !target.startsWith(typed));   // red as soon as it cannot become the answer
+  if (/^[a-h][1-8]$/.test(typed)) {   // a whole wrong square: it goes red on the board for a second, then the field is clear again
+    flash = typed;
+    input.readOnly = true;
+    draw();
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => { flash = null; input.readOnly = false; input.value = ""; input.classList.remove("wrong"); draw(); input.focus(); }, 1000);
+  }
 });
 
 // the mode icon: type (keyboard) or click (pointer); it shows the mode you would switch to
