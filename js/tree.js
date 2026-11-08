@@ -85,6 +85,21 @@ function row(nodes, flipped) {
   return div;
 }
 
+// Side-board comments stand beside their board; where a branch puts that near the edge of the screen they would be
+// clipped. Measure them and make just those paragraphs narrower (never below ~7rem).
+function fitNotes() {
+  const tree = document.getElementById("tree");
+  const notes = [...tree.querySelectorAll(".aside .note")];
+  notes.forEach(n => n.style.width = "");
+  const edge = tree.getBoundingClientRect(), min = 7 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  for (const n of notes) {
+    if (getComputedStyle(n).position !== "absolute") continue;   // under its board: nothing to clip
+    const r = n.getBoundingClientRect();
+    const over = Math.max(edge.left + 8 - r.left, r.right - (edge.right - 8), 0);
+    if (over) n.style.width = `${Math.max(min, r.width - over)}px`;
+  }
+}
+
 // Keys on the opening page: Down / Right go to the next board, Up / Left to the previous one, in the
 // order of the tree (a board, then its first branch all the way down, then the next branch, ...).
 // The board you move to lands exactly where the current one sits: the first board's place on screen.
@@ -176,6 +191,9 @@ async function main() {
   const { file, orientation } = document.body.dataset;
   const root = parse(await (await fetch(file)).text());
   document.getElementById("tree").appendChild(row(root.children, orientation === "black"));
+  fitNotes();
+  addEventListener("resize", fitNotes);
+  document.fonts?.ready.then(fitNotes);
   enableKeys();
 }
 
