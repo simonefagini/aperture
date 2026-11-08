@@ -15,14 +15,14 @@
 1. d4 d5 2. Bf4 Nf6 3. e3
 1. d4 d5 2. Bf4 Nf6 3. e3 e6
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3
-1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 {With the bishop gone from c1, the **b2 pawn** is undefended: Black's typical idea after **…c5** is **…Qb6**. **Nd2** becomes especially important to allow **Rb1** and defend b2.[%cal Rd8b6,Ga1b1][%csl Rb2]}
+1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 {With the bishop gone from c1, the **b2 pawn** is undefended: Black's typical idea after **…c5** is **…Qb6**. **Nd2** becomes especially important to allow **Rb1** and defend b2.[%cal Yd8b6,Ga1b1][%csl Rb2]}
 ~ @fen r3kb1r/pp2pppp/1qn2n2/3p1b2/2pP1B2/2P1PN2/PPQ2PPP/RN2KB1R {In some cases, where the pawn is still on **e7**, **Qxf5** loses to **…Qxb2**, and **…Qxa1** follows. <br> White must keep b2 defended, usually with the **passive Qc1**. [%csl Ye7][%cal Gc2c1, Rb6b2][%sqr Sc8,Ef5]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6
 ~ 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 cxd4 6. exd4 {When Black takes **cxd4**, White can take back with **exd4**. [%sqr Se3, Ed4]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 {**Ngf3** here is good because Black's light-square bishop is blocked by **the e6 pawn.** [%csl Ye6]}
 ~ @fen rn2kb1r/pp2pppp/1q3n2/2pp4/3P1Bb1/1QP1PN2/PP3PPP/RN2KB1R {When the Black bishop is on **g4** and White has spent a tempo to protect **b2**, **…Bxf3** gives White doubled pawns after **gxf3**. <br>In this case, **Qxb6 axb6** as an *intermezzo* also affects Black's structure. [%cal Rg4f3, Gg2f3]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3	Bd6 {Black's dark-squared bishop challenges White's bishop on **f4**.<br>
-White doesn't want to take on **d6**, allowing Black's queen to develop (**…Qxd6**), nor to be forced to recapture with **exf4**, doubling the f-pawns. [%cal Rd6f4,Yd8d6,Ye3f4][%csl Yc3,Yd4]}
+White doesn't want to take on **d6**, allowing Black's queen to develop (**…Qxd6**), nor to be forced to recapture with **exf4**, doubling the f-pawns. [%cal Rd6f4,Bd8d6,Be3f4][%csl Yc3,Yd4]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3	Bd6 7. Bg3 {White keeps the bishop with **Bg3**.}
 ~ @fen r1b2rk1/pp2qppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2Q1RK1 {Note that after **7...O-O 8.Bd3 Qe7**, White castling kingside would be less good: after a bishop exchange on **g3** (**…Bxg3 hxg3**), White no longer has a rook to use the half-open h-file. [%cal Rd6g3, Gh2g3][%csl Bh1][%sqr Se1 Eg1]}
 1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. c3 c5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 O-O

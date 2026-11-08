@@ -11,21 +11,24 @@
 ~ 1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 {After **e3** and the exchange on **d4**, White leaves the typical London structure.<br>It's a *reversed Carlsbad*, the same pawn structure as the **Exchange Caro-Kann**, with the bishop already on f4.}
 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 
 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 {[%cal Rd4d5, Rc3d5L, Bd4f4]}
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 {On a normal development move such as **e6 or Nf6**, white takes the knight in b8, losing the bishop but avoiding an attack on the Queen with **Nc6**.}
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7 Bd7 
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7 Bd7 8. O-O-O @empty
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 {[%cal Yb8c6L]}
+~ 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 Nc6? {After **4...Nc6?**, White wins a pawn with **5.Qxd5**.<br>- After **5...Bd7**, White castles queenside (**6.O-O-O**).<br>- After **5...Qxd5 6.Nxd5**, White threatens **Nc7+!**.<br><br>**4...Nd7?? 5.Nxd5** loses at least a pawn and Black risks losing the queen after **Nc7+ Qxc7 Bxc7**. [%cal Rc6d4L]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 {On a normal development move such as **...e6 or ...Nf6**, White takes the knight on b8, giving up the bishop but avoiding an attack on the queen with **…Nc6**.}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 {[%csl Ra7]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 {[%cal Rd4a7, Re4d5]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 {[%cal Rd4a7]}
+~ 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 a6?! 7. O-O-O {If Black tries to save the **a7** pawn with **6...a6?!**, after **7.O-O-O** Black can no longer take on **e4** (**…dxe4**) because of **Qxd8#**.[%csl Ra7][%cal Yd4d8]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7 {[%cal Ra7b8]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7 Bd7 {[%cal Bd8b8,Ra7b8]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 6. e4 dxe4 7. Qxa7 Bd7 8. O-O-O {Black's bishop on **d7** is now pinned to the queen: the rook on **d1** x-rays the queen through it.[%cal Rd1d8]}@empty
 
 
 
 1. d4 d5 2. Bf4 c5 3. e4 {Similar to the Albin Countergambit with colours reversed, the **Morris countergambit** can also be played here.}
 1. d4 d5 2. Bf4 c5 3. e4 dxe4
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 {[%cal Bd1d5]}
-1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 {[%cal Rf6d5L]}
-1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 {[%cal Bc3d5L]}
-1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 {[%cal Bg7g6, Gd1d2, Gd1e2]}
-~~ 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 Nbd7? 6. Nb5! {After **Nbd7?**, White has a great **Nb5!**, threatening **Nc7+** and winning a rook after **6...Qa5+ 7.c3 Nb6 8.Nc7+**. [%cal Rb5c7L, Rf4c7]}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 {[%cal Rf6d5L, Rd8d5]}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 {[%cal Bc3d5L, Bd1d5]}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 {[%cal Yg7g6, Yd1d2, Gd1e2]}
+~~ 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 Nbd7? 6. Nb5! {After **5...Nbd7?**, White has a great **6.Nb5!**, threatening **Nc7+** and winning a rook after **6...Qa5+ 7.c3 Nb6 8.Nc7+**. [%cal Yb5c7L, Yf4c7]}
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 6. Qe2 {[%cal Ge1c1, Re2e4, Rc3e4L]} @empty
