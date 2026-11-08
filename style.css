@@ -179,7 +179,7 @@ body.study .coord { display: none; }
 .tester .tools { position: absolute; top: 0; left: 100%; display: flex; flex-direction: column; }   /* little icons beside the top right of the board */
 .tester .tools button { width: 1.5rem; height: 2rem; padding: 0; border: 0; background: none; display: flex; align-items: center; justify-content: center; color: var(--toggle-color); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
 .tester .tools button:hover { color: var(--hover-color); }
-.tester .tools svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tester .tools svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* study mode shows the mated king upright too */
 body.study .mated { transform: none; }
