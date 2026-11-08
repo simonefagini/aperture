@@ -7,9 +7,23 @@
 1. d4 d5
 1. d4 d5 2. Bf4
 1. d4 d5 2. Bf4 c5 {[%cal Rc5d4]}
-1. d4 d5 2. Bf4 c5 3. Nc3 
+1. d4 d5 2. Bf4 c5 3. Nc3 {[%cal Rc3d5L, Bd1d4]}
 ~ 1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 {After **e3** and the exchange on **d4**, White leaves the typical London structure.<br>It's a *reversed Carlsbad*, the same pawn structure as the **Exchange Caro-Kann**, with the bishop already on f4.}
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4
-1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 {[%cal Rd4d5, Rc3d5L]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 {[%cal Rd4d5, Rc3d5L, Bd4f4]}
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8
+1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 5. Bxb8 Rxb8 
 
-@empty
+
+
+
+1. d4 d5 2. Bf4 c5 3. e4 {Similar to the Albin Countergambit with colours reversed, the **Morris countergambit** can also be played here.}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 {[%cal Bd1d5]}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 {[%cal Bc3d5L]}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 
+~ 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 Nbd7? 6. Nb5! {After **Nbd7?**, White has a great **Nc5!** threatening **Nc7** and winning a Rook after **6...Qa7 7.c3 Nb6 8. Nc7**.}
+1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 6. Qd2 {[%cal Ge1c1]}
