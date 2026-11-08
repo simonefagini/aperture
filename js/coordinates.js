@@ -1,11 +1,13 @@
 import { board } from "./board.js?v=57";
 
-// train the coordinates: one square lights up on an empty board, you type its name (e4); right: another one lights up, wrong: the text turns red.
+// train the coordinates, two ways (the icon under flip switches):
+//  type: one square lights up on an empty board, you type its name (e4); right: another one lights up, wrong: the text turns red
+//  click: a name is shown, you click that square on the board; right: another name, wrong: the square you clicked flashes red
 // the green circle shows or hides the coordinates around the board; ctrl/cmd-Enter picks which files are asked.
 const EMPTY_FEN = "8/8/8/8/8/8/8/8 w - - 0 1", FILES = "abcdefgh";
 const stage = document.getElementById("stage"), input = document.getElementById("san"), panel = document.getElementById("files");
 const boxes = [...panel.querySelectorAll("input")];
-let flipped = false, target = null;
+let flipped = false, target = null, clickMode = false, flash = null, flashTimer = 0;
 
 // the ticked files / ranks (none ticked counts as all, so there is always a square to ask)
 const picked = group => {
@@ -16,7 +18,9 @@ const picked = group => {
 
 function draw() {
   const fig = document.createElement("figure");
-  fig.appendChild(board({ fen: EMPTY_FEN, to: target, checks: [], arrows: [], rings: [] }, flipped));
+  const svg = board({ fen: EMPTY_FEN, to: clickMode ? undefined : target, checks: flash ? [flash] : [], arrows: [], rings: [] }, flipped);   // in click mode nothing is lit: the name is the question
+  if (clickMode) svg.addEventListener("click", e => clicked(squareAt(svg, e)));
+  fig.appendChild(svg);
   const cap = document.createElement("figcaption");
   cap.textContent = " ";   // same height as the test board
   fig.appendChild(cap);
@@ -34,7 +38,26 @@ function next() {
   if (!target) input.placeholder = sq;   // the first square is given away as an example; it vanishes when you type
   else input.placeholder = "";
   target = sq;
+  if (clickMode) input.value = sq;
   draw();
+}
+
+// the square under a click: the svg is 9.1 x 8.6 units, with the board's corner at (0, 0)
+function squareAt(svg, e) {
+  const r = svg.getBoundingClientRect();
+  let f = Math.floor(-0.55 + (e.clientX - r.left) / r.width * 9.1), row = Math.floor((e.clientY - r.top) / r.height * 8.6);
+  if (f < 0 || f > 7 || row < 0 || row > 7) return null;
+  if (flipped) { f = 7 - f; row = 7 - row; }
+  return FILES[f] + (8 - row);
+}
+
+function clicked(sq) {
+  if (!sq) return;
+  if (sq === target) { flash = null; next(); return; }
+  flash = sq;   // wrong: that square goes red for a moment
+  draw();
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => { flash = null; draw(); }, 500);
 }
 
 input.addEventListener("input", () => {
@@ -42,6 +65,22 @@ input.addEventListener("input", () => {
   if (typed === target) { input.value = ""; input.classList.remove("wrong"); next(); return; }
   input.classList.toggle("wrong", !target.startsWith(typed));   // red as soon as it cannot become the answer
 });
+
+// the mode icon: type (keyboard) or click (pointer); it shows the mode you would switch to
+const modeButton = document.getElementById("mode");
+function setMode(on) {
+  clickMode = on;
+  document.body.classList.toggle("clickmode", on);
+  input.readOnly = on;
+  input.value = on ? target : "";
+  input.classList.remove("wrong");
+  modeButton.setAttribute("aria-label", on ? "type the names instead" : "click the squares instead");
+  try { localStorage.setItem("aperture-coords-mode", on ? "click" : "type"); } catch (e) {}
+  flash = null;
+  draw();
+  input.focus();
+}
+modeButton.addEventListener("click", () => setMode(!clickMode));
 
 // the green circle: coordinates shown; grey: hidden
 const toggle = document.getElementById("study-toggle");
@@ -71,7 +110,7 @@ panel.addEventListener("click", e => {
   changed();
 });
 
-input.addEventListener("keydown", e => {
+document.addEventListener("keydown", e => {   // the files and ranks panel: ctrl/cmd-Enter toggles it, Esc closes it
   if (e.key === "Escape" && !panel.hidden) panel.hidden = true;
   else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) panel.hidden = !panel.hidden;
   else return;
@@ -79,6 +118,7 @@ input.addEventListener("keydown", e => {
 });
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); input.focus(); });
 next();
+try { if (localStorage.getItem("aperture-coords-mode") === "click") setMode(true); } catch (e) {}
 input.focus();
 document.addEventListener("keydown", e => {   // typing anywhere starts typing in the input
   if (e.key.length === 1 && e.key !== " " && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement !== input) input.focus();

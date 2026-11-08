@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
   <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <script src="js/theme.js?v=37"></script>
-  <link rel="stylesheet" href="style.css?v=81">
+  <link rel="stylesheet" href="style.css?v=82">
 </head>
 <body class="marks">
   <nav id="nav">
@@ -29,6 +29,10 @@
         <button id="flip" type="button" aria-label="flip the board">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"/></svg>
         </button>
+        <button id="mode" type="button" aria-label="click the squares instead">
+          <svg class="to-click" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.04 4.69a.5.5 0 0 1 .65-.65l16 6.5a.5.5 0 0 1-.06.95l-6.12 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.12a.5.5 0 0 1-.95.06z"/></svg>
+          <svg class="to-type" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        </button>
         <button id="study-toggle" type="button" aria-label="hide the coordinates" aria-pressed="false">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>
         </button>
@@ -42,6 +46,6 @@
       </div>
     </div>
   </main>
-  <script type="module" src="js/coordinates.js?v=3"></script>
+  <script type="module" src="js/coordinates.js?v=4"></script>
 </body>
 </html>
