@@ -92,10 +92,10 @@ function fitNotes() {
   // boards on the left of the first column would hang out of the page where nothing can scroll to them (phones):
   // give the tree that much room on its left
   const kids = tree.firstElementChild;
-  kids.style.paddingLeft = "";
+  kids.style.paddingLeft = kids.style.paddingRight = "";
   const farLeft = Math.min(...[...tree.querySelectorAll(".asides.left")].map(a => a.getBoundingClientRect().left), Infinity);
   const gap = tree.getBoundingClientRect().left + 8 - (farLeft + tree.scrollLeft);
-  if (gap > 0) kids.style.paddingLeft = `${gap}px`;
+  if (gap > 0) kids.style.paddingLeft = kids.style.paddingRight = `${gap}px`;   // both sides, so the boards stay centred
   const notes = [...tree.querySelectorAll(".aside .note")];
   notes.forEach(n => n.style.width = "");
   const edge = tree.getBoundingClientRect(), min = 7 * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -199,6 +199,9 @@ async function main() {
   const root = parse(await (await fetch(file)).text());
   document.getElementById("tree").appendChild(row(root.children, orientation === "black"));
   fitNotes();
+  const first = document.querySelector("#tree figure");   // start with the first board in the middle of the screen
+  const t = document.getElementById("tree");
+  if (first && t.scrollWidth > t.clientWidth) { const r = first.getBoundingClientRect(), b = t.getBoundingClientRect(); t.scrollLeft += r.left + r.width / 2 - (b.left + b.width / 2); }
   addEventListener("resize", fitNotes);
   document.fonts?.ready.then(fitNotes);
   enableKeys();
