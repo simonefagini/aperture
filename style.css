@@ -175,6 +175,7 @@ body.study .coord { display: none; }
 /* test-board.html: a board in the middle, and a line to type below it */
 .tester { --b: min(28rem, calc(100vw - 3rem)); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; justify-content: center; min-height: 100vh; min-height: 100dvh; padding-block: 4rem; }   /* centered vertically on the page */
 .tester figure { width: var(--b); }
+.tester figcaption { min-height: 1.3em; min-height: 1lh; }   /* the room for the move is always there, so the input does not jump */
 .tester .lower { position: relative; width: min(40rem, 100%); }
 .tester #debug { position: absolute; top: calc(100% + .75rem); left: 0; right: 0; font-size: .9rem; color: var(--muted); }   /* under the input, so showing it moves nothing */
 .tester #debug .error { margin: 0; }
