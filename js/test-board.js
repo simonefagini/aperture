@@ -41,6 +41,8 @@ function update() {
 }
 
 input.addEventListener("input", update);
+document.getElementById("open").addEventListener("click", () =>   // the same as cmd-click on the tree page: this position on the chess.com analysis board
+  window.open(`https://www.chess.com/analysis?fen=${encodeURI(node.fen)}&flip=${flipped}`, "_blank", "noopener"));
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); });
 input.value = "1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf4c7]}";
 update();
