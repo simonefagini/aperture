@@ -41,9 +41,9 @@ h1 { margin: 0 0 3rem; font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 600; 
 h1:has(+ .subtitle) { margin-bottom: .5rem; }
 .subtitle { margin: 0 0 3rem; font-size: clamp(1.1rem, 3vw, 1.4rem); color: var(--muted); }
 
-/* laptop screens (a 14" MacBook at 100%): the opening pages scale down to 90% so the side comments have room, back to full size by ~1660px */
+/* laptop screens (a 14" MacBook at 100%): the opening pages scale down to 90% so the side comments have room, back to full size by ~1660px, and up to 115% on big screens (a 5K at 2560px) */
 @media (min-width: 82rem) {
-  html:has(body[data-file]) { font-size: clamp(14.4px, calc(14.4px + (100vw - 1512px) * .0107), 16px); }
+  html:has(body[data-file]) { font-size: calc(clamp(14.4px, calc(14.4px + (100vw - 1512px) * .0107), 16px) + clamp(0px, calc((100vw - 1900px) * .00364), 2.4px)); }
 }
 
 /* every board has the same size (--b); a board's replies sit in a row below it */
