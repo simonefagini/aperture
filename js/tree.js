@@ -89,6 +89,13 @@ function row(nodes, flipped) {
 // clipped. Measure them and make just those paragraphs narrower (never below ~7rem).
 function fitNotes() {
   const tree = document.getElementById("tree");
+  // boards on the left of the first column would hang out of the page where nothing can scroll to them (phones):
+  // give the tree that much room on its left
+  const kids = tree.firstElementChild;
+  kids.style.paddingLeft = "";
+  const farLeft = Math.min(...[...tree.querySelectorAll(".asides.left")].map(a => a.getBoundingClientRect().left), Infinity);
+  const gap = tree.getBoundingClientRect().left + 8 - (farLeft + tree.scrollLeft);
+  if (gap > 0) kids.style.paddingLeft = `${gap}px`;
   const notes = [...tree.querySelectorAll(".aside .note")];
   notes.forEach(n => n.style.width = "");
   const edge = tree.getBoundingClientRect(), min = 7 * parseFloat(getComputedStyle(document.documentElement).fontSize);
