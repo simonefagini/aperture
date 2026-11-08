@@ -48,9 +48,9 @@ function note(text, side) {
 
 // a block is a board with its replies in a row below it; side says where its comment goes.
 // Alternative lines ("~") sit in a column of smaller boards to the left of the board ("~~" or "~r": to the right).
-function block(node, side, flipped) {
+function block(node, side, flipped, branching) {
   const div = document.createElement("div");
-  div.className = "block";
+  div.className = branching ? "block branching" : "block";
   const main = document.createElement("div");
   main.className = "main";
   const fig = makeFigure(node, flipped);
@@ -80,7 +80,7 @@ function row(nodes, flipped) {
   nodes.forEach((n, i) => {
     const several = nodes.length > 1;   // first of several: comment on the left, last: on the right
     const side = !several ? "right" : i === 0 ? "left" : i === nodes.length - 1 ? "right" : "below";
-    div.appendChild(block(n, side, flipped));
+    div.appendChild(block(n, side, flipped, several));
   });
   return div;
 }

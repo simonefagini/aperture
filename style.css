@@ -72,6 +72,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 @media (min-width: 82rem) {   /* wide enough: the comment stands to the left of its side board */
   .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 15rem; margin: 0; }
   .asides.right .aside .note { right: auto; left: calc(100% + 1rem); }
+  .branching > .main > .asides .aside .note { width: 11.5rem; }   /* where the tree branches the outer comments hit the screen edge: a narrower paragraph */
 }
 
 /* comments: beside the board when there is room, else under it */
