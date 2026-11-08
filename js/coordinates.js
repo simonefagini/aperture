@@ -31,6 +31,8 @@ function next() {
   let sq;
   do sq = any(files) + any(ranks);
   while (sq === target);
+  if (!target) input.placeholder = sq;   // the first square is given away as an example; it vanishes when you type
+  else input.placeholder = "";
   target = sq;
   draw();
 }
