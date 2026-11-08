@@ -190,7 +190,7 @@ body.study .coord { display: none; }
 .tester #san { width: 100%; box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
 .tester #san:focus { border-color: var(--muted); }
 .tester .wrap { position: relative; }
-.tester .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .25rem);   /* the svg keeps .55 of 9.1 units empty on the right: start from the frame */ display: flex; flex-direction: column; }   /* little icons beside the top right of the board */
+.tester .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .5rem);   /* the svg keeps .55 of 9.1 units empty on the right: start from the frame */ display: flex; flex-direction: column; }   /* little icons beside the top right of the board */
 .tester .tools button { width: 1.5rem; height: 1.6rem; padding: 0; border: 0; background: none; display: flex; align-items: flex-start; justify-content: center; color: var(--toggle-color); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
 .tester .tools button:hover { color: var(--hover-color); }
 .tester .tools #study-toggle { color: #6fa83a; }
