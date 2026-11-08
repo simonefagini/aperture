@@ -191,11 +191,11 @@ body.study .coord { display: none; }
 .tester #san:focus { border-color: var(--muted); }
 .tester .wrap { position: relative; }
 .tester .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .65rem);   /* the svg keeps .55 of 9.1 units empty on the right: start from the frame */ display: flex; flex-direction: column; }   /* little icons beside the top right of the board */
-.tester .tools button { width: 1.5rem; height: 1.8rem; padding: 0; border: 0; background: none; display: flex; align-items: flex-start; justify-content: center; color: var(--toggle-color); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
+.tester .tools button { width: 1.5rem; height: 2.1rem; padding: 0; border: 0; background: none; display: flex; align-items: flex-start; justify-content: center; color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
 .tester .tools button:hover { color: var(--hover-color); }
 .tester .tools #study-toggle { color: #6fa83a; }
 .tester .tools #study-toggle svg { fill: currentColor; stroke: none; }
-.tester .tools #study-toggle[aria-pressed="true"] { color: var(--toggle-color); }
+.tester .tools #study-toggle[aria-pressed="true"] { color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); }
 .tester .tools svg { margin-top: -.17rem; width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* study mode shows the mated king upright too */
