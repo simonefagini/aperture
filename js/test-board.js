@@ -58,9 +58,10 @@ input.addEventListener("input", update);
 document.getElementById("open").addEventListener("click", () =>   // the same as cmd-click on the tree page: this position on the chess.com analysis board
   window.open(`https://www.chess.com/analysis?fen=${encodeURI(node.fen)}&flip=${flipped}`, "_blank", "noopener"));
 input.addEventListener("keydown", e => {
-  if (e.key !== "Enter" || !(e.ctrlKey || e.metaKey)) return;
+  if (e.key === "Escape" && debugging) debugging = false;                          // Esc closes the panel
+  else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) debugging = !debugging;  // ctrl/cmd-Enter toggles it
+  else return;
   e.preventDefault();
-  debugging = !debugging;
   showProblem();
 });
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); });
