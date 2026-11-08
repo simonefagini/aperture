@@ -183,7 +183,11 @@ body.study .coord { display: none; }
 /* test-board.html: a board in the middle, and a line to type below it */
 .tester { --b: min(28rem, calc(100vw - 3rem)); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; justify-content: center; min-height: 100vh; min-height: 100dvh; padding-block: 4rem; }   /* centered vertically on the page */
 .tester figure { width: var(--b); }
-.tester #san { width: min(40rem, 100%); box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
+.tester .lower { position: relative; width: min(40rem, 100%); }
+.tester #debug { position: absolute; top: calc(100% + .75rem); left: 0; right: 0; font-size: .9rem; color: var(--muted); }   /* under the input, so showing it moves nothing */
+.tester #debug .error { margin: 0; }
+.tester #debug .error .msg { margin-bottom: .6rem; }
+.tester #san { width: 100%; box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
 .tester #san:focus { border-color: var(--muted); }
 .tester .wrap { position: relative; }
 .tester .tools { position: absolute; top: 0; left: 100%; display: flex; flex-direction: column; }   /* little icons beside the top right of the board */

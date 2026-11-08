@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
   <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <script src="js/theme.js?v=37"></script>
-  <link rel="stylesheet" href="style.css?v=70">
+  <link rel="stylesheet" href="style.css?v=71">
 </head>
 <body class="marks">
   <a id="home" href="index.html" aria-label="all openings">
@@ -29,9 +29,12 @@
         </button>
       </div>
     </div>
-    <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
-           placeholder="1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf3e5L][%csl Yc3][%sqr Re8]}">
+    <div class="lower">
+      <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
+             placeholder="1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf3e5L][%csl Yc3][%sqr Re8]}">
+      <div id="debug" hidden></div>
+    </div>
   </main>
-  <script type="module" src="js/test-board.js?v=10"></script>
+  <script type="module" src="js/test-board.js?v=11"></script>
 </body>
 </html>

@@ -1,9 +1,10 @@
-import { parse, board } from "./board.js?v=57";
+import { parse, board, showError } from "./board.js?v=57";
 
 // a board that follows what you type: SAN, move numbers, ! ? $7, and the { [%cal ...] [%csl ...] [%sqr ...] } marks;
 // "@fen <fen> [moves]" starts from any position (paste a whole FEN)
 const stage = document.getElementById("stage"), input = document.getElementById("san");
-let flipped = false, node = null;
+const debug = document.getElementById("debug");
+let flipped = false, node = null, debugging = false, problem = null;   // ctrl/cmd-Enter shows what is wrong with the line
 
 // the board at the end of the typed line (an empty input is the starting position)
 function positionOf(text) {
@@ -33,16 +34,35 @@ function draw() {
 function update() {
   try {
     node = positionOf(input.value);
+    problem = null;
   } catch (e) {   // half-typed: keep the last good board
+    problem = e;
+    showProblem();
     if (node) return;
     node = positionOf("");
   }
+  showProblem();
   draw();
+}
+
+// the debugger panel: hidden until asked for; then the message and the line with the culprit marked
+function showProblem() {
+  debug.hidden = !debugging;
+  if (!debugging) return;
+  if (!problem) { debug.textContent = "no errors"; return; }
+  const e = Object.assign(new Error(problem.message.replace(/^line \d+: /, "")), { token: problem.token, occurrence: problem.occurrence, source: input.value, lineNo: 1 });
+  showError(debug, e);
 }
 
 input.addEventListener("input", update);
 document.getElementById("open").addEventListener("click", () =>   // the same as cmd-click on the tree page: this position on the chess.com analysis board
   window.open(`https://www.chess.com/analysis?fen=${encodeURI(node.fen)}&flip=${flipped}`, "_blank", "noopener"));
+input.addEventListener("keydown", e => {
+  if (e.key !== "Enter" || !(e.ctrlKey || e.metaKey)) return;
+  e.preventDefault();
+  debugging = !debugging;
+  showProblem();
+});
 document.getElementById("flip").addEventListener("click", () => { flipped = !flipped; draw(); });
 input.value = "1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf4c7]}";
 update();
