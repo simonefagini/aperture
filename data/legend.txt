@@ -98,6 +98,9 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    stack as several side boards. The arrow keys skip them.
    On a phone they stay on the left too, just smaller (pinch to zoom).
 
+   Start the line with ~~ (or ~r) instead of ~ to put the side board on the RIGHT of
+   the board, with its comment on its right. Both sides can be used on the same board.
+
 4. MARKS (Lichess style), shown only while hovering
    Put them inside the same {comment}. The text around them is still shown; the
    codes themselves are not.
@@ -110,8 +113,11 @@ LEGEND: how to write a line in a data file (e.g. data/london/main.txt)
    Items are separated by commas (spaces work too).
    An arrow from a square to the same square is drawn as a circle.
 
-   Habit I suggest:  R = a threat against me,  G = what I defend / my plan,
-                     Y = a square to watch,    B = free to use.
+   What the colours mean here:
+                     G = my own good moves,
+                     R = attacks,
+                     B = defence,
+                     Y = alternative moves, or moves to keep an eye on.
 
 5. HOME PAGE PREVIEW
    The board on the home page is set by one extra line in the opening's file:
