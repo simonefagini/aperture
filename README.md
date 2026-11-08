@@ -9,4 +9,5 @@ Static site that shows opening lines as a tree of boards. Display only.
 - Black's view: `data-orientation="black"` on `<body>` in the page.
 - Sublime Text highlighting for the data files: copy `sublime/Aperture.sublime-syntax` into Packages/User, then pick "Aperture" from the syntax menu at the bottom right.
 - A mistake in a data file (illegal move, wrong move number, bad mark) shows on the page, with the line and the culprit marked.
-- `test-board.html` (not linked anywhere): a board that follows the line you type, to try SAN, glyphs, arrows and circles.
+- `test-board.html` (flask icon next to the eclipse): a board that follows the line you type, to try SAN, glyphs, arrows, circles and `@fen`. Ctrl/Cmd+Enter shows what is wrong with the line.
+- `coordinates.html` (crosshair icon): practise the coordinates. A square lights up on an empty board, type its name (`e4`); a wrong answer turns the text red. The green circle hides the coordinates; Ctrl/Cmd+Enter picks which files are asked.
