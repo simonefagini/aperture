@@ -181,6 +181,7 @@ body.study .coord { display: none; }
 .tester #debug .error { margin: 0; }
 .tester #debug .error .msg { margin-bottom: .6rem; }
 .tester #san { width: 100%; box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
+.tester #san::placeholder { color: var(--muted); opacity: .75; }   /* examples are grey; only what you type is in the text colour */
 .tester #san:focus { border-color: var(--muted); }
 .tester .wrap { position: relative; }
 .tester .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .65rem);   /* the svg keeps .55 of 9.1 units empty on the right: start from the frame */ display: flex; flex-direction: column; }   /* little icons beside the top right of the board */
@@ -199,7 +200,7 @@ body.nocoords .coord { display: none; }
 .coords #files { position: absolute; top: calc(100% + .75rem); left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: .5rem; color: var(--muted); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; }
 .coords #files .row { display: flex; align-items: center; justify-content: center; gap: .9rem; flex-wrap: wrap; }
 .coords #files .what { width: 3.2rem; text-align: right; }
-.coords #files button { padding: 0; border: 0; background: none; color: var(--toggle-color); font: inherit; font-size: .8rem; cursor: pointer; }
+.coords #files button { padding: 0; border: 0; background: none; color: var(--toggle-color); font: inherit; font-size: .8rem; font-weight: 700; text-decoration: underline; text-underline-offset: .15em; cursor: pointer; }
 .coords #files button:hover { color: var(--hover-color); }
 .coords #files[hidden] { display: none; }
 .coords #files label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
