@@ -147,11 +147,11 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
   color: var(--toggle-color); transition: color .3s ease;
 }
 #home:hover { color: var(--hover-color); }
-#home svg { width: 1.6rem; height: 1.6rem; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; }
+#home svg { width: 1.36rem; height: 1.36rem; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linejoin: round; }
 
 /* test board link: a flask, one step further left (where home would be, on the home page itself) */
 #testlink {
-  position: absolute; top: 1rem; right: 5.75rem; width: 2.5rem; height: 2.5rem;
+  position: absolute; top: 1rem; right: 5.5rem; width: 2.5rem; height: 2.5rem;
   display: flex; align-items: center; justify-content: center;
   color: var(--toggle-color); transition: color .3s ease;
 }
