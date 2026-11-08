@@ -25,5 +25,5 @@
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 {[%cal Bc3d5L]}
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 
-~ 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 Nbd7? 6. Nb5! {After **Nbd7?**, White has a great **Nc5!** threatening **Nc7** and winning a Rook after **6...Qa7 7.c3 Nb6 8. Nc7**.}
+~~ 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 Nbd7? 6. Nb5! {After **Nbd7?**, White has a great **Nc5!** threatening **Nc7** and winning a Rook after **6...Qa7 7.c3 Nb6 8. Nc7**.}
 1. d4 d5 2. Bf4 c5 3. e4 dxe4 4. d5 Nf6 5. Nc3 a6 6. Qd2 {[%cal Ge1c1]}
