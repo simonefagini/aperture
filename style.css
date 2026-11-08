@@ -175,7 +175,6 @@ body.study .coord { display: none; }
 .tester figure { width: var(--b); }
 .tester #san { width: min(40rem, 100%); box-sizing: border-box; padding: .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .95rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }
 .tester #san:focus { border-color: var(--muted); }
-.tester #msg { min-height: 1.4em; margin: 0; max-width: 40rem; color: #d03a3a; font-size: .9rem; }
 .tester #flip { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; }
 .tester #flip:hover { color: var(--hover-color); }
 

@@ -1,20 +1,23 @@
-import { parse, board } from "./board.js?v=56";
+import { parse, board } from "./board.js?v=57";
 
-// a board that follows what you type: SAN, move numbers, ! ? $7, and the { [%cal ...] [%csl ...] [%sqr ...] } marks
-const stage = document.getElementById("stage"), input = document.getElementById("san"), msg = document.getElementById("msg");
+// a board that follows what you type: SAN, move numbers, ! ? $7, and the { [%cal ...] [%csl ...] [%sqr ...] } marks;
+// "@fen <fen> [moves]" starts from any position (paste a whole FEN)
+const stage = document.getElementById("stage"), input = document.getElementById("san");
 let flipped = false, node = null;
 
 // the board at the end of the typed line (an empty input is the starting position)
 function positionOf(text) {
+  if (text.trim().startsWith("@fen")) return parse(`d4\n~ ${text.trim()}`).children[0].asides[0];   // the parser only takes @fen on a side board
   let n = parse(text);
   while (n.children.length && !n.children[0].empty) n = n.children[0];
   return n;
 }
 
 // last move with its number, e.g. "2.Bf4!" or "1...d5"
-function label(n) {
+function label(n, fromFen) {
   const ply = n.moves.length;
   if (!ply) return "";
+  if (fromFen) return `${n.moves[ply - 1]}${n.glyph === "$7" ? "□" : n.glyph ?? ""}`;   // no move numbers after a FEN
   return `${Math.ceil(ply / 2)}${ply % 2 ? "." : "..."}${n.moves[ply - 1]}${n.glyph === "$7" ? "□" : n.glyph ?? ""}`;
 }
 
@@ -22,7 +25,7 @@ function draw() {
   const fig = document.createElement("figure");
   fig.appendChild(board(node, flipped));
   const cap = document.createElement("figcaption");
-  cap.textContent = label(node) || " ";
+  cap.textContent = label(node, input.value.trim().startsWith("@fen")) || " ";
   fig.appendChild(cap);
   stage.replaceChildren(fig);
 }
@@ -30,9 +33,7 @@ function draw() {
 function update() {
   try {
     node = positionOf(input.value);
-    msg.textContent = "";
-  } catch (e) {   // half-typed: keep the last good board and say what is wrong
-    msg.textContent = e.message;
+  } catch (e) {   // half-typed: keep the last good board
     if (node) return;
     node = positionOf("");
   }

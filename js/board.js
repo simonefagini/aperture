@@ -84,8 +84,10 @@ export function parse(text) {
     let game = new Chess(), fromFen = false;
     if (line.startsWith("@fen")) {                  // "~ @fen <pieces> [moves] {comment}": any position, as a side board
       if (!isAside) throw new Error(`line ${lineNo}: "@fen" only works on a "~" line (a side board)`);
-      const [placement = "", ...rest] = line.slice(4).trim().split(/\s+/);   // only the piece placement; the rest is assumed
-      try { game = new Chess(`${placement} w - - 0 1`, { skipValidation: true }); }   // no kings needed
+      const [placement = "", ...rest] = line.slice(4).trim().split(/\s+/);   // the piece placement, then optionally a whole FEN's other fields
+      const fields = ["w", "-", "-", "0", "1"], shape = [/^[wb]$/, /^(-|[KQkq]+)$/, /^(-|[a-h][36])$/, /^\d+$/, /^\d+$/];
+      for (let i = 0; i < 5 && rest.length && shape[i].test(rest[0]); i++) fields[i] = rest.shift();   // what is not given is assumed
+      try { game = new Chess(`${placement} ${fields.join(" ")}`, { skipValidation: true }); }   // no kings needed
       catch (e) { throw fail(`line ${lineNo}: "${placement}" is not a valid FEN piece placement`, placement); }
       line = rest.join(" ");
       fromFen = true;
