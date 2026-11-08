@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
   <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <script src="js/theme.js?v=37"></script>
-  <link rel="stylesheet" href="style.css?v=65">
+  <link rel="stylesheet" href="style.css?v=66">
 </head>
 <body class="marks">
   <a id="home" href="index.html" aria-label="all openings">
@@ -18,10 +18,16 @@
   </a>
   <button id="theme-toggle" type="button" aria-label="switch to dark mode"></button>
   <main class="tester">
-    <div id="stage"></div>
+    <div class="wrap">
+      <div id="stage"></div>
+      <div class="tools">
+        <button id="flip" type="button" aria-label="flip the board">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"/></svg>
+        </button>
+      </div>
+    </div>
     <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
            placeholder="1. d4 d5 2. Bf4! c5 {[%cal Rc5d4,Gf3e5L][%csl Yc3][%sqr Re8]}">
-    <button id="flip" type="button">flip</button>
   </main>
   <script type="module" src="js/test-board.js?v=9"></script>
 </body>
