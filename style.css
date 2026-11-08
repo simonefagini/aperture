@@ -59,16 +59,19 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 
 /* alternative lines: smaller boards to the left of the board, on phones too (small: pinch to zoom) */
 .asides { position: absolute; top: 0; right: calc(100% + .5rem); display: flex; flex-direction: column; gap: 1rem; width: calc(var(--b) * .45); margin: 0; }
+.asides.right { right: auto; left: calc(100% + .5rem); }   /* "~~" / "~r": on the right of the board */
 .aside { width: 100%; }
 .aside figcaption { font-size: .7rem; }
 .aside .note { position: static; width: auto; margin: .5rem 0 0; font-size: .33rem; text-align: left; }
 @media (min-width: 52rem) {
   .asides { right: calc(100% + 2rem); gap: 1.5rem; width: calc(var(--b) * .6); }
+  .asides.right { right: auto; left: calc(100% + 2rem); }
   .aside figcaption { font-size: inherit; }
   .aside .note { margin: .7rem 0 0; font-size: .95rem; }
 }
 @media (min-width: 82rem) {   /* wide enough: the comment stands to the left of its side board */
   .aside .note { position: absolute; top: 0; right: calc(100% + 1rem); width: 15rem; margin: 0; }
+  .asides.right .aside .note { right: auto; left: calc(100% + 1rem); }
 }
 
 /* comments: beside the board when there is room, else under it */

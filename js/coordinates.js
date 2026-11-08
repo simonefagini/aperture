@@ -1,4 +1,4 @@
-import { board } from "./board.js?v=57";
+import { board } from "./board.js?v=58";
 
 // train the coordinates, two ways (the icon under flip switches):
 //  type: one square lights up on an empty board, you type its name (e4); right: another one lights up, wrong: the text turns red

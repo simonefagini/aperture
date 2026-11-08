@@ -13,8 +13,8 @@ contexts:
     # "# ..." a note to yourself, not shown on the site
     - match: '^\s*#.*$'
       scope: comment.line.number-sign.aperture
-    # "~ ..." a side board
-    - match: '^\s*(~)'
+    # "~ ..." a side board on the left, "~~ ..." or "~r ..." on the right
+    - match: '^\s*(~~|~r(?=\s)|~)'
       captures:
         1: keyword.operator.side-board.aperture
     # "@fen <pieces>"

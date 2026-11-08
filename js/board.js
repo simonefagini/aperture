@@ -78,7 +78,12 @@ export function parse(text) {
       return;
     }
     const isAside = line.startsWith("~");            // "~ <moves>": an alternative line shown beside the board above
-    if (isAside) line = line.slice(1).trim();
+    let asideSide = "left";                          // "~~ <moves>" or "~r <moves>": on the right of the board instead
+    if (isAside) {
+      const m = line.match(/^~(~|r(?=\s|$))?/);
+      if (m[1]) asideSide = "right";
+      line = line.slice(m[0].length).trim();
+    }
     const isPreview = line.startsWith("@preview");   // "@preview <moves>": the board shown on the home page
     if (isPreview) line = line.slice("@preview".length).trim();
     let game = new Chess(), fromFen = false;
@@ -130,7 +135,7 @@ export function parse(text) {
     if (isPreview) { root.preview = { moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, arrows, rings }; return; }
     if (isAside) {
       if (!lastNode) throw new Error(`line ${lineNo}: a "~" line needs a board above it`);
-      lastNode.asides.push({ moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings });
+      lastNode.asides.push({ moves, glyph, mated, checks: sqr.checks, fen: game.fen(), from, to, comment: note, arrows, rings, side: asideSide });
       return;
     }
     const key = moves.join(" ");

@@ -1,4 +1,4 @@
-import { parse, board, showError } from "./board.js?v=57";
+import { parse, board, showError } from "./board.js?v=58";
 
 // last move with its number, e.g. "2.Bf4" or "1...d5"
 function label(moves, glyph = "") {
@@ -47,7 +47,7 @@ function note(text, side) {
 }
 
 // a block is a board with its replies in a row below it; side says where its comment goes.
-// Alternative lines ("~") sit in a column of smaller boards to the left of the board.
+// Alternative lines ("~") sit in a column of smaller boards to the left of the board ("~~" or "~r": to the right).
 function block(node, side, flipped) {
   const div = document.createElement("div");
   div.className = "block";
@@ -56,10 +56,12 @@ function block(node, side, flipped) {
   const fig = makeFigure(node, flipped);
   if (node.comment) fig.appendChild(note(node.comment, side));
   main.appendChild(fig);
-  if (node.asides.length) {
+  for (const where of ["left", "right"]) {
+    const list = node.asides.filter(a => a.side === where);
+    if (!list.length) continue;
     const col = document.createElement("div");
-    col.className = "asides";
-    for (const a of node.asides) {
+    col.className = `asides ${where}`;
+    for (const a of list) {
       const f = makeFigure(a, flipped);
       f.classList.add("aside");
       if (a.comment) f.appendChild(note(a.comment, "below"));              // under its own board
