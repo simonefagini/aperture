@@ -142,7 +142,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 
 /* home icon: a little grid next to the eclipse toggle, back to all the openings */
 #home {
-  position: absolute; top: 1rem; right: 3.75rem; width: 2.5rem; height: 2.5rem;
+  position: absolute; top: 1rem; right: 3.25rem; width: 2.5rem; height: 2.5rem;
   display: flex; align-items: center; justify-content: center;
   color: var(--toggle-color); transition: color .3s ease;
 }
