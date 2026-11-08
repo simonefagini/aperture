@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>coordinates board</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&display=swap">
+  <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+  <script src="js/theme.js?v=37"></script>
+  <link rel="stylesheet" href="style.css?v=78">
+</head>
+<body class="marks">
+  <nav id="nav">
+    <a id="testlink" href="test-board.html" aria-label="test board">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2v7.5a2 2 0 0 1-.2.9L4.7 20.5a1 1 0 0 0 .9 1.5h12.8a1 1 0 0 0 .9-1.5l-5.1-10.1a2 2 0 0 1-.2-.9V2M8.5 2h7M7 16h10"/></svg>
+    </a>
+    <a id="home" href="index.html" aria-label="all openings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>
+    </a>
+  </nav>
+  <button id="theme-toggle" type="button" aria-label="switch to dark mode"></button>
+  <main class="tester coords">
+    <div class="wrap">
+      <div id="stage"></div>
+      <div class="tools">
+        <button id="flip" type="button" aria-label="flip the board">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"/></svg>
+        </button>
+        <button id="study-toggle" type="button" aria-label="hide the coordinates" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="lower">
+      <input id="san" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="type the square, e.g. e4">
+      <div id="files" hidden>
+        <label><input type="checkbox" value="a" checked> a</label>
+        <label><input type="checkbox" value="b" checked> b</label>
+        <label><input type="checkbox" value="c" checked> c</label>
+        <label><input type="checkbox" value="d" checked> d</label>
+        <label><input type="checkbox" value="e" checked> e</label>
+        <label><input type="checkbox" value="f" checked> f</label>
+        <label><input type="checkbox" value="g" checked> g</label>
+        <label><input type="checkbox" value="h" checked> h</label>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="js/coordinates.js?v=1"></script>
+</body>
+</html>
