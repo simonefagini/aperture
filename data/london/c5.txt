@@ -7,10 +7,12 @@
 1. d4 d5
 1. d4 d5 2. Bf4
 1. d4 d5 2. Bf4 c5 {[%cal Rc5d4]}
+~~ 1. d4 d5 2. Bf4 c5 3. c3 Nc6 4. e3 Qb6 {After **3.c3 Nc6 4.e3 Qb6** (or **3.e3** and **4.c3**), White can be in some trouble: the **b2** pawn is under pressure. [%cal Rb6b2, Yd1b3, Yc5c4]}
 ~ 1. d4 d5 2. Bf4 c5 3. dxc5?! Nc6 4. Nf3 f6 5. e3 e5 6. Bg3 Bxc5 {Accepting the gambit with **3.dxc5?!** is not recommended. White gives up central control and Black easily wins the pawn back.<br>[Mason–Steinitz, London 1883](https://www.chessgames.com/perl/chessgame?gid=1002036): **3.dxc5?! Nc6 4.Nf3 f6 5.e3 e5 6.Bg3 Bxc5**.}
 1. d4 d5 2. Bf4 c5 3. Nc3 {[%cal Rc3d5L, Bd1d4]}
 ~ 1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 {After **e3** and the exchange on **d4**, White leaves the typical London structure.<br>It's a *reversed Carlsbad*, the same pawn structure as the **Exchange Caro-Kann**, with the bishop already on f4.}
 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 
+~ 1. d4 d5 2. Bf4 c5 3. Nc3 Nc6 4. e4 {If Black doesn't take on **d4** (**…cxd4**), **4.e4** strikes at the centre.<br><br>With **3...Nf6 4.e3**, the game enters the Chigorin Variation.[%cal Re4d5, Yg8f6L]}
 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 {[%cal Rd4d5, Rc3d5L, Bd4f4]}
 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 e6 {[%cal Yb8c6L]}
 ~ 1. d4 d5 2. Bf4 c5 3. Nc3 cxd4 4. Qxd4 Nc6? {After **4...Nc6?**, White wins a pawn with **5.Qxd5**.<br>- After **5...Bd7**, White castles queenside (**6.O-O-O**).<br>- After **5...Qxd5 6.Nxd5**, White threatens **Nc7+!**.<br><br>**4...Nd7?? 5.Nxd5** loses at least a pawn and Black risks losing the queen after **Nc7+ Qxc7 Bxc7**. [%cal Rc6d4L]}
