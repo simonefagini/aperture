@@ -12,34 +12,3 @@
 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 {**3...g6** kicks the queen away and gains a tempo. [%cal Gg7g6, Rg6h5]}
 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 {The queen retreats, keeping the idea of mate on **f7**. White has moved the queen a lot while Black develops. [%cal Rf3f7]}
 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {Black develops with a threat on **e4**, and **f7** is only attacked, not lost: from here White's usual tries are **5.g4** and **5.Qb3**. [%cal Gg8f6]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 {Threatens **g5**, kicking out the knight to keep the pressure on **f7**. [%cal Rg4g5, Rg5f6]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 {A very strong reply: it attacks the bishop and the pawn on **g4** at the same time. [%cal Gd5c4, Gd5e4, Rc8g4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? {The natural capture is a mistake: **Nd4** is now the threat. [%cal Gc6d4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 {**Nxc2+** forks the king and the rook on **a1**, so White has to defend with the queen. [%cal Gd4c2, Gc2e1, Gc2a1]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 {**Qd1** (or **Qd3**) protects **c2**.}
-~ 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Bb3 {**7.Bb3** protects **c2** too, but the queen on **f3** is attacked by the knight.[%cal Rd4f3]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 {The bishop takes with a double threat on the queen and on **e2**. [%cal Rg4d1, Rg4e2]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Be2 {Blocking with the knight (**8.Ne2**) loses to mate in two: **Nf3+ Kf1 Bh3#**. After **8.Be2** a nice little move is **...Qxd5**. [%cal Gd8d5]}
-~ 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Ne2 Nf3+ 9. Kf1 Bh3# {After **8.Ne2?**, **Nf3+ 9.Kf1 Bh3#** is mate.}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Be2 Qxd5 {The rook on **h1** is attacked. [%cal Rd5h1, Rd5g2]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Be2 Qxd5 9. f3 {White usually plays **f3**. [%cal Gf2f3]}
-~ 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Be2 Qxd5 9. Bxg4 {The bishop can be taken too: **Qxg4**.}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. g4 d5 6. exd5? Nd4 7. Qd1 Bxg4 8. Be2 Qxd5 9. f3 Bf5 {Black just moves the bishop and enjoys a much better position.}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 {Another common line, to keep the pressure on **f7**. It can look scary to let the queen into your camp, but the king is fine on **e7**. [%cal Rb3f7, Rc4f7]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 {**Nd4** attacks the queen (**Qe2** also defends **f7**). [%cal Gd4b3, Bf6g8]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ {Two lines here: **6.Bxf7+** and **6.Qc3**.[%cal Rf7e8]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ Ke7 {The only legal move. Now both the bishop and the queen are attacked. [%cal Rd4b3, Re7f7]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ Ke7 7. Qc4 {The best move for White: the queen still defends the bishop. [%cal Gb3c4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ Ke7 7. Qc4 b5 {**...b5** kicks the queen out of the defence of the bishop. [%cal Gb5c4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ Ke7 7. Qc4 b5 8. Qc3 {[%csl Gf6, Ge3][%cal Gf6e4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Bxf7+ Ke7 7. Qc4 b5 8. Qc3 Kxf7 {Now you can just win the bishop. Or play fancy with **...Ne4** and torture the opponent a bit more. [%csl Gb4][%cal Gf6e4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 {The other line: the queen heads for **c3**. Black's idea is to get rid of **e4**, bring out the bishop on **f5** and fork the king and rook with **Nc2+**. [%cal Gd4c2]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 {[%cal Gd5e4, Gc8f5]}
-~ 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 Nxe4 {**6...Nxe4** is also possible. [%cal Gf6e4]}
-~ 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. Bxd5 Nxd5 8. exd5 Bf5 9. Na3 Bxa3 10. bxa3 Nxc2+ {**7.Bxd5** ends in the same position after **Nxd5 8.exd5 Bf5 9.Na3 Bxa3 10.bxa3 Nxc2+**. You can reach it no matter what. [%cal Gc2e1, Gc2a1]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 {[%cal Re4d5]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 Bf5 {[%cal Gd4c2, Gc2e1, Gc2a1]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 Bf5 8. d3 {A very natural move, but it opens the diagonal between the king and the queen. [%cal Rf5c2]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 Bf5 8. d3 Bb4!! {The bishop pins the queen to the king. [%cal Gb4c3, Gb4e1]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 Bf5 8. d3 Bb4!! 9. Qxb4 Nxc2+ {[%cal Gc2e1, Gc2b4]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 5. Qb3 Nd4 6. Qc3 d5 7. exd5 Bf5 8. d3 Bb4!! 9. Qxb4 Nxc2+ 10. Kd1 {The knight takes the queen on **b4**. [%csl Gb4][%cal Gc2b4]}
