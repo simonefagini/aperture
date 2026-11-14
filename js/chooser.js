@@ -10,10 +10,10 @@ const OPENINGS = {
       { name: "2...c5 (Steinitz Countergambit)", moves: "d4 d5 Bf4 c5 {[%cal Gc5d4]}", page: "london-c5.html" },
     ],
   },
-  misc: {
+  traps: {
     flipped: true,
     variations: [
-      { name: "Defence against the Scholar's Mate", moves: "e4 e5 Qh5 Nc6 Bc4 g6 Qf3 Nf6 {[%cal Rf3f7]}", page: "misc-scholar.html" },
+      { name: "Defence against the Scholar's Mate", moves: "e4 e5 Qh5 Nc6 Bc4 g6 Qf3 Nf6 {[%cal Rf3f7]}", page: "traps-scholar.html" },
     ],
   },
 };
