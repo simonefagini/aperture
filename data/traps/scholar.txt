@@ -1,12 +1,12 @@
 # Traps & Defences (Black): defence and traps against the Scholar's Mate attack. Every line is one board: all the moves from the start, SAN.
 # Source: https://lichess.org/study/XiAnMI2T
 # See data/legend.txt for the syntax.
-@preview 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {[%cal Rf3f7, Gg8f6]}
+@preview 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {[%cal Rf3f7, Gg8f6L]}
 
 1. e4 e5 2. Qh5 {The queen comes out early, eyeing **e5** and **f7**.[%cal Rh5e5, Rh5f7]}
 ~ 1. e4 e5 2. Qh5 g6? 3. Qxe5+ {Ignoring the threat to **e5** (here with **2...g6?**) loses a pawn and the rook on **h8** to the fork **Qxe5+**.[%cal Re5h8, Re5g7]}
-1. e4 e5 2. Qh5 Nc6 {The best reply: the knight defends **e5**, and **Nf6** is next to hit the queen. [%cal Bc6e5, Gg8f6]}
+1. e4 e5 2. Qh5 Nc6 {The best reply: the knight defends **e5**, and **Nf6** is next to hit the queen. [%cal Bc6e5L, Gg8f6L]}
 1. e4 e5 2. Qh5 Nc6 3. Bc4 {Now **Qxf7#** is threatened. [%cal Rh5f7, Rc4f7]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 {**3...g6** kicks the queen away and gains a tempo. [%cal Gg7g6, Rg6h5]}
+1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 {**3...g6** kicks the queen away and gains a tempo. [%cal Rg6h5]}
 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 {The queen retreats, keeping the idea of mate on **f7**. White has moved the queen a lot while Black develops. [%cal Rf3f7]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {Black develops with a threat on **e4**, and **f7** is only attacked, not lost: from here White's usual tries are **5.g4** and **5.Qb3**. [%cal Gg8f6]} @empty
+1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {Black develops with a threat on **e4**, and **f7** is only attacked, not lost: from here White's usual tries are **5.g4** and **5.Qb3**. [%cal Gg8f6L]} @empty
