@@ -121,6 +121,7 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 2.5rem 2rem; max-width: 56rem; margin: 0 auto; }
 .card { display: block; color: inherit; text-decoration: none; }
 #grid figure { width: 100%; }
+.card figcaption { margin-top: .75rem; }
 .card:hover figcaption { color: var(--hover-color); }
 .card.empty { opacity: .4; pointer-events: none; }
 
