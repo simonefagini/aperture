@@ -1,0 +1,9 @@
+# Traps & Defences (Black): defence against the Fried Liver attack, the Knight d4 trap. Every line is one board: all the moves from the start, SAN.
+# Source: https://lichess.org/study/p0H2Rjz9/QPODeL5r
+# See data/legend.txt for the syntax.
+@preview 1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nd4 {[%cal Rg5f7, Gc6d4L]}
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 {The Fried Liver attack: the knight and bishop both aim at **f7**. [%cal Rg5f7, Rc4f7]}
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 {A very common reply: the pawn hits the bishop and blocks its diagonal to **f7**. [%cal Gd5c4]}
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 {White takes, and the pawn on **d5** now attacks the knight on **c6**. [%cal Rd5c6]}
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nd4 {**5...Nd4** starts the trap: the knight jumps away and eyes **c2** and **f3**. If White ever has **Nc3** the trap does not work. [%cal Gc6d4L, Rg5f7]} @empty
