@@ -14,7 +14,7 @@ const OPENINGS = {
     flipped: true,
     variations: [
       { name: "Defence against the Scholar's Mate", moves: "e4 e5 Qh5 Nc6 Bc4 g6 Qf3 Nf6 {[%cal Rf3f7]}", page: "traps-scholar.html" },
-      { name: "Defence against the Fried Liver", moves: "e4 e5 Nf3 Nc6 Bc4 Nf6 Ng5 d5 exd5 Nd4 {[%cal Rg5f7]}", page: "traps-fried-liver.html" },
+      { name: "Defence against the Fried Liver", moves: "e4 e5 Nf3 Nc6 Bc4 Nf6 Ng5 d5 exd5 Nd4 {[%cal Rg5f7L]}", page: "traps-fried-liver.html" },
     ],
   },
 };
