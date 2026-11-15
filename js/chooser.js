@@ -1,4 +1,4 @@
-import { parse, board } from "./board.js?v=58";
+import { parse, board } from "./board.js?v=59";
 
 // the variations of each opening: a name, the moves that define it (shown as SAN and as the little board),
 // and the page with its tree. A "{[%cal ...]}" after the moves adds marks to the board.
@@ -34,7 +34,7 @@ function item(v, flipped) {
   a.className = empty ? "variation empty" : "variation";
   if (!empty) a.href = v.page;
   const fig = document.createElement("figure");
-  fig.appendChild(board(preview, flipped));
+  fig.appendChild(board(preview, flipped, false));
   const text = document.createElement("div");
   const name = document.createElement("div");
   name.className = "name";

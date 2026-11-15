@@ -1,4 +1,4 @@
-import { parse, board, showError } from "./board.js?v=58";
+import { parse, board, showError } from "./board.js?v=59";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [
@@ -23,7 +23,7 @@ function card(tag, node, name, flipped, href) {
   el.className = "card";
   if (href) el.href = href;
   const fig = document.createElement("figure");
-  fig.appendChild(board(node, flipped));
+  fig.appendChild(board(node, flipped, false));
   const cap = document.createElement("figcaption");
   cap.textContent = name;
   fig.appendChild(cap);
