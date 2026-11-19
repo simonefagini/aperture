@@ -1,0 +1,50 @@
+/* ocr.html: screenshot -> fen. Meant to be appended to aperture's style.css (uses its colour variables). */
+.ocr { --b: min(28rem, calc(100vw - 3rem)); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; min-height: 100dvh; padding-block: 4rem 6rem; position: relative; }   /* the board sits in the middle of the page, like on the test board */
+/* status, options and fen hang under the board without moving it */
+.ocr .under { position: absolute; top: calc(100% + 1.25rem); left: 50%; transform: translateX(-50%); width: min(40rem, calc(100vw - 2rem)); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+/* the empty board is the drop target: a faded board with the hint written on it */
+#stage { position: relative; display: block; width: var(--b); outline: none; }
+#stage.empty { cursor: pointer; }
+#stage.empty svg { opacity: .45; transition: opacity .3s ease; }
+#stage.empty:hover svg, #stage.empty:focus-visible svg, #stage.over svg { opacity: .7; }
+#stage .hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%; padding: .9rem 1rem; border-radius: .5rem; background: var(--body-bg); text-align: center; pointer-events: none; }
+#stage .hint .big { display: block; font-weight: 600; }
+#status { min-height: 1.3em; margin: 0; color: var(--muted); font-size: .9rem; text-align: center; }
+#status.bad { color: #d03a3a; }
+#result { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; }
+.ocr .tools[hidden] { display: none; }
+#result[hidden] { display: none; }
+.ocr .wrap { position: relative; }
+.ocr #stage figure { width: var(--b); margin: 0; }
+.ocr .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .65rem); display: flex; flex-direction: column; }
+.ocr .tools button { width: 1.5rem; height: 2.1rem; padding: 0; border: 0; background: none; display: flex; align-items: flex-start; justify-content: center; color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
+.ocr .tools button:hover { color: var(--hover-color); }
+.ocr .tools svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ocr .lower { width: 100%; display: flex; flex-direction: column; gap: 1.25rem; align-items: center; }
+.ocr .fenrow { position: relative; width: 100%; }   /* centered under the board; the copy button sits inside the field, so it does not push it sideways */
+.ocr #fen { display: block; width: 100%; box-sizing: border-box; padding: .7rem 2.6rem .7rem .9rem; border: 1px solid var(--highlight-color); border-radius: .5rem; background: transparent; color: var(--text-color); font: 450 .82rem/1.4 ui-monospace, Menlo, Consolas, monospace; outline: none; }   /* readonly, but you can still select part of it */
+.ocr #fen:focus { border-color: var(--muted); }
+.ocr #copy { position: absolute; right: .35rem; top: 50%; transform: translateY(-50%); width: 2.1rem; height: 2.1rem; padding: 0; border: 0; background: none; display: flex; align-items: center; justify-content: center; color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
+.ocr #copy:hover { color: var(--hover-color); }
+.ocr #copy svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ocr #copy .i-done, .ocr #copy.done .i-copy { display: none; }
+.ocr #copy.done .i-done { display: block; color: #6fa83a; }
+#shotbox { padding: 0; border: 0; background: none; max-width: 92vw; max-height: 92vh; overflow: visible; }
+#shotbox::backdrop { background: rgba(0, 0, 0, .6); }
+#shotbox #shot { display: block; max-width: 92vw; max-height: 88vh; width: auto; height: auto; border-radius: .3rem; box-shadow: 0 .5rem 2rem rgba(0, 0, 0, .4); }
+.ocr .opts { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem 1.8rem; font-size: .95rem; color: var(--muted); }   /* all grey; only the fen is in the text colour */
+.ocr .opts > div { display: flex; align-items: center; gap: .9rem; }
+.ocr .opts .castle label { display: flex; align-items: center; gap: .4rem; cursor: pointer; }
+.ocr .opts .castle input { margin: 0; accent-color: #6fa83a; cursor: pointer; }
+.ocr .opts .castle label:has(input:disabled) { opacity: .35; cursor: default; }
+.ocr .opts .castle input:disabled { cursor: default; }
+/* the side to move: a plain drop-down with a small arrow */
+.ocr .opts .turn { position: relative; display: flex; align-items: center; }
+.ocr .opts .turn select { appearance: none; -webkit-appearance: none; margin: 0; padding: 0 1.3rem 0 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; outline: none; }
+.ocr .opts .turn select:focus-visible { text-decoration: underline; }
+.ocr .opts .turn svg { position: absolute; right: 0; width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.ocr .opts .turn:hover svg { stroke: var(--hover-color); }
+.ocr .opts .turn:hover select, .ocr .opts .castle label:not(:has(input:disabled)):hover { color: var(--hover-color); }
+.ocr footer { position: absolute; left: 0; right: 0; bottom: 1rem; padding: 0 1rem; text-align: center; color: var(--muted); font-size: .75rem; line-height: 1.4; }
+.ocr footer a { color: inherit; text-decoration-color: var(--highlight-color); }
+.ocr footer a:hover { color: var(--hover-color); }
