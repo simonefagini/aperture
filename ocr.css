@@ -48,3 +48,6 @@
 .ocr footer { position: absolute; left: 0; right: 0; bottom: 1rem; padding: 0 1rem; text-align: center; color: color-mix(in srgb, var(--muted) 65%, var(--body-bg)); font-size: .75rem; line-height: 1.4; }
 .ocr footer a { color: inherit; text-decoration-color: var(--highlight-color); }
 .ocr footer a:hover { color: var(--hover-color); }
+
+/* the page content is position: relative and comes later, so it covered the top-right buttons and ate their clicks */
+#nav, #theme-toggle { z-index: 10; }
