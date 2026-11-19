@@ -47,7 +47,10 @@ Also do not copy `web/test/` (Node tests, `node_modules`).
    are in `simonefagini/chess-ocr`, `src/download_pieces.py`). onnxruntime-web (MIT) is loaded from jsDelivr.
    I have not checked whether a model trained on those images has any license implication: mention it as an
    open question for me, do not decide it.
-5. **No other behaviour changes.** Do not restyle the page; do not move the board; keep the empty-board drop target,
+5. **Footer.** `ocr.html` ends with a small grey `<footer>` (no background): the screenshot stays in the browser, the model was
+   trained with PyTorch on boards drawn from Lichess piece sets under their own licenses, link to the chess-ocr repo.
+   Keep it. If I settle the license question in LICENSES.md, make the footer wording match.
+6. **No other behaviour changes.** Do not restyle the page; do not move the board; keep the empty-board drop target,
    the grey option text, the FEN bar centered under the board with the copy button inside it.
 
 ## Things to know about the page (so you do not "fix" them)
@@ -58,6 +61,12 @@ Also do not copy `web/test/` (Node tests, `node_modules`).
 - The board finder (`js/board-finder.js`) and slicer (`js/fen-ocr.js`) are line-by-line ports of Python code; a Node
   test in the other repo checks they give identical results to the Python on 42 real images. Do not refactor them.
 - Browsers cache hard: when testing changes, add a throwaway query string to the URL.
+
+## Replacing the model later
+I will retrain the model in the chess-ocr repo with other inputs. Only `model/baseline.onnx` is swapped: same input
+(64 squares, 3x32x32 raw 0-255 pixels) and output (13 scores per square, classes `·PNBRQKpnbrqk`), as long as the architecture
+contract is unchanged. When it is swapped, bump the `?v=` on the `MODEL` constant in `js/ocr.js` (browsers cache the file).
+If I ever change the input size or the classes, `js/fen-ocr.js` has to change too: ask me.
 
 ## How to check it works
 1. `python3 -m http.server` here, open `http://localhost:8000/ocr.html`.
