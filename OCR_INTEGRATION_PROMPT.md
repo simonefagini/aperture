@@ -42,11 +42,9 @@ Also do not copy `web/test/` (Node tests, `node_modules`).
    change them; use fresh numbers for the new files; bump `js/board.js?v=` only if you touch it (you should not).
 3. **README.md.** Add a bullet like the existing ones for `test-board.html` and `coordinates.html`: what the page is,
    which icon opens it, one line on how it works (model in `model/`, runtime from jsDelivr).
-4. **LICENSES.md.** Add: the model `model/baseline.onnx` was trained on synthetic boards rendered from Lichess piece
-   sets (many different licenses, e.g. cburnett CC BY-SA/GPLv2+, plus others; the training code and the list of sets
-   are in `simonefagini/chess-ocr`, `src/download_pieces.py`). onnxruntime-web (MIT) is loaded from jsDelivr.
-   I have not checked whether a model trained on those images has any license implication: mention it as an
-   open question for me, do not decide it.
+4. **LICENSES.md.** Already done in this repo: the section "Screenshot-to-FEN model" holds the table of piece sets the model was
+   trained on, with the open questions (derivative-model question, non-commercial and non-free sets). The footer of `ocr.html`
+   links to it on GitHub. Do not rewrite it; only check the anchor in the footer link still matches the heading.
 5. **Footer.** `ocr.html` ends with a small grey `<footer>` (no background): the screenshot stays in the browser, the model was
    trained with PyTorch on boards drawn from Lichess piece sets under their own licenses, link to the chess-ocr repo.
    Keep it. If I settle the license question in LICENSES.md, make the footer wording match.
