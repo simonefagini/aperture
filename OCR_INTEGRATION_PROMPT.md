@@ -42,12 +42,11 @@ Also do not copy `web/test/` (Node tests, `node_modules`).
    change them; use fresh numbers for the new files; bump `js/board.js?v=` only if you touch it (you should not).
 3. **README.md.** Add a bullet like the existing ones for `test-board.html` and `coordinates.html`: what the page is,
    which icon opens it, one line on how it works (model in `model/`, runtime from jsDelivr).
-4. **LICENSES.md.** Already done in this repo: the section "Screenshot-to-FEN model" holds the table of piece sets the model was
-   trained on, with the open questions (derivative-model question, non-commercial and non-free sets). The footer of `ocr.html`
+4. **LICENSES.md.** Already done in this repo: the section "Screenshot-to-FEN model" has the table of piece sets (free-license sets
+   for training, two non-commercial ones only for testing) and links to Lichess's license file. The footer of `ocr.html`
    links to it on GitHub. Do not rewrite it; only check the anchor in the footer link still matches the heading.
 5. **Footer.** `ocr.html` ends with a small grey `<footer>` (no background): the screenshot stays in the browser, the model was
-   trained with PyTorch on boards drawn from Lichess piece sets under their own licenses, link to the chess-ocr repo.
-   Keep it. If I settle the license question in LICENSES.md, make the footer wording match.
+   trained with PyTorch on boards drawn from freely licensed Lichess piece sets, with a link to the license table. Keep it.
 6. **No other behaviour changes.** Do not restyle the page; do not move the board; keep the empty-board drop target,
    the grey option text, the FEN bar centered under the board with the copy button inside it.
 
