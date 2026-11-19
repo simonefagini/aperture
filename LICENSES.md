@@ -14,14 +14,13 @@ Libraries loaded from CDN: chess.js (BSD-2-Clause), d3-hierarchy (ISC), onnxrunt
 
 ## Screenshot-to-FEN model (`model/baseline.onnx`)
 
-The model `baseline.onnx` was trained on synthetic chessboards that I drew myself from 41 piece sets downloaded from
+The model `baseline.onnx` was trained on synthetic chessboards that I drew myself from 32 piece sets downloaded from
 [Lichess](https://github.com/lichess-org/lila/tree/master/public/piece) (`src/download_pieces.py`), combined with random positions,
 board colours, highlights and arrows. Authors and licenses below are copied from Lichess's
 [COPYING.md](https://github.com/lichess-org/lila/blob/master/COPYING.md) (read on 2026-11-19; check upstream before relying on them).
 The model file (`baseline.onnx`, 614 KB) contains only trained numbers, no images.
 
-Groups: **A** free licenses (attribution / share-alike / copyleft / public domain): 16 sets · **B** non-commercial (CC BY-NC-SA): 16 sets ·
-**C** non-free or no license stated: 7 sets · **D** not listed in Lichess's license file: 2 sets.
+Groups: **A** free licenses (attribution / share-alike / copyleft / public domain): 16 sets · **B** non-commercial (CC BY-NC-SA): 16 sets.
 
 | Piece set | Author | License | Group | Role |
 |---|---|---|---|---|
@@ -57,21 +56,16 @@ Groups: **A** free licenses (attribution / share-alike / copyleft / public domai
 | `staunty` | sadsnake1 | CC BY-NC-SA 4.0 | B | training |
 | `tatiana` | sadsnake1 | CC BY-NC-SA 4.0 | B | held out: never trained on, used for testing |
 | `xkcd` | Randall Munroe | CC BY-NC-SA 2.5 | B | skipped (not a real piece style) |
-| `alpha` | Eric Bentzen | "free for personal non commercial use" | C | training |
-| `chess7` | Style-7 | "freeware" | C | training |
-| `companion` | David L. Brown | "freeware" | C | training |
-| `leipzig` | Armando Hernandez Marroquin | "freeware" | C | training |
-| `reillycraig` | Reilly Craig | none stated | C | training |
-| `riohacha` | unknown | none stated | C | training |
-| `shahi-ivory-brown` | Tamer Karatekin | free for personal and commercial use, but no modification (Şahî font license v1.0) | C | training |
-| `governor` | not listed upstream | not listed upstream | D | training |
-| `kosal` | not listed upstream | not listed upstream | D | held out: never trained on, used for testing |
 
-#### Open questions (not decided)
-- Is a model trained on images under these licenses a derivative of them? This is legally unsettled; the model contains
-  numbers, not images, but I have not got a legal answer. Groups B and C are the uncomfortable ones: B is non-commercial,
-  C is "personal use only" or unclear. This site is a personal, non-commercial project.
-- If the chess-ocr repository is ever made public, the SVG files of group C (and D) should be removed from it first:
-  redistributing them is not covered by their licenses. The rendered PNGs in `data/pieces_png/` are derivatives of the same files.
-- The clean option, if wanted: retrain with group A only (plus my own screenshots) and compare accuracy on my real screenshots.
-  That experiment has not been run yet.
+### Left out on purpose
+Nine Lichess sets were removed from this repository and from training, because their licenses are non-free, not stated, or
+not listed upstream: `alpha` ("personal non-commercial use"), `chess7`, `companion`, `leipzig` ("freeware"), `reillycraig`,
+`riohacha` (nothing stated), `shahi-ivory-brown` (no modification allowed), `governor` and `kosal` (not listed upstream).
+The first model, trained with them, made no more mistakes on my real screenshots than the current one (0 errors on all 38 boards
+both times) and was equal on unseen styles (98.3% vs 98.2% of squares), so nothing was lost. They are still in this repository's
+git history (it is private); the history would have to be rewritten before the repository is ever made public.
+
+### Open question (not decided)
+Is a model trained on images under these licenses a derivative of them? This is legally unsettled. The model contains numbers,
+not images, but I have no legal answer. Group B (non-commercial, share-alike) is the uncomfortable one; this site is a personal,
+non-commercial project. The clean option is to retrain with group A only (plus my own screenshots) and compare again; not run yet.
