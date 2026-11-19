@@ -270,8 +270,8 @@ export function board(node, flipped, coords = true) {
       const piece = (ch === ch.toUpperCase() ? "w" : "b") + ch.toUpperCase();
       const [x, y] = flipped ? [7 - f, 7 - r] : [f, r];
       const sq = "abcdefgh"[f] + (8 - r);
-      const upsideDown = sq === node.mated;   // a mated king lies upside down, as in the old days
-      el("image", { href: `pieces/${piece}.svg`, x, y, width: 1, height: 1, ...(upsideDown ? { class: "mated", transform: `rotate(180 ${x + 0.5} ${y + 0.5})` } : {}) }, svg);
+      const sideWays = sq === node.mated;   // a mated king lies sideway, as in the old days
+      el("image", { href: `pieces/${piece}.svg`, x, y, width: 1, height: 1, ...(sideWays ? { class: "mated", transform: `rotate(-90 ${x + 0.5} ${y + 0.5})` } : {}) }, svg);
       f++;
     }
   });
