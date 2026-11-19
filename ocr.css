@@ -1,7 +1,7 @@
 /* ocr.html: screenshot -> fen. Meant to be appended to aperture's style.css (uses its colour variables). */
-.ocr { --b: min(28rem, calc(100vw - 3rem)); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; min-height: 100dvh; padding-block: 4rem 6rem; position: relative; }   /* the board sits in the middle of the page, like on the test board */
+.ocr { --b: min(28rem, calc(100vw - 3rem)); display: grid; grid-template-rows: auto auto auto auto; justify-items: center; align-content: start; min-height: 100vh; min-height: 100dvh; padding-block: 4rem 1rem; position: relative; }   /* a short window: everything stacks from the top, nothing overlaps */
 /* status, options and fen hang under the board without moving it */
-.ocr .under { position: absolute; top: calc(100% + 1.25rem); left: 50%; transform: translateX(-50%); width: min(40rem, calc(100vw - 2rem)); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+.ocr .under { grid-row: 3; align-self: start; margin-top: 1.25rem; width: min(40rem, 100%); display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }   /* status, options and fen under the board */
 /* the empty board is the drop target: a faded board with the hint written on it */
 #stage { position: relative; display: block; width: var(--b); outline: none; }
 #stage.empty { cursor: pointer; }
@@ -14,7 +14,7 @@
 #result { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; }
 .ocr .tools[hidden] { display: none; }
 #result[hidden] { display: none; }
-.ocr .wrap { position: relative; }
+.ocr .wrap { grid-row: 2; position: relative; }
 .ocr #stage figure { width: var(--b); margin: 0; }
 .ocr .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .65rem); display: flex; flex-direction: column; }
 .ocr .tools button { width: 1.5rem; height: 2.1rem; padding: 0; border: 0; background: none; display: flex; align-items: flex-start; justify-content: center; color: color-mix(in srgb, var(--toggle-color) 65%, var(--body-bg)); cursor: pointer; transition: color .3s ease; -webkit-tap-highlight-color: transparent; }
@@ -45,9 +45,12 @@
 .ocr .opts .turn svg { position: absolute; right: 0; width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 .ocr .opts .turn:hover svg { stroke: var(--hover-color); }
 .ocr .opts .turn:hover select, .ocr .opts .castle label:not(:has(input:disabled)):hover { color: var(--hover-color); }
-.ocr footer { position: absolute; left: 0; right: 0; bottom: 1rem; padding: 0 1rem; text-align: center; color: color-mix(in srgb, var(--muted) 65%, var(--body-bg)); font-size: .75rem; line-height: 1.4; }
+.ocr footer { grid-row: 4; margin-top: 2rem; padding: 0 .5rem; max-width: 40rem; text-align: center; color: color-mix(in srgb, var(--muted) 65%, var(--body-bg)); font-size: .75rem; line-height: 1.4; }
 .ocr footer a { color: inherit; text-decoration-color: var(--highlight-color); }
 .ocr footer a:hover { color: var(--hover-color); }
+/* tall enough: the board sits in the middle of the page, with the status, options and fen hanging under it */
+@media (min-height: 58rem) { .ocr { grid-template-rows: 1fr auto 1fr auto; align-content: stretch; } }
+@media (max-width: 34rem) and (min-height: 54rem) { .ocr { grid-template-rows: 1fr auto 1fr auto; align-content: stretch; } }
 
 /* the page content is position: relative and comes later, so it covered the top-right buttons and ate their clicks */
 #nav, #theme-toggle { z-index: 10; }
