@@ -45,6 +45,6 @@
 .ocr .opts .turn svg { position: absolute; right: 0; width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 .ocr .opts .turn:hover svg { stroke: var(--hover-color); }
 .ocr .opts .turn:hover select, .ocr .opts .castle label:not(:has(input:disabled)):hover { color: var(--hover-color); }
-.ocr footer { position: absolute; left: 0; right: 0; bottom: 1rem; padding: 0 1rem; text-align: center; color: var(--muted); font-size: .75rem; line-height: 1.4; }
+.ocr footer { position: absolute; left: 0; right: 0; bottom: 1rem; padding: 0 1rem; text-align: center; color: color-mix(in srgb, var(--muted) 65%, var(--body-bg)); font-size: .75rem; line-height: 1.4; }
 .ocr footer a { color: inherit; text-decoration-color: var(--highlight-color); }
 .ocr footer a:hover { color: var(--hover-color); }
