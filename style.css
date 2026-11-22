@@ -160,6 +160,19 @@ figure:hover .layer, body.marks .layer { opacity: 1; }
 #nav svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 #nav #home svg { width: 1.36rem; height: 1.36rem; stroke-width: 1.65; }
 
+/* a label under the nav icons and the theme button on hover, so an icon you do not recognise is not a riddle (not on touch screens, where hover sticks) */
+#nav a { position: relative; }
+@media (hover: hover) {
+  #nav a::after, #theme-toggle::after {
+    content: attr(aria-label); position: absolute; top: calc(100% - .2rem); left: 50%; transform: translateX(-50%);
+    padding: .2rem .55rem; border-radius: .35rem; background: var(--body-bg); border: 1px solid var(--highlight-color);
+    color: var(--muted); font-size: .75rem; line-height: 1.3; white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity .2s ease; z-index: 20;
+  }
+  #theme-toggle::after { left: auto; right: 0; transform: none; }   /* the last button: the label stays inside the window */
+  #nav a:hover::after, #theme-toggle:hover::after { opacity: 1; transition-delay: .35s; }
+}
+
 /* study mode toggle: a green circle while the annotations are on, grey in study mode */
 #stepper #study-toggle { color: #6fa83a; }
 #stepper #study-toggle svg { fill: currentColor; stroke: none; }
