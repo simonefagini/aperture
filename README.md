@@ -13,7 +13,7 @@ The home page (`index.html`) lists the openings. Pick one and you get its list o
 ### Coordinates (crosshair icon)
 `coordinates.html` is a drill for learning the board. A square lights up on an empty board and you type its name (`e4`); a wrong answer turns the text red. The green circle hides the coordinates around the board, and Ctrl/Cmd+Enter lets you choose which files are asked.
 
-### Screenshot to FEN (scanner icon)
+### Board recognition (scanner icon)
 `ocr.html` turns a screenshot of a chess position into a FEN you can paste anywhere (an analysis board, an engine, a study).
 
 1. Drop, paste or choose a screenshot. It can be a whole browser window from chess.com or Lichess; you don't need to crop it.

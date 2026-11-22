@@ -10,9 +10,9 @@ If you modify the SVGs, share the changes under the same license.
 
 ## Code
 Your own code: add a license of your choice (e.g. MIT) as `LICENSE`.
-Libraries loaded from CDN: chess.js (BSD-2-Clause), d3-hierarchy (ISC), onnxruntime-web (MIT, used by the screenshot-to-FEN page).
+Libraries loaded from CDN: chess.js (BSD-2-Clause), d3-hierarchy (ISC), onnxruntime-web (MIT, used by the board recognition page).
 
-## Screenshot-to-FEN model (`model/baseline.onnx`)
+## Board recognition model (`model/baseline.onnx`)
 
 The model `baseline.onnx` was trained on synthetic chessboards that I drew myself from piece sets taken from
 [Lichess](https://github.com/lichess-org/lila/tree/master/public/piece) (`src/download_pieces.py`), combined with random positions,

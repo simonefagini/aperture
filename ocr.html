@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>screenshot to fen</title>
+  <title>board recognition</title>
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
   <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <script src="js/theme.js?v=37"></script>
   <link rel="stylesheet" href="style.css?v=93">
-  <link rel="stylesheet" href="ocr.css?v=20">
+  <link rel="stylesheet" href="ocr.css?v=21">
 </head>
 <body>
   <nav id="nav">
@@ -21,7 +21,7 @@
     <a id="coordlink" href="coordinates.html" aria-label="coordinates board">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>
     </a>
-    <a id="ocrlink" href="ocr.html" aria-label="screenshot to fen" aria-current="page">
+    <a id="ocrlink" href="ocr.html" aria-label="board recognition" aria-current="page">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>
     </a>
     <a id="home" href="index.html" aria-label="all openings">
@@ -73,7 +73,7 @@
         </div>
         </div>
     </div>
-    <footer>Your screenshot stays in your browser, nothing is uploaded.<br>The model was trained with PyTorch on boards drawn from freely licensed Lichess piece sets: <a href="https://github.com/simonefagini/aperture/blob/main/LICENSES.md#screenshot-to-fen-model-modelbaselineonnx" target="_blank" rel="noopener">details</a>.</footer>
+    <footer>Your screenshot stays in your browser, nothing is uploaded.<br>The model was trained with PyTorch on boards drawn from freely licensed Lichess piece sets: <a href="https://github.com/simonefagini/aperture/blob/main/LICENSES.md#board-recognition-model-modelbaselineonnx" target="_blank" rel="noopener">details</a>.</footer>
   </main>
   <dialog id="shotbox" aria-label="the screenshot, with the board found outlined">
     <canvas id="shot"></canvas>
