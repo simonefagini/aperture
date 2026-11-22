@@ -40,12 +40,10 @@
 .ocr .opts .castle label:has(input:disabled) { opacity: .35; cursor: default; }
 .ocr .opts .castle input:disabled { cursor: default; }
 /* the side to move: a plain drop-down with a small arrow */
-.ocr .opts .turn { position: relative; display: flex; align-items: center; }
-.ocr .opts .turn select { appearance: none; -webkit-appearance: none; margin: 0; padding: 0 1.3rem 0 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; outline: none; }
-.ocr .opts .turn select:focus-visible { text-decoration: underline; }
-.ocr .opts .turn svg { position: absolute; right: 0; width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-.ocr .opts .turn:hover svg { stroke: var(--hover-color); }
-.ocr .opts .turn:hover select, .ocr .opts .castle label:not(:has(input:disabled)):hover { color: var(--hover-color); }
+.ocr .opts .turn { display: flex; align-items: center; gap: .4rem; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }   /* a click switches the side to move */
+.ocr .opts .turn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ocr .opts .turn:focus-visible { text-decoration: underline; outline: none; }
+.ocr .opts .turn:hover, .ocr .opts .castle label:not(:has(input:disabled)):hover { color: var(--hover-color); }
 .ocr footer { grid-row: 4; align-self: end; margin-top: 2rem; padding: 0 .5rem; text-align: center; color: color-mix(in srgb, var(--muted) 65%, var(--body-bg)); font-size: .75rem; line-height: 1.4; }
 .ocr footer a { color: inherit; text-decoration-color: var(--highlight-color); }
 .ocr footer a:hover { color: var(--hover-color); }

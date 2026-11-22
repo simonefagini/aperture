@@ -8,7 +8,11 @@ const MODEL = "model/baseline.onnx?v=3";   // bump the number when the model fil
 const $ = id => document.getElementById(id);
 const file = $("file"), statusEl = $("status"), result = $("result"), tools = $("tools");
 const stage = $("stage"), fenBox = $("fen"), shot = $("shot"), shotbox = $("shotbox");
-const turnSelect = $("turn");
+const turnBtn = $("turn"), turnText = $("turnText");
+const turnSelect = {   // the side to move, kept on the button
+  get value() { return turnBtn.dataset.v || "w"; },
+  set value(v) { turnBtn.dataset.v = v; turnText.textContent = v === "b" ? "black to move" : "white to move"; },
+};
 const castleBoxes = document.querySelectorAll(".castle input");
 const wanted = new Set();   // the rights you ticked: kept while a flip makes them impossible, back when they are possible again
 let turnTouched = false, placement = "", flipped = false, session = null, ort = null, lastLabels = null;
@@ -129,7 +133,7 @@ document.addEventListener("paste", e => {
   if (item) read(item.getAsFile());
 });
 
-turnSelect.addEventListener("change", () => { turnTouched = true; fenBox.value = fenNow(); });
+turnBtn.addEventListener("click", () => { turnSelect.value = turnSelect.value === "w" ? "b" : "w"; turnTouched = true; fenBox.value = fenNow(); });
 for (const b of castleBoxes) b.addEventListener("change", () => { b.checked ? wanted.add(b.value) : wanted.delete(b.value); fenBox.value = fenNow(); });
 
 $("original").addEventListener("click", () => shotbox.showModal());
