@@ -13,7 +13,10 @@
 #status.bad { color: #d03a3a; }
 #result { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; }
 .ocr .tools[hidden] { display: none; }
-#result[hidden] { display: none; }
+#result[hidden] { display: flex; }   /* kept in the layout while empty: a greyed bar for the fen, so nothing below the board moves when a result arrives */
+#result[hidden] .opts { visibility: hidden; }
+#result[hidden] .fenrow { opacity: .4; pointer-events: none; }
+#result[hidden] #copy { visibility: hidden; }
 .ocr .wrap { grid-row: 2; position: relative; }
 .ocr #stage figure { width: var(--b); margin: 0; }
 .ocr .tools { position: absolute; top: 0; left: calc(100% - var(--b) * .0604 + .65rem); display: flex; flex-direction: column; }

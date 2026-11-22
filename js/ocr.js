@@ -56,6 +56,7 @@ function showEmpty() {
   stage.classList.add("empty");
   stage.tabIndex = 0;
   tools.hidden = result.hidden = true;
+  fenBox.value = "";
   lastLabels = null;
   turnSelect.value = "w";
   wanted.clear();
