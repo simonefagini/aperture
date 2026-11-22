@@ -11,7 +11,7 @@ const stage = $("stage"), fenBox = $("fen"), shot = $("shot"), shotbox = $("shot
 const turnSelect = $("turn");
 const castleBoxes = document.querySelectorAll(".castle input");
 const wanted = new Set();   // the rights you ticked: kept while a flip makes them impossible, back when they are possible again
-let placement = "", flipped = false, session = null, ort = null, lastLabels = null;
+let turnTouched = false, placement = "", flipped = false, session = null, ort = null, lastLabels = null;
 
 const say = (text, bad = false) => { statusEl.textContent = text; statusEl.classList.toggle("bad", bad); };
 const nextPaint = () => new Promise(r => requestAnimationFrame(() => setTimeout(r)));
@@ -101,10 +101,11 @@ async function read(blob) {
     if (!isBoard(img, box)) { say("no chessboard found in this image", true); return; }
     const labels = await classify(ort, session, sliceBoard(img, box));
     lastLabels = labels;
-    turnSelect.value = "w";
+    turnTouched = false;
     wanted.clear();
   for (const b of castleBoxes) b.checked = false;
     flipped = guessFlipped(labels);
+    turnSelect.value = flipped ? "b" : "w";   // black at the bottom: most often it is black's turn
     placement = fenPlacement(labels, flipped);
     if (labels.every(c => c === 0)) { say("a board, but no pieces on it", true); return; }
     draw();
@@ -128,7 +129,7 @@ document.addEventListener("paste", e => {
   if (item) read(item.getAsFile());
 });
 
-turnSelect.addEventListener("change", () => { fenBox.value = fenNow(); });
+turnSelect.addEventListener("change", () => { turnTouched = true; fenBox.value = fenNow(); });
 for (const b of castleBoxes) b.addEventListener("change", () => { b.checked ? wanted.add(b.value) : wanted.delete(b.value); fenBox.value = fenNow(); });
 
 $("original").addEventListener("click", () => shotbox.showModal());
@@ -138,6 +139,7 @@ $("clear").addEventListener("click", showEmpty);
 
 $("flip").addEventListener("click", () => {   // the orientation guess is wrong: read the same squares the other way round
   flipped = !flipped;
+  if (!turnTouched) turnSelect.value = flipped ? "b" : "w";
   placement = fenPlacement(lastLabels, flipped);
   draw();
 });
