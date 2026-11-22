@@ -1,9 +1,9 @@
-import { parse, board, showError } from "./board.js?v=59";
+import { parse, board, showError } from "./board.js?v=60";
 
 // the openings on the home page; every other cell is an empty placeholder
 const OPENINGS = [
-  { name: "London System", page: "london.html", file: "data/london/main.txt", flipped: false },
-  { name: "Traps & Defences", page: "traps.html", file: "data/traps/scholar.txt", flipped: true },
+  { name: "London System", page: "openings/london.html", file: "data/london/main.txt", flipped: false },
+  { name: "Traps & Defences", page: "openings/traps.html", file: "data/traps/scholar.txt", flipped: true },
 ];
 const PLACEHOLDERS = 4;
 const MAX_PLIES = 16;   // the preview follows the first line for up to 8 moves each

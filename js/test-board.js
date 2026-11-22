@@ -1,4 +1,4 @@
-import { parse, board, showError } from "./board.js?v=59";
+import { parse, board, showError } from "./board.js?v=60";
 
 // a board that follows what you type: SAN, move numbers, ! ? $7, and the { [%cal ...] [%csl ...] [%sqr ...] } marks;
 // "@fen <fen> [moves]" starts from any position (paste a whole FEN)

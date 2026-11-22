@@ -1,10 +1,10 @@
 // ocr.html: a screenshot in, a FEN out. Everything happens in the browser.
-import { board } from "./board.js?v=59";
+import { board } from "./board.js?v=60";
 import { findBoard, isBoard } from "./board-finder.js";
 import { sliceBoard, classify, loadModel, guessFlipped, fenPlacement } from "./fen-ocr.js";
 
 const ORT = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/";
-const MODEL = "model/baseline.onnx?v=3";   // bump the number when the model file is replaced (browsers cache it)
+const MODEL = new URL("../model/baseline.onnx?v=3", import.meta.url).href;   // bump the number when the model file is replaced (browsers cache it)
 const $ = id => document.getElementById(id);
 const file = $("file"), statusEl = $("status"), result = $("result"), tools = $("tools");
 const stage = $("stage"), fenBox = $("fen"), shot = $("shot"), shotbox = $("shotbox");

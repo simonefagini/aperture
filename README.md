@@ -5,16 +5,16 @@ A small static website for studying chess. It started as a way to look at openin
 ## What is on the site
 
 ### Openings
-The home page (`index.html`) lists the openings. Pick one and you get its list of variations (`london.html`), and pick a variation to see its tree (`london-main.html`): every line is drawn as a row of boards, and lines that branch share their common moves, so you can see at a glance where a position splits into different replies. Comments, arrows, circles and move marks (`!`, `?`, ...) are drawn on the boards. The eclipse button in the top right switches between light and dark.
+The home page (`index.html`) lists the openings. Pick one and you get its list of variations (`openings/london.html`), and pick a variation to see its tree (`openings/london-main.html`): every line is drawn as a row of boards, and lines that branch share their common moves, so you can see at a glance where a position splits into different replies. Comments, arrows, circles and move marks (`!`, `?`, ...) are drawn on the boards. The eclipse button in the top right switches between light and dark.
 
 ### Test board (flask icon)
-`test-board.html` is a scratch pad. Type a line and a board follows it, so you can try out the notation (SAN, glyphs, arrows, circles, `@fen`) before putting it in a data file. If the line has a mistake, Ctrl/Cmd+Enter shows what is wrong.
+`tools/test-board.html` is a scratch pad. Type a line and a board follows it, so you can try out the notation (SAN, glyphs, arrows, circles, `@fen`) before putting it in a data file. If the line has a mistake, Ctrl/Cmd+Enter shows what is wrong.
 
 ### Coordinates (crosshair icon)
-`coordinates.html` is a drill for learning the board. A square lights up on an empty board and you type its name (`e4`); a wrong answer turns the text red. The green circle hides the coordinates around the board, and Ctrl/Cmd+Enter lets you choose which files are asked.
+`tools/coordinates.html` is a drill for learning the board. A square lights up on an empty board and you type its name (`e4`); a wrong answer turns the text red. The green circle hides the coordinates around the board, and Ctrl/Cmd+Enter lets you choose which files are asked.
 
 ### Board recognition (scanner icon)
-`ocr.html` turns a screenshot of a chess position into a FEN you can paste anywhere (an analysis board, an engine, a study).
+`tools/ocr.html` turns a screenshot of a chess position into a FEN you can paste anywhere (an analysis board, an engine, a study).
 
 1. Drop, paste or choose a screenshot. It can be a whole browser window from chess.com or Lichess; you don't need to crop it.
 2. The page finds the chessboard in the picture by itself and reads which piece is on each of the 64 squares.
@@ -26,7 +26,7 @@ Everything happens in your browser. The screenshot is never uploaded anywhere. T
 
 ## Adding and editing lines
 
-- To add a variation: write its data file and its tree page (copy `london-main.html`), then add a line to `OPENINGS` in `js/chooser.js`.
+- To add a variation: write its data file and its tree page (copy `openings/london-main.html`), then add a line to `OPENINGS` in `js/chooser.js`.
 - Lines live in plain text files such as `data/london/main.txt`: SAN moves, one line per row, optional move numbers (`1. d4 d5 2. Bf4`), and an optional `{comment}` after the last move. `data/legend.txt` describes the full syntax.
 - Write `@empty` on its own line under a line (or at the end of its moves, e.g. `d4 d5 Bf4 Nf6 e3 @empty`) to add a faded, empty board below it, suggesting the line goes on. It is ignored if a reply to that line is listed.
 - A mistake in a data file (illegal move, wrong move number, bad mark) shows on the page, with the line and the culprit marked.
