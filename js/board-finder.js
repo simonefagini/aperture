@@ -4,6 +4,7 @@
 //
 //   findBoard({ data, width, height })  ->  [left, top, right, bottom, edgeScore] | null
 //   isBoard(img, box)                   ->  true if the box really looks like a chessboard
+//   locateBoard(img)                    ->  the box if the picture has a board (retrying on a blurred copy), else null
 //
 // `data` is RGBA bytes, exactly what canvas getImageData() returns. Plain arithmetic only,
 // no DOM, so the same file runs in the browser and in Node (web/test/run.mjs checks it
@@ -292,4 +293,43 @@ export function isBoard(img, box) {
   if (!box || box[4] < MIN_EDGE) return false;
   const [l, t, r] = box;
   return checker(img.data, img.width, img.height, 4, l, t, (r - l) / 8) >= MIN_CHECKER;
+}
+
+// ---- book diagrams: the hatching on the dark squares makes a finer grid than the board itself ----
+// A box blur (width BLUR_W, two passes, edges repeated) smooths the hatching into flat grey, so the real
+// grid wins. It is only tried when the plain image has no board, so screenshots behave as before.
+// Same arithmetic as blur() in src/board_finder.py.
+const BLUR_W = 5;
+
+function boxPass(src, w, h, horizontal) {
+  const out = new Uint8Array(src.length), r = BLUR_W >> 1;
+  const n = horizontal ? w : h, lines = horizontal ? h : w;
+  for (let line = 0; line < lines; line++) {
+    for (let i = 0; i < n; i++) {
+      for (let c = 0; c < 3; c++) {
+        let sum = 0;
+        for (let k = -r; k <= r; k++) {
+          const j = Math.min(n - 1, Math.max(0, i + k));
+          sum += horizontal ? src[(line * w + j) * 4 + c] : src[(j * w + line) * 4 + c];
+        }
+        out[(horizontal ? line * w + i : i * w + line) * 4 + c] = Math.floor((sum + r) / BLUR_W);
+      }
+      out[(horizontal ? line * w + i : i * w + line) * 4 + 3] = 255;
+    }
+  }
+  return out;
+}
+
+export function blur(img) {
+  let data = img.data;
+  for (let round = 0; round < 2; round++) data = boxPass(boxPass(data, img.width, img.height, true), img.width, img.height, false);
+  return { data, width: img.width, height: img.height };
+}
+
+// The board box if the picture has a board, else null.
+export function locateBoard(img) {
+  let box = findBoard(img);
+  if (isBoard(img, box)) return box;
+  box = findBoard(blur(img));
+  return isBoard(img, box) ? box : null;
 }

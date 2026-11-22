@@ -1,6 +1,6 @@
 // ocr.html: a screenshot in, a FEN out. Everything happens in the browser.
 import { board } from "./board.js?v=60";
-import { findBoard, isBoard } from "./board-finder.js";
+import { locateBoard } from "./board-finder.js";
 import { sliceBoard, classify, loadModel, guessFlipped, fenPlacement } from "./fen-ocr.js";
 
 const ORT = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/";
@@ -101,8 +101,8 @@ async function read(blob) {
     const img = cx.getImageData(0, 0, bitmap.width, bitmap.height);
     const t0 = performance.now();
     await ready();
-    const box = findBoard(img);
-    if (!isBoard(img, box)) { say("no chessboard found in this image", true); return; }
+    const box = locateBoard(img);
+    if (!box) { say("no chessboard found in this image", true); return; }
     const labels = await classify(ort, session, sliceBoard(img, box));
     lastLabels = labels;
     turnTouched = false;
