@@ -12,9 +12,8 @@
     bar.content = BAR_COLOR[theme];
     const button = document.getElementById("theme-toggle");
     if (button) {
-      const label = theme === "dark" ? "switch to light mode" : "switch to dark mode";
-      button.setAttribute("aria-label", label);
-      button.title = label;   // the hover label
+      button.setAttribute("aria-label", theme === "dark" ? "switch to light mode" : "switch to dark mode");
+      button.title = theme === "dark" ? "light mode" : "dark mode";   // the hover label
     }
   }
   apply(saved() || (query.matches ? "dark" : "light"));
