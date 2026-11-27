@@ -1,12 +1,14 @@
 # Traps & Defences (Black): defence and traps against the Scholar's Mate attack. Every line is one board: all the moves from the start, SAN.
 # Source: https://lichess.org/study/XiAnMI2T
 # See data/legend.txt for the syntax.
-@preview 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {[%cal Rf3f7, Gg8f6L]}
+@preview 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {[%cal Rf3f6, Gc6d4L]}
 
-1. e4 e5 2. Qh5 {The queen comes out early, eyeing **e5** and **f7**.[%cal Rh5e5, Rh5f7]}
-~ 1. e4 e5 2. Qh5 g6? 3. Qxe5+ {Ignoring the threat to **e5** (here with **2...g6?**) loses a pawn and the rook on **h8** to the fork **Qxe5+**.[%cal Re5h8, Re5g7]}
-1. e4 e5 2. Qh5 Nc6 {The best reply: the knight defends **e5**, and **Nf6** is next to hit the queen. [%cal Bc6e5L, Gg8f6L]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 {Now **Qxf7#** is threatened. [%cal Rh5f7, Rc4f7]}
+1. e4 e5 2. Qh5 {The queen comes out early, eyeing **e5** and **f7**.<br>Mostly referred to as the [Danvers Opening (ECO C20)](https://www.365chess.com/eco/C20).[%cal Rh5e5, Rh5f7]}
+~ 1. e4 e5 2. Bc4 Nf6 {With **2.Bc4** the [Bishop's Opening (ECO C23)](https://www.365chess.com/eco/C23_Bishop's_opening), the best reply for Black is **2...Nf6**, the [Berlin Defence](https://www.365chess.com/eco/C24_Bishop's_opening_Berlin_defence), which already prevents the Scholar's Mate. [%cal Gf6h5L, Rf6e4L]}
+1. e4 e5 2. Qh5 Nc6 {The best reply is **2...Nc6**, defending the pawn on **e5**.[%cal Bc6e5L, Gg8f6L]}
+~ 1. e4 e5 2. Qh5 g6? 3. Qxe5+ {Ignoring the threat to **e5** and going for an attack on the queen with **2...g6?**, aiming to gain a tempo, just loses a pawn and the rook on **h8** to the fork **Qxe5+**.[%cal Re5e8, Re5h8]}
+1. e4 e5 2. Qh5 Nc6 3. Bc4 {With **3.Bc4**, White threatens **Qxf7#**. [%cal Rh5f7, Rc4f7]}
 1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 {**3...g6** kicks the queen away and gains a tempo. [%cal Rg6h5]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 {The queen retreats, keeping the idea of mate on **f7**. White has moved the queen a lot while Black develops. [%cal Rf3f7]}
-1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {Black develops with a threat on **e4**, and **f7** is only attacked, not lost: from here White's usual tries are **5.g4** and **5.Qb3**. [%cal Gg8f6L]} @empty
+1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 {The queen retreats, keeping the idea of mate on **f7**.<br>White has moved the queen a lot while Black develops. [%cal Rf3f7, Rc4f7]}
+~ 1. e4 e5 2. Qf3?! {Referred to as the Napoleon Opening, it is a variation where the position of the queen poses no impediments to Black's development. **2...Nf6** is still the best reply.[%cal Gg8f6L]}
+1. e4 e5 2. Qh5 Nc6 3. Bc4 g6 4. Qf3 Nf6 {Black develops and blocks the f-file: **Qxf7#** is no longer possible. The idea **...Nd4** hits the queen and **c2**. White's usual tries are **5.g4** and **5.Qb3**. [%cal Rf3f6, Bd8f6, Gc6d4L]} @empty
